@@ -1,0 +1,19 @@
+{
+  "name": "synchronize-video",
+  "version": "1.0.0",
+  "description": "synchronize videos with others within room",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nabildroid/synchronize-video.git"
+  },
+  "author": "nabil lakrib",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nabildroid/synchronize-video/issues"
+  },
+  "homepage": "https://github.com/nabildroid/synchronize-video#readme"
+}
