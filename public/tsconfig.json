@@ -3,6 +3,7 @@
     "compilerOptions": {
         "target": "ESNext",
         "jsx": "react",
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "strictNullChecks": true
     }
 }

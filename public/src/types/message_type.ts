@@ -1,0 +1,30 @@
+import { IUser } from "./user_type";
+import { Duration } from "./video_type";
+
+export enum MessageReactions {
+	LANTH,
+	HEART,
+	ANGER,
+	SAD,
+}
+
+export enum MessageType {
+	TEXT,
+	REACTION,
+}
+
+export type MessageBody =
+	| {
+			type: MessageType.TEXT;
+			content: string;
+	  }
+	| {
+			type: MessageType.REACTION;
+			content: MessageReactions;
+	  };
+
+export type Message = {
+	user: IUser;
+	body: MessageBody;
+	duration: Duration;
+};
