@@ -9,9 +9,7 @@ export interface IJoinRoomState {
 
 export type JoinRoomResponse = Promise<Guest | false>;
 export interface IJoinRoomActions {
-	join(user: Guest): JoinRoomResponse;
-}
-
-export interface IJoinRoomProvider extends IJoinRoomState {
 	join(name: string): JoinRoomResponse;
 }
+
+export interface IJoinRoomProvider extends IJoinRoomState, IJoinRoomActions {}
