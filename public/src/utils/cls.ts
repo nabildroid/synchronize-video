@@ -6,7 +6,7 @@ export default function cl(...args: ClAcceptedValue[]) {
 	return t;
 }
 export function cls(...args: ClAcceptedValue[]){
-	return {"className":cl(...args).toString()}
+	return {"className":cl(...args).toString() as string}
 }
 
 /*

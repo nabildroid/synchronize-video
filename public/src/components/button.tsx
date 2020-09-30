@@ -12,7 +12,10 @@ type Props = {
 const Button: React.FC<Props> = ({ text, textSize = "md", fullwith = false, click }) => {
     const sfullwidth = cl({ "w-full": fullwith });
     const stextSize = `text-${textSize}`
-    const style = cls(sfullwidth, stextSize, "font-semibold", "leading-loose", "text-white", "bg-indigo-500", "rounded-lg")
+    const actionStyle = "hover:bg-indigo-400 active:bg-indigo-700"
+    const defaultStyle = "outline-none px-4 font-semibold leading-loose text-white bg-indigo-500 rounded-md"
+
+    const style = cls(actionStyle,sfullwidth, stextSize, defaultStyle)
 
     return (
         <button
