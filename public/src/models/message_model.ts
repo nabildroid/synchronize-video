@@ -9,7 +9,7 @@ export interface IMessagesActions {
 	listen(callback: Function): void;
 }
 
-export type TimelineMessage =
+export type TimelineMessage = { id: number } & (
 	| {
 			type: "dot";
 	  }
@@ -20,10 +20,15 @@ export type TimelineMessage =
 	| {
 			type: "message";
 			payload: Message;
-	  };
+	  }
+);
 export type TimelineMessages = TimelineMessage[];
 
 export interface IMessagesProvider extends IMessagesState {
+	draftMessage: {
+		text: string;
+		setText(val: string);
+	};
 	timeLineMessages: TimelineMessages;
 	send(body: MessageBody): Promise<boolean>;
 }

@@ -18,9 +18,19 @@ const Emoji: React.FC<Props> = ({ type, height = 16, width = 16 }) => {
             return (
                 <img {...style} src="http://localhost/hhh.png" alt="sad emoji" />
             )
-        default: return (
-            <h2>{":("}</h2>
-        )
+        case MessageReactions.LANTH:
+            return (
+                <img {...style} src="http://localhost/hhh.png" alt="lanth emoji" />
+            )
+        case MessageReactions.ANGER:
+            return (
+                <img {...style} src="http://localhost/hhh.png" alt="anger emoji" />
+            )
+        case MessageReactions.HEART:
+            return (
+                <img {...style} src="http://localhost/hhh.png" alt="heart emoji" />
+            )
+        default: return null
 
     }
 }

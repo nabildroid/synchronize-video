@@ -9,7 +9,7 @@ import { TimelineMessages } from "../../models/message_model";
 
 
 type Props = {
-    content: TimelineMessages
+    content: TimelineMessages,
 }
 
 
@@ -20,13 +20,13 @@ const MessagesList: React.FC<Props> = ({ content }) => {
                 content.map(elm => {
                     switch (elm.type) {
                         case "dot":
-                            return <Dot />
+                            return <Dot key={elm.id} />
                         case "time":
-                            return <MessageTimeLabel time={elm.payload} />
+                            return <MessageTimeLabel time={elm.payload} key={elm.id} />
                         case "message":
                             return elm.payload.body.type == MessageType.TEXT ?
-                                <TextMessage content={elm.payload.body.content} user={elm.payload.user.name} /> :
-                                <EmojiMessage emoji={elm.payload.body.content} user={elm.payload.user.name} />
+                                <TextMessage content={elm.payload.body.content} user={elm.payload.user.name} key={elm.id} /> :
+                                <EmojiMessage emoji={elm.payload.body.content} user={elm.payload.user.name} key={elm.id} />
                     }
                 })
             }
