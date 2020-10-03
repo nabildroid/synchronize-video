@@ -8,6 +8,7 @@ export enum TWColors {
 	BROWN = "brown",
 	PINK = "pink",
 	INDIGO = "indigo",
+	GRAY = "gray",
 }
 
 export default function applyColor(

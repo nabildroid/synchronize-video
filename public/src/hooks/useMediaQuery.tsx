@@ -10,10 +10,10 @@ const UseMediaQuery = (): BreakPoints => {
         setWidth(target.innerWidth);
     }, []);
 
-    React.useEffect(() => {
+    React.useLayoutEffect(() => {
         window.addEventListener("resize", ReactToWindowSizing);
         return () => window.removeEventListener("resize", ReactToWindowSizing);
-    }, [])
+    })
 
     if (width <= 640)
         return "sm";

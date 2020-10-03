@@ -1,21 +1,50 @@
-import React from "react"
-import Button from "./components/button";
-
+import React, { useEffect, useRef, useState } from "react"
+import Watchers from "./layouts/wacthers"
+import TextMessage from "./layouts/messages/textMessage";
+import EmojiMessage from "./layouts/messages/emojiMessage";
+import { MessageReactions, MessageType } from "./types/message_type";
+import { TimelineMessages } from "./models/message_model";
+import Dot from "./components/messageDot";
+import MessagesList from "./layouts/messages/messagesList";
+import UseMediaQuery from "./hooks/useMediaQuery";
+import * as WriteMessage from "./layouts/messages/writeMessage";
+import Messages from "./layouts/messages";
+import EmojisBlock from "./layouts/emojisBlock";
+import Join from "./layouts/join";
+import JoinBackground from "./layouts/joinBackground";
+import VideoWrapper from "./layouts/videoWrapper";
 const App = () => {
+    const bearkPoint = UseMediaQuery()
 
-    const [num, setNum] = React.useState<number>(0);
 
-    const increment = () => {
-        setNum(num + 1);
-    }
+
     return (
         <div>
-            <h2 className="text-lg text-green-500">{num.toString()}</h2>
-            <Button text="Hello world" fullwith={!!(num % 5)} textSize="xs" click={increment} />
+            <JoinBackground title="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut" />
+            <Join />
+            <VideoWrapper>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima obcaecati tenetur sequi impedit exercitationem voluptas? Expedita minima explicabo fuga necessitatibus facere suscipit similique enim mollitia, at libero, soluta totam. Aliquam?
+            </VideoWrapper>
+            <EmojisBlock click={type => console.log(type)} />
+            <Watchers names={["nabil", "droid", "test", "hello world"]} />
+            <TextMessage
+                content="suscipit laboriosam totam magni, excepturi cum dolorem dignissimos nobis! Facilis provident nemo fugiat repudiandae doloremque."
+                user="Nabil"
+            />
+            <Dot />
+            <EmojiMessage user="hello world" emoji={MessageReactions.SAD} />
+
+            <br />
+            <br />
+            <br />
+            <Messages />
+
+
         </div>
     )
-
 }
+
+
 
 
 export default App
