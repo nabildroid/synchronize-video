@@ -176,7 +176,7 @@ const Messages: React.FC<Props> = ({ }) => {
     const [text, setText] = useState("");
     const isNotMed = UseMediaQuery() != "md";
     return (
-        <div className="md:mt-0 md:bg-gray-100 md:max-w-xl z-10 flex flex-col flex-auto w-5/6 max-h-screen px-2 pt-2 -mt-20 bg-white">
+        <div className="md:bg-gray-100 md:max-w-xl z-10 flex flex-col flex-auto w-5/6 max-h-screen px-2 pt-2 bg-white">
             <Label name="Messages" />
             <MessagesList content={messages} />
             <div className="md:relative fixed bottom-0 left-0 self-end w-full px-2 py-2">

@@ -14,7 +14,7 @@ function extractName(name: string) {
 const JoinTitle: React.FC<Props> = ({ name }) => {
     const cleanName = extractName(name.trim());
     return (
-        <h2 className="lg:items-center md:items-start md:text-4xl flex justify-center pt-8 space-x-3 text-3xl tracking-wide text-gray-800">
+        <h2 className="lg:items-center md:items-start md:text-4xl flex justify-center space-x-3 text-3xl tracking-wide text-gray-800">
             <span className="font-medium text-indigo-600">{cleanName}</span>
             <span>Asks you to join</span>
         </h2>

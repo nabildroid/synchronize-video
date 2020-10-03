@@ -7,7 +7,7 @@ type Props = {
 const MessageText: React.FC<Props> = ({ content }) => {
 
     return (
-        <p className="text-md pl-2 mt-1 leading-tight text-gray-800">
+        <p className="text-md pl-2 leading-tight text-gray-800">
             {content}
         </p>
     )
