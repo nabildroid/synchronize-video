@@ -4,14 +4,15 @@ import Shade from "../components/shade";
 import { TWColors } from "../types/colors";
 
 type Props = {
-    title: string
+    title: string,
+    image: string
 }
 
-const JoinBackground: React.FC<Props> = ({ title }) => {
+const JoinBackground: React.FC<Props> = ({ title, image }) => {
 
     return (
         <div>
-            <ImageBackground src="./image.jpg" />
+            <ImageBackground src={image} />
             <Shade color={TWColors.BLACK} opacity={50} />
             <div className="md:max-w-lg lg:max-w-xl relative flex flex-col items-center justify-start max-w-xs -mt-3">
                 <p className="text-md md:text-2xl lg:text-3xl font-medium text-gray-400">Watch with your friends</p>

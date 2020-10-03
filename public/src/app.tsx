@@ -13,6 +13,7 @@ import EmojisBlock from "./layouts/emojisBlock";
 import Join from "./layouts/join";
 import JoinBackground from "./layouts/joinBackground";
 import VideoWrapper from "./layouts/videoWrapper";
+import JoinView from "./views/join_view";
 const App = () => {
     const bearkPoint = UseMediaQuery()
 
@@ -20,8 +21,8 @@ const App = () => {
 
     return (
         <div>
-            <JoinBackground title="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut" /> 
-            <Join  submit={name=>console.log(name.toUpperCase())} />
+            <JoinView />
+            {/* <Join  submit={name=>console.log(name.toUpperCase())} />
             <VideoWrapper>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima obcaecati tenetur sequi impedit exercitationem voluptas? Expedita minima explicabo fuga necessitatibus facere suscipit similique enim mollitia, at libero, soluta totam. Aliquam?
             </VideoWrapper>
@@ -38,7 +39,7 @@ const App = () => {
             <br />
             <br />
             <Messages />
-
+ */}
 
         </div>
     )
