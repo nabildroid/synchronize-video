@@ -182,6 +182,7 @@ const Messages: React.FC<Props> = ({ }) => {
             <div className="md:relative fixed bottom-0 left-0 self-end w-full px-2 py-2">
                 {isNotMed && <WithoutLabel text={text} setText={setText} />}
             </div>
+            {/* TODO WithLabel not belong to this layout */}
             {!isNotMed && <WithLabel text={text} setText={setText} />}
         </div>
     )

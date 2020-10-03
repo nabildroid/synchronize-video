@@ -20,7 +20,7 @@ const App = () => {
 
     return (
         <div>
-            <JoinBackground title="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut" /> */}
+            <JoinBackground title="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut" /> 
             <Join  submit={name=>console.log(name.toUpperCase())} />
             <VideoWrapper>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima obcaecati tenetur sequi impedit exercitationem voluptas? Expedita minima explicabo fuga necessitatibus facere suscipit similique enim mollitia, at libero, soluta totam. Aliquam?
