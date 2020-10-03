@@ -8,22 +8,28 @@ import { TWColors } from '../types/colors'
 
 type Props = {
     showForPhone?: boolean;
+    submit: (name: string) => void
 }
 
-const Join: React.FC<Props> = ({ showForPhone = false }) => {
+const Join: React.FC<Props> = ({ showForPhone = false, submit }) => {
     const [name, setName] = useState("Nabil");
     const styleShowForPhone = cl({ "hidden": !showForPhone })
     const styleDefault = cl("md:pb-8 md:relative md:block fixed inset-0 z-10 flex items-end px-1")
+
+    const onSubmit = e => { e.preventDefault(); submit(name) };
     return (
         <div {...cls(styleShowForPhone, styleDefault)}>
             <Shade color={TWColors.GRAY} className="md:hidden z-0" />
-            <div className="md:pb-0 md:bg-transparent info md:max-w-sm lg:max-w-md z-10 w-full px-2 pb-12 mx-auto space-y-4 bg-white rounded-t-lg">
+            <form
+                onSubmit={onSubmit}
+                className="md:pb-0 md:bg-transparent info md:max-w-sm lg:max-w-md z-10 w-full px-2 pb-12 mx-auto space-y-4 bg-white rounded-t-lg"
+            >
                 <JoinTitle name={name} />
                 <div className="space-y-3">
                     <NameInput name={name} setName={setName} />
-                    <Button text="Join" fullwith={true} click={() => { }} textSize="lg" />
+                    <Button type="submit" text="Join" fullwith={true} textSize="lg" />
                 </div>
-            </div>
+            </form>
         </div>
     )
 }

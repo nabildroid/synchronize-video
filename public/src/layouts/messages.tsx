@@ -3,7 +3,7 @@ import Label from "../components/label";
 import MessagesList from "./messages/messagesList";
 import { MessageType, MessageReactions } from "../types/message_type";
 import { TimelineMessages } from "../models/message_model";
-import { WithoutLabel } from "./messages/writeMessage";
+import { WithoutLabel, WithLabel } from "./messages/writeMessage";
 import UseMediaQuery from "../hooks/useMediaQuery";
 
 type Props = {
@@ -26,15 +26,15 @@ const Messages: React.FC<Props> = ({ }) => {
     };
     const messages: TimelineMessages = [
         {
-            id:1,
+            id: 1,
             type: "dot",
         },
         {
-            id:2,
+            id: 2,
             type: "dot",
         },
         {
-            id:3,
+            id: 3,
             type: "time",
             payload: {
                 minute: 15,
@@ -43,7 +43,7 @@ const Messages: React.FC<Props> = ({ }) => {
             }
         },
         {
-            id:4,
+            id: 4,
             type: "message",
             payload: {
                 body: {
@@ -59,7 +59,7 @@ const Messages: React.FC<Props> = ({ }) => {
             }
         },
         {
-            id:5,
+            id: 5,
             type: "message",
             payload: {
                 body: {
@@ -74,15 +74,15 @@ const Messages: React.FC<Props> = ({ }) => {
                 user
             }
         }, {
-            id:6,
+            id: 6,
             type: "dot",
         },
         {
-            id:7,
+            id: 7,
             type: "dot",
         },
         {
-            id:8,
+            id: 8,
             type: "time",
             payload: {
                 minute: 15,
@@ -91,7 +91,7 @@ const Messages: React.FC<Props> = ({ }) => {
             }
         },
         {
-            id:9,
+            id: 9,
             type: "message",
             payload: {
                 body: {
@@ -107,7 +107,7 @@ const Messages: React.FC<Props> = ({ }) => {
             }
         },
         {
-            id:10,
+            id: 10,
             type: "message",
             payload: {
                 body: {
@@ -122,15 +122,15 @@ const Messages: React.FC<Props> = ({ }) => {
                 user
             }
         }, {
-            id:11,
+            id: 11,
             type: "dot",
         },
         {
-            id:12,
+            id: 12,
             type: "dot",
         },
         {
-            id:13,
+            id: 13,
             type: "time",
             payload: {
                 minute: 15,
@@ -139,7 +139,7 @@ const Messages: React.FC<Props> = ({ }) => {
             }
         },
         {
-            id:14,
+            id: 14,
             type: "message",
             payload: {
                 body: {
@@ -155,7 +155,7 @@ const Messages: React.FC<Props> = ({ }) => {
             }
         },
         {
-            id:15,
+            id: 15,
             type: "message",
             payload: {
                 body: {
@@ -179,9 +179,10 @@ const Messages: React.FC<Props> = ({ }) => {
         <div className="md:mt-0 md:bg-gray-100 md:max-w-xl z-10 flex flex-col flex-auto w-5/6 max-h-screen px-2 pt-2 -mt-20 bg-white">
             <Label name="Messages" />
             <MessagesList content={messages} />
-            {isNotMed &&
-                <WithoutLabel text={text} setText={setText} />
-            }
+            <div className="md:relative fixed bottom-0 left-0 self-end w-full px-2 py-2">
+                {isNotMed && <WithoutLabel text={text} setText={setText} />}
+            </div>
+            {!isNotMed && <WithLabel text={text} setText={setText} />}
         </div>
     )
 }
