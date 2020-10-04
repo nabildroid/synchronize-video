@@ -15,7 +15,7 @@ type Props = {
 
 const MessagesList: React.FC<Props> = ({ content }) => {
     return (
-        <div className="md:pb-2 md:space-y-2 flex-1 pb-24 space-y-1 overflow-y-scroll text-center">
+        <div className="md:pb-2 md:space-y-2 flex-1 max-h-screen pb-24 space-y-1 overflow-y-scroll text-center">
             {
                 content.map(elm => {
                     switch (elm.type) {

@@ -18,7 +18,7 @@ const JoinView: React.FC<Props> = ({ }) => {
                 <JoinBackground image="http://localhost/image.jpg" title="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut" />
             </div>
 
-            <div className="z-10 flex-auto bg-white">
+            <div className=" z-10 flex-auto bg-white">
                 <div className="md:hidden flex">
                     <div className="mx-auto -mt-4">
                         <ShareLink url="http://localhost/vsync-join.html" />
@@ -29,7 +29,7 @@ const JoinView: React.FC<Props> = ({ }) => {
                         <Join showForPhone={phoneShowLogin} submit={() => { }} hidePhoneLogin={() => setPhoneShowLogin(false)} />
                     </div>
                     <div className="md:bg-indigo-100 flex-1">
-                        <div className="md:mt-4 mt-4">
+                        <div className="md:mt-4 md:max-w-sm lg:max-w-md mx-auto mt-4">
                             <Watchers names={["nabil", "test", "hello world"]}>
                                 <Button
                                     className="md:hidden shadow"

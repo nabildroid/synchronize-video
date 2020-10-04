@@ -15,7 +15,7 @@ const EmojisBlock: React.FC<Props> = ({ click }) => {
 
     let allEmojis = enumKeys(MessageReactions)
     return (
-        <div className="lg:space-y-5 lg:space-x-3 lg:flex-row relative z-20 flex flex-col items-center self-end justify-center flex-shrink-0 p-1 space-y-3">
+        <div className="lg:space-y-0 lg:space-x-3 lg:flex-row relative flex flex-col items-center self-end justify-center flex-shrink-0 p-1 space-y-3">
             {
                 allEmojis.map((key) => (
                     <EmojiButton key={key}

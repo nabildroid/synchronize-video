@@ -12,7 +12,7 @@ type Props = {
 export const WithLabel: React.FC<Props> = ({ text, setText }) => {
 
     return (
-        <Form submit={() => { }} className="w-4/5 space-y-1">
+        <Form submit={() => { }} className="space-y-1">
             <Label name="Write message" htmlFor="write-message-input" />
             <textarea id="write-message-input"
                 value={text}

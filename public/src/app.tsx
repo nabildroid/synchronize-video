@@ -14,6 +14,7 @@ import Join from "./layouts/join";
 import JoinBackground from "./layouts/joinBackground";
 import VideoWrapper from "./layouts/videoWrapper";
 import JoinView from "./views/join_view";
+import RoomView from "./views/room_view";
 const App = () => {
     const bearkPoint = UseMediaQuery()
 
@@ -21,7 +22,8 @@ const App = () => {
 
     return (
         <div>
-            <JoinView />
+            {/* <JoinView /> */}
+            <RoomView />
             {/* <Join  submit={name=>console.log(name.toUpperCase())} />
             <VideoWrapper>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima obcaecati tenetur sequi impedit exercitationem voluptas? Expedita minima explicabo fuga necessitatibus facere suscipit similique enim mollitia, at libero, soluta totam. Aliquam?

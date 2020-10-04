@@ -29,7 +29,7 @@ const VideoWrapper: React.FC<Props> = ({ children }) => {
             <div
                 style={{ "height": height }}
                 ref={wrapper}
-                className=" sm:max-w-lg md:max-w-none sm:bg-indigo-600 relative z-10 w-full h-64 max-w-md mx-auto bg-yellow-500"
+                className=" sm:max-w-lg md:max-w-none sm:bg-indigo-600 relative w-full h-64 max-w-md mx-auto bg-yellow-500"
             >
                 {children}
             </div>

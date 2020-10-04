@@ -174,16 +174,14 @@ const Messages: React.FC<Props> = ({ }) => {
 
 
     const [text, setText] = useState("");
-    const isNotMed = UseMediaQuery() != "md";
+    const isNotLg = UseMediaQuery() != "lg";
     return (
-        <div className="md:bg-gray-100 md:max-w-xl z-10 flex flex-col flex-auto w-5/6 max-h-screen px-2 pt-2 bg-white">
+        <div className="md:bg-gray-100 flex flex-col flex-auto w-full h-full px-2 pt-2 bg-white">
             <Label name="Messages" />
             <MessagesList content={messages} />
             <div className="md:relative fixed bottom-0 left-0 self-end w-full px-2 py-2">
-                {isNotMed && <WithoutLabel text={text} setText={setText} />}
+                {isNotLg && <WithoutLabel text={text} setText={setText} />}
             </div>
-            {/* TODO WithLabel not belong to this layout */}
-            {!isNotMed && <WithLabel text={text} setText={setText} />}
         </div>
     )
 }
