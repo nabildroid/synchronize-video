@@ -3,13 +3,14 @@ import JoinBackground from "../layouts/joinBackground"
 import ShareLink from "../components/shareLink"
 import Join from "../layouts/join"
 import Watchers from "../layouts/wacthers"
+import Button from "../components/button"
 
 
 type Props = {
 
 }
 const JoinView: React.FC<Props> = ({ }) => {
-    const [phoneShowLogin, setPhoneShowLogin] = useState(true)
+    const [phoneShowLogin, setPhoneShowLogin] = useState(false)
 
     return (
         <div className="md:flex-row flex flex-col w-full min-h-screen">
@@ -25,8 +26,14 @@ const JoinView: React.FC<Props> = ({ }) => {
                     <Join showForPhone={phoneShowLogin} submit={() => { }} hidePhoneLogin={() => setPhoneShowLogin(false)} />
 
                     <div className="md:bg-indigo-100 flex-1">
-                        <Watchers names={["nabil", "test", "hello world"]}>
-                            <li>hello orld</li>
+                        <Watchers names={["nabil", "test", "hello world","nabil", "test", "hello world"]}>
+                            <Button 
+                                className="md:hidden shadow"
+                                icon="Join"
+                                text="join"
+                                textSize="md"
+                                click={()=>setPhoneShowLogin(true)}
+                            />
                         </Watchers>
                     </div>
                 </div>

@@ -1,6 +1,8 @@
 import React from "react";
 import RandomName from "../utils/randomName";
 import Label from "./label";
+import Svg from "./svg";
+import { TWColors } from "../types/colors";
 
 type Props = {
     name: string,
@@ -26,11 +28,7 @@ const NameInput: React.FC<Props> = ({ name, setName }) => {
                 className="rounded-r-md hover:bg-indigo-100 flex items-center px-3 bg-indigo-200"
                 type="button"
             >
-                <svg className="w-6 h-6 text-indigo-500" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="5.5" cy="11.5" r="4.5"></circle>
-                    <circle cx="18.5" cy="11.5" r="4.5"></circle>
-                    <line x1="5.5" y1="16" x2="18.5" y2="16"></line>
-                </svg>
+                <Svg type="Random" size={6} color={TWColors.INDIGO} />
             </button>
         </div>
     </div>
