@@ -27,7 +27,7 @@ const Join: React.FC<Props> = ({ showForPhone = false, submit,hidePhoneLogin }) 
             />
             <form
                 onSubmit={onSubmit}
-                className="md:py-0 md:pb-0 sm:-mb-0 sm:pb-12 md:bg-transparent info md:max-w-sm lg:max-w-md z-10 w-full max-h-full px-2 py-8 pb-12 pb-16 mx-auto -mb-5 space-y-4 overflow-y-auto bg-white rounded-t-lg"
+                className="md:py-0 md:pb-0 sm:mb-0 sm:pb-12 md:bg-transparent info md:max-w-sm lg:max-w-md md:-mb-0 z-10 w-full max-h-full px-2 py-8 pb-16 mx-auto -mb-5 space-y-4 overflow-y-auto bg-white rounded-t-lg"
             >
                 <JoinTitle name={name} />
                 <div className="space-y-3">
