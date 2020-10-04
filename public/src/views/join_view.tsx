@@ -10,7 +10,7 @@ type Props = {
 
 }
 const JoinView: React.FC<Props> = ({ }) => {
-    const [phoneShowLogin, setPhoneShowLogin] = useState(false)
+    const [phoneShowLogin, setPhoneShowLogin] = useState(true)
 
     return (
         <div className="md:flex-row flex flex-col w-full min-h-screen">
@@ -20,21 +20,26 @@ const JoinView: React.FC<Props> = ({ }) => {
 
             <div className="z-10 flex-auto bg-white">
                 <div className="md:hidden flex">
-                    <ShareLink url="http://localhost/vsync-join.html" />
+                    <div className="mx-auto -mt-4">
+                        <ShareLink url="http://localhost/vsync-join.html" />
+                    </div>
                 </div>
                 <div className="flex flex-col min-h-full">
-                    <Join showForPhone={phoneShowLogin} submit={() => { }} hidePhoneLogin={() => setPhoneShowLogin(false)} />
-
+                    <div className="md:py-8">
+                        <Join showForPhone={phoneShowLogin} submit={() => { }} hidePhoneLogin={() => setPhoneShowLogin(false)} />
+                    </div>
                     <div className="md:bg-indigo-100 flex-1">
-                        <Watchers names={["nabil", "test", "hello world","nabil", "test", "hello world"]}>
-                            <Button 
-                                className="md:hidden shadow"
-                                icon="Join"
-                                text="join"
-                                textSize="md"
-                                click={()=>setPhoneShowLogin(true)}
-                            />
-                        </Watchers>
+                        <div className="md:mt-4 mt-4">
+                            <Watchers names={["nabil", "test", "hello world"]}>
+                                <Button
+                                    className="md:hidden shadow"
+                                    icon="Join"
+                                    text="join"
+                                    textSize="md"
+                                    click={() => setPhoneShowLogin(true)}
+                                />
+                            </Watchers>
+                        </div>
                     </div>
                 </div>
             </div>

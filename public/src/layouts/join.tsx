@@ -15,7 +15,7 @@ type Props = {
 const Join: React.FC<Props> = ({ showForPhone = false, submit,hidePhoneLogin }) => {
     const [name, setName] = useState("Nabil");
     const styleShowForPhone = cl({ "hidden": !showForPhone })
-    const styleDefault = cl("md:pb-8 md:relative md:block fixed inset-0 z-10 flex items-end px-1")
+    const styleDefault = cl("md:relative md:block fixed inset-0 z-10 flex items-end")
 
     const onSubmit = e => { e.preventDefault(); submit(name) };
     return (
@@ -27,7 +27,7 @@ const Join: React.FC<Props> = ({ showForPhone = false, submit,hidePhoneLogin }) 
             />
             <form
                 onSubmit={onSubmit}
-                className="md:pb-0 md:bg-transparent info md:max-w-sm lg:max-w-md z-10 w-full px-2 pb-12 mx-auto space-y-4 bg-white rounded-t-lg"
+                className="md:py-0 md:pb-0 sm:-mb-0 sm:pb-12 md:bg-transparent info md:max-w-sm lg:max-w-md z-10 w-full max-h-full px-2 py-8 pb-12 pb-16 mx-auto -mb-5 space-y-4 overflow-y-auto bg-white rounded-t-lg"
             >
                 <JoinTitle name={name} />
                 <div className="space-y-3">

@@ -13,7 +13,7 @@ function cleanURL(urlstring: string) {
 }
 const ShareLink: React.FC<Props> = ({ url }) => {
     return (
-        <div className="flex items-stretch justify-around pl-2 pr-1 mx-auto space-x-1 bg-white rounded-lg shadow-md">
+        <div className="flex items-stretch justify-around pl-2 pr-1 space-x-1 bg-white rounded-lg shadow-md">
             <div className="flex items-center text-sm">
                 <span className="text-gray-500">Link:</span>
                 <a className="px-1 font-mono font-semibold leading-loose text-indigo-700" href={url}>
