@@ -28,3 +28,18 @@ export type Message = {
 	body: MessageBody;
 	duration: Duration;
 };
+
+export type TimelineMessage = { id: number } & (
+	| {
+			type: "dot";
+	  }
+	| {
+			type: "time";
+			payload: Duration;
+	  }
+	| {
+			type: "message";
+			payload: Message;
+	  }
+);
+export type TimelineMessages = TimelineMessage[];

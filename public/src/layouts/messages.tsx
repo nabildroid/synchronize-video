@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Label from "../components/label";
 import MessagesList from "./messages/messagesList";
-import { MessageType, MessageReactions } from "../types/message_type";
-import { TimelineMessages } from "../models/message_model";
+import { MessageType, MessageReactions, TimelineMessages } from "../types/message_type";
 import { WithoutLabel, WithLabel } from "./messages/writeMessage";
 import UseMediaQuery from "../hooks/useMediaQuery";
 

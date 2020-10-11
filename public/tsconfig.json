@@ -4,6 +4,5 @@
         "target": "ESNext",
         "jsx": "react",
         "allowSyntheticDefaultImports": true,
-        "strictNullChecks": true
     }
 }

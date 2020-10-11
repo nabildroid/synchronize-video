@@ -6,10 +6,13 @@ export interface IAppState {
 	subscribers: { type: DataFlowTypes; action: DataFlowTypes }[];
 }
 export default interface IAppAction extends P2P_Node_API {
-	subscribe(type: DataFlowTypes, notifier: () => void);
-	query();
+	subscribe(type: DataFlowTypes, notifier: () => void); // connection to P2P
+	query(); // connection to server
 }
 
+export interface IAppProvider {
+    
+}
 
 /*
 

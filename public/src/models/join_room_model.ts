@@ -1,9 +1,10 @@
 import { Background } from "../types/room_type";
-import { Guest, IUser } from "../types/user_type";
+import { Guest } from "../types/user_type";
 
 export interface IJoinRoomState {
 	title: string;
-	author: IUser;
+	author: Guest;
+	watcher:Guest[]
 	background: Background;
 }
 

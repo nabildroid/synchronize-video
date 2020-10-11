@@ -1,10 +1,9 @@
 import React from "react"
-import { MessageType } from "../../types/message_type";
+import { MessageType, TimelineMessages } from "../../types/message_type";
 import Dot from "../../components/messageDot";
 import TextMessage from "./textMessage";
 import EmojiMessage from "./emojiMessage";
 import MessageTimeLabel from "../../components/messageTimeLabel";
-import { TimelineMessages } from "../../models/message_model";
 
 
 
