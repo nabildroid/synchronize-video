@@ -1,16 +1,32 @@
-import { Background } from "../types/room_type";
-import { Guest } from "../types/user_type";
+import { IRoomInfo } from "./room_model";
 
-export interface IJoinRoomState {
-	title: string;
-	author: Guest;
-	watcher:Guest[]
-	background: Background;
+export interface IJoinRoomState extends IRoomInfo {
+	loading: boolean;
+	error: Error;
 }
+export const JoinRoomStateInit: IJoinRoomState = {
+	author: null,
+	background: null,
+	title: null,
+	watchers: [],
+	loading: true,
+	error: null,
+};
 
-export type JoinRoomResponse = Promise<Guest | false>;
-export interface IJoinRoomActions {
-	join(name: string): JoinRoomResponse;
-}
+export type JoinRoomActions =
+	| {
+			type: "load_room";
+			payload: IRoomInfo;
+	  }
+	| {
+			type: "loading_on";
+	  }
+	| {
+			type: "loading_off";
+	  }
+	| {
+			type: "login_error";
+			payload: string;
+	  };
 
-export interface IJoinRoomProvider extends IJoinRoomState, IJoinRoomActions {}
+export interface IJoinRoomProvider extends IJoinRoomState {}

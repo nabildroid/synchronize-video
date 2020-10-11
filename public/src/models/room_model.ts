@@ -1,12 +1,16 @@
 import { Background } from "../types/room_type";
-import { IUser } from "../types/user_type";
+import { Guest, IUser } from "../types/user_type";
 import { Duration } from "../types/video_type";
 
-export interface IRoomState {
+
+export interface IRoomInfo {
 	title: string;
 	background: Background;
-	author: IUser;
-	watchers: IUser[];
+	author: Guest;
+	watchers: Guest[];
+}
+export interface IRoomState extends IRoomInfo {
+
 }
 
 export interface IRoomActions {
