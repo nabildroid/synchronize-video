@@ -1,14 +1,20 @@
-import React, { createContext } from "react"
-import { IJoinRoomProvider } from "../models/join_room_model"
+import React, { createContext, useContext, useEffect, useReducer } from "react"
+import JoinRoomAction from "../actions/joinRoomAction"
+import { IJoinRoomProvider, JoinRoomStateInit } from "../models/join_room_model"
 
 
 
-const JoinContext = createContext<IJoinRoomProvider>(null)
+export const JoinContext = createContext<IJoinRoomProvider>(null)
 
 const JoinProvider: React.FC = ({ children }) => {
+    const [state, dispatch] = useReducer(JoinRoomAction, JoinRoomStateInit)
+
+    const values = {
+        ...state
+    }
 
     return (
-        <JoinContext.Provider value={null}>
+        <JoinContext.Provider value={values}>
             {children}
         </JoinContext.Provider>
     )
