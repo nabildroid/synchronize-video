@@ -6,8 +6,8 @@ import { IPAdressType } from "../types/P2P_node_API";
 
 
 interface IProviderValues {
-    join: (name: string, dispatch: any) => Promise<void>
-    boardcastMyIp: (ip: IPAdressType, dispatch: any) => Promise<void>
+    join(name: string, dispatch: any): Promise<void>
+    boardcastMyIp(ip: IPAdressType, dispatch: any): Promise<void>
     loadRoom(id: string, dispatch: React.Dispatch<JoinRoomActions>)
 }
 export const ServerContext = createContext<IProviderValues>(null);

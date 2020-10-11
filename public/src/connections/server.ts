@@ -7,7 +7,7 @@ import { Guest } from "../types/user_type";
 class Server implements IServerAPI {
 	auth = null;
 
-	join(name) {
+	join(name): Promise<JoinRoomResponse> {
 		return new Promise((res, rej) =>
 			setTimeout(() => {
 				if (name == "nabil") {
@@ -18,10 +18,10 @@ class Server implements IServerAPI {
 					});
 				} else return res(false);
 			}, 500)
-		) as Promise<Guest | false>;
+		);
 	}
 
-	boardcastIp(ip) {
+	boardcastIp(ip): Promise<IPAdressType[] | false> {
 		if (!this.auth) return Promise.resolve<false>(false);
 		else
 			return new Promise((res, rej) =>
@@ -29,7 +29,7 @@ class Server implements IServerAPI {
 					if (this.auth != "auth me") res(false);
 					else res(["ip1", "ip2", "ip3"]);
 				}, 500)
-			) as Promise<IPAdressType[] | false>;
+			);
 	}
 
 	loadRoomInfo(id): Promise<IRoomInfo | false> {
