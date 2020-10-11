@@ -1,4 +1,4 @@
-import { Guest } from "./user_type";
+import { Guest, IUser } from "./user_type";
 import { Message } from "./message_type";
 import { Duration } from "./video_type";
 
@@ -19,7 +19,7 @@ export type SentDataType = {
 export type IPAdressType = string
 
 export default interface P2P_Node_API {
-	add(IPAdresses:IPAdressType[])
+	add(IPAdresses:IPAdressType[]):Promise<IUser[]>
 	send(data: SentDataType): Promise<boolean>;
 	listen(callback: (content: RecievedContent) => void);
 }
