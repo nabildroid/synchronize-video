@@ -1,12 +1,14 @@
 import React, { createContext, useRef } from "react";
 
 import Server from "../connections/server";
+import { JoinRoomActions } from "../models/join_room_model";
 import { IPAdressType } from "../types/P2P_node_API";
 
 
 interface IProviderValues {
     join: (name: string, dispatch: any) => Promise<void>
     boardcastMyIp: (ip: IPAdressType, dispatch: any) => Promise<void>
+    loadRoom(id: string, dispatch: React.Dispatch<JoinRoomActions>)
 }
 export const ServerContext = createContext<IProviderValues>(null);
 
@@ -31,9 +33,15 @@ const ServerProvider: React.FC = ({ children }) => {
             dispatch({ type: "error" })
         else dispatch({ type: "add", payload: response })
     }
+    const loadRoom: IProviderValues["loadRoom"] = async (id, dispatch) => {
+        dispatch({ type: "loading_on" })
+        const response = await server.current.loadRoomInfo(id);
+        if (response)
+            dispatch({ type: "load_room", payload: response })
+    }
 
     return (
-        <ServerContext.Provider value={{ join, boardcastMyIp }}>
+        <ServerContext.Provider value={{ join, boardcastMyIp, loadRoom }}>
             {children}
         </ServerContext.Provider>
     )
