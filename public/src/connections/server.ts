@@ -52,30 +52,34 @@ class Server implements IServerAPI {
 			);
 	}
 
-	loadRoomInfo(id): Promise<IRoomInfo | false> {
+	loadRoomInfo(id: string): Promise<IRoomInfo | false> {
+		console.log("........fetching room info")
 		return new Promise((res, rej) =>
 			setTimeout(
 				() =>
-					res({
-						author: {
-							id: 155,
-							name: "efzefz",
-						},
-						background:
-							"https://images.unsplash.com/photo-1505051508008-923feaf90180?ixlib=rb-1.2.1&w=1000&q=80",
-						title: "hello "+Math.floor(Math.random() *100),
-						watchers: [
-							{
-								id: 151,
-								name: "efzefz",
-							},
-							{
-								id: 160,
-								name: "efzefz",
-							},
-						],
-					}),
-				5000
+					id != "11"
+						? res(false)
+						: res({
+								author: {
+									id: 155,
+									name: "efzefz",
+								},
+								background:
+									"https://images.unsplash.com/photo-1505051508008-923feaf90180?ixlib=rb-1.2.1&w=1000&q=80",
+								title:
+									"hello " + Math.floor(Math.random() * 100),
+								watchers: [
+									{
+										id: 151,
+										name: "efzefz",
+									},
+									{
+										id: 160,
+										name: "efzefz",
+									},
+								],
+						  }),
+				500
 			)
 		);
 	}

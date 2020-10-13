@@ -23,11 +23,14 @@ const ServerProvider: React.FC = ({ children }) => {
             dispatch({ type: "error" })
         else dispatch({ type: "add", payload: response })
     }
+
     const loadRoom: IProviderValues["loadRoom"] = async (id, dispatch) => {
         dispatch({ type: "loading_on" })
         const response = await server.current.loadRoomInfo(id);
         if (response)
             dispatch({ type: "load_room", payload: response })
+        dispatch({ type: "loading_off" })
+        
     }
 
     return (

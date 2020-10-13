@@ -12,7 +12,7 @@ function extractName(name: string) {
 }
 
 const JoinTitle: React.FC<Props> = ({ name }) => {
-    const cleanName = extractName(name.trim());
+    const cleanName = extractName(name);
     return (
         <h2 className="lg:items-center md:items-start md:text-4xl flex justify-center space-x-3 text-3xl tracking-wide text-gray-800">
             <span className="font-medium text-indigo-600">{cleanName}</span>

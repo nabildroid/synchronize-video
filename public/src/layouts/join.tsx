@@ -9,10 +9,11 @@ import { JoinContext } from '../contexts/joinContext'
 
 type Props = {
     showForPhone?: boolean;
+    author: string
     hidePhoneLogin()
 }
 
-const Join: React.FC<Props> = ({ showForPhone = false, hidePhoneLogin }) => {
+const Join: React.FC<Props> = ({ author, showForPhone = false, hidePhoneLogin }) => {
     const [name, setName] = useState("nabil");
     const styleShowForPhone = cl({ "hidden": !showForPhone })
     const styleDefault = cl("md:relative md:block fixed inset-0 z-10 flex items-end")
@@ -34,7 +35,7 @@ const Join: React.FC<Props> = ({ showForPhone = false, hidePhoneLogin }) => {
                 onSubmit={onSubmit}
                 className="md:py-0 md:pb-0 sm:mb-0 sm:pb-12 md:bg-transparent info md:max-w-sm lg:max-w-md md:-mb-0 z-10 w-full max-h-full px-2 py-8 pb-16 mx-auto -mb-5 space-y-4 overflow-y-auto bg-white rounded-t-lg"
             >
-                <JoinTitle name={name} />
+                <JoinTitle name={author} />
                 <div className="space-y-3">
                     <NameInput name={name} setName={setName} />
                     <Button type="submit" text="Join" fullwith={true} textSize="lg" />

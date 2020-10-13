@@ -12,7 +12,7 @@ type Props = {
 }
 const JoinView: React.FC<Props> = ({ }) => {
     const [phoneShowLogin, setPhoneShowLogin] = useState(true)
-    const {  background, title, watchers } = useContext(JoinContext)
+    const { author, background, title, watchers } = useContext(JoinContext)
     return (
         <div className="md:flex-row flex flex-col w-full min-h-screen">
             <div className="md:h-screen md:w-1/2 md:max-w-none lg:max-w-xl relative flex items-center justify-center h-56 bg-green-500">
@@ -27,7 +27,7 @@ const JoinView: React.FC<Props> = ({ }) => {
                 </div>
                 <div className="flex flex-col min-h-full">
                     <div className="md:py-8">
-                        <Join showForPhone={phoneShowLogin} hidePhoneLogin={() => setPhoneShowLogin(false)} />
+                        <Join author={author.name} showForPhone={phoneShowLogin} hidePhoneLogin={() => setPhoneShowLogin(false)} />
                     </div>
                     <div className="md:bg-indigo-100 flex-1">
                         <div className="md:mt-4 md:max-w-sm lg:max-w-md mx-auto mt-4">

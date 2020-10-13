@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useReducer } from "react"
+import { Redirect, useParams } from "react-router-dom"
 import JoinRoomAction from "../actions/joinRoomAction"
 import { IJoinRoomProvider, JoinRoomStateInit } from "../models/join_room_model"
 import { AppContext } from "./appContext"
@@ -13,9 +14,10 @@ const JoinProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useReducer(JoinRoomAction, JoinRoomStateInit)
 
     const { loadRoom,server } = useContext(ServerContext)
+    const { id } = useParams<{ id: string }>();
 
     useEffect(() => {
-        loadRoom("10", dispatch)
+        loadRoom(id,dispatch)
     }, [])
 
     const submitName = useCallback(async (name: string) => {
@@ -35,6 +37,7 @@ const JoinProvider: React.FC = ({ children }) => {
 
     return (
         <JoinContext.Provider value={values}>
+            {!state.loading && !state.title && <Redirect to="/" />}
             {children}
         </JoinContext.Provider>
     )
