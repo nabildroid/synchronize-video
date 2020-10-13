@@ -5,7 +5,10 @@ export interface IJoinRoomState extends IRoomInfo {
 	error: Error;
 }
 export const JoinRoomStateInit: IJoinRoomState = {
-	author: null,
+	author: {
+		name:"friend",
+		id:null
+	},
 	background: null,
 	title: null,
 	watchers: [],
@@ -29,4 +32,6 @@ export type JoinRoomActions =
 			payload: string;
 	  };
 
-export interface IJoinRoomProvider extends IJoinRoomState {}
+export interface IJoinRoomProvider extends IJoinRoomState {
+	submitName(name:string):Promise<void>
+}

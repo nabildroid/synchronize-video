@@ -4,22 +4,26 @@ export interface IAppState {
 	user: Guest | false;
 	loading: boolean;
 }
-export type AppActions = {
-    
-}
-
-export interface IAppProvider extends IAppState{
-    
-}
-
-
+export type AppActions =
+	| {
+			type: "login";
+			payload: Guest;
+	  }
+	| {
+			type: "loading_on";
+	  }
+	| {
+			type: "loading_off";
+	  };
 
 export const AppStateInit: IAppState = {
 	user: false,
 	loading: false,
 };
 
-/*
+export interface IAppProvider extends IAppState {
+	login(user: Guest);
+}/*
 
     App
         Room/JoinRoom

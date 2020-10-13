@@ -1,28 +1,33 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import JoinTitle from '../components/joinTitle'
 import NameInput from '../components/nameInput'
 import Button from '../components/button'
 import cl, { cls } from '../utils/cls'
 import Shade from '../components/shade'
 import { TWColors } from '../types/colors'
+import { JoinContext } from '../contexts/joinContext'
 
 type Props = {
     showForPhone?: boolean;
-    submit: (name: string) => void;
     hidePhoneLogin()
 }
 
-const Join: React.FC<Props> = ({ showForPhone = false, submit,hidePhoneLogin }) => {
-    const [name, setName] = useState("Nabil");
+const Join: React.FC<Props> = ({ showForPhone = false, hidePhoneLogin }) => {
+    const [name, setName] = useState("nabil");
     const styleShowForPhone = cl({ "hidden": !showForPhone })
     const styleDefault = cl("md:relative md:block fixed inset-0 z-10 flex items-end")
+    const { submitName, error } = useContext(JoinContext)
+    
+    const onSubmit = e => {
+        e.preventDefault();
+        submitName(name)
+    };
 
-    const onSubmit = e => { e.preventDefault(); submit(name) };
     return (
         <div {...cls(styleShowForPhone, styleDefault)}>
-            <Shade 
+            <Shade
                 color={TWColors.GRAY}
-                className="md:hidden z-0" 
+                className="md:hidden z-0"
                 click={hidePhoneLogin}
             />
             <form

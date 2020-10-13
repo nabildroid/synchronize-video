@@ -1,17 +1,37 @@
 import { IRoomInfo } from "../models/room_model";
 import { IPAdressType } from "../types/P2P_node_API";
 import { JoinRoomResponse } from "../types/room_type";
-import { IServerAPI } from "../types/server_API";
-import { Guest } from "../types/user_type";
+import { AuthKey, IServerAPI } from "../types/server_API";
 
+const fakeAuthKey: AuthKey = {
+	key: "auth me please!",
+	generated: new Date(),
+	expire: new Date(),
+};
 class Server implements IServerAPI {
-	auth = null;
+	auth: AuthKey = null;
+
+	signMeIn(auth: AuthKey): Promise<JoinRoomResponse> {
+		return new Promise((res, rej) =>
+			setTimeout(() => {
+				if (auth.key == "auth me please!") {
+					this.auth = fakeAuthKey;
+					res({
+						id: 155,
+						name: "nabil",
+					});
+				} else return res(false);
+			}, 500)
+		);
+	}
 
 	join(name): Promise<JoinRoomResponse> {
+		console.log("........fetching join")
+
 		return new Promise((res, rej) =>
 			setTimeout(() => {
 				if (name == "nabil") {
-					this.auth = "auth me";
+					this.auth = fakeAuthKey;
 					res({
 						id: 155,
 						name: "nabil",
@@ -26,7 +46,7 @@ class Server implements IServerAPI {
 		else
 			return new Promise((res, rej) =>
 				setTimeout(() => {
-					if (this.auth != "auth me") res(false);
+					if (this.auth.key != "auth me please!") res(false);
 					else res(["ip1", "ip2", "ip3"]);
 				}, 500)
 			);

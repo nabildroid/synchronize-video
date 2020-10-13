@@ -41,7 +41,7 @@ const RoomView: React.FC<Props> = ({ }) => {
                             <EmojisBlock click={() => { }} />
                         </div>
                         <div className="lg:-mt-4 md:w-full w-5/6">
-                            <Watchers names={["nabil", "test", "hello world", "-20 overflow-hidden", "bah blah nmlzef ", "profpr", "operjofe"]} />
+                            <Watchers guests={[{id:10,name:"test"}]} />
                         </div>
                     </div>
                 </div>

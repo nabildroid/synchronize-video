@@ -27,11 +27,11 @@ const JoinView: React.FC<Props> = ({ }) => {
                 </div>
                 <div className="flex flex-col min-h-full">
                     <div className="md:py-8">
-                        <Join showForPhone={phoneShowLogin} submit={() => { }} hidePhoneLogin={() => setPhoneShowLogin(false)} />
+                        <Join showForPhone={phoneShowLogin} hidePhoneLogin={() => setPhoneShowLogin(false)} />
                     </div>
                     <div className="md:bg-indigo-100 flex-1">
                         <div className="md:mt-4 md:max-w-sm lg:max-w-md mx-auto mt-4">
-                            <Watchers names={watchers.map(w=>w.name)}>
+                            <Watchers guests={watchers}>
                                 <Button
                                     className="md:hidden shadow"
                                     icon="Join"
