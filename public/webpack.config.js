@@ -16,10 +16,13 @@ module.exports = env => {
                 rules: [
                     {
                         test: /\.(ts|tsx)$/,
-                        use: "ts-loader"
-                    }
-                ]
-            }
+						use: "ts-loader",
+					},
+				],
+			},
+			devServer: {
+				historyApiFallback: true,
+			},
         },
         targetConfig(env)
     );

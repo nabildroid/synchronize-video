@@ -7,6 +7,9 @@ module.exports.entry = entry;
 module.exports.config = () => ({
 	mode: "development",
 	entry,
+	output: {
+		publicPath: "/",
+	},
 	module: {
 		rules: [
 			{
