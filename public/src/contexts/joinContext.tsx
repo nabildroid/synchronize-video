@@ -12,7 +12,7 @@ const JoinProvider: React.FC = ({ children }) => {
     const { login } = useContext(AppContext)
     const [state, dispatch] = useReducer(JoinRoomAction, JoinRoomStateInit)
 
-    const { loadRoom } = useContext(ServerContext)
+    const { loadRoom,server } = useContext(ServerContext)
 
     useEffect(() => {
         loadRoom("10", dispatch)
