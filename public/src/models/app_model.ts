@@ -12,9 +12,6 @@ export interface IAppProvider extends IAppState{
     
 }
 
-export const AppStateInit:IAppState = {
-    user:false
-}
 
 
 export const AppStateInit: IAppState = {
