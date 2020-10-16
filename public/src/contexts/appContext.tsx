@@ -23,7 +23,9 @@ const AppProvider: React.FC = ({ children }) => {
             server.signMeIn(auth).then(response => {
                 response && login(response);
             });
-        }
+        } else
+            dispatch({ type: "loading_off" })
+
     }, [])
 
     const login: IAppProvider["login"] = (user) => {

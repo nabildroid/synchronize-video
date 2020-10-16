@@ -8,6 +8,7 @@ export default (
 		return {
 			...state,
 			...action.payload,
+			loading:false,
 		};
 	if (action.type == "loading_off" || action.type == "loading_on")
 		return {

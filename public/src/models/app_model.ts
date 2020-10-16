@@ -18,7 +18,7 @@ export type AppActions =
 
 export const AppStateInit: IAppState = {
 	user: false,
-	loading: false,
+	loading: true,
 };
 
 export interface IAppProvider extends IAppState {

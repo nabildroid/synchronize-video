@@ -8,7 +8,6 @@ import { IServerAPI } from "../types/server_API";
 
 interface IProviderValues {
     boardcastMyIp(ip: IPAdressType, dispatch: any): Promise<void>
-    loadRoom(id: string, dispatch: React.Dispatch<JoinRoomActions>)
     server: IServerAPI
 }
 export const ServerContext = createContext<IProviderValues>(null);
@@ -24,17 +23,10 @@ const ServerProvider: React.FC = ({ children }) => {
         else dispatch({ type: "add", payload: response })
     }
 
-    const loadRoom: IProviderValues["loadRoom"] = async (id, dispatch) => {
-        dispatch({ type: "loading_on" })
-        const response = await server.current.loadRoomInfo(id);
-        if (response)
-            dispatch({ type: "load_room", payload: response })
-        dispatch({ type: "loading_off" })
-        
-    }
+  
 
     return (
-        <ServerContext.Provider value={{ boardcastMyIp, loadRoom, server: server.current }}>
+        <ServerContext.Provider value={{ boardcastMyIp, server: server.current }}>
             {children}
         </ServerContext.Provider>
     )

@@ -11,7 +11,7 @@ import RoomProvider from "./contexts/roomContext";
 
 
 const App = () => {
-    const { user, loading } = useContext(AppContext)
+    const { loading } = useContext(AppContext)
     if (loading)
         return <h2>loading</h2>
 
@@ -20,25 +20,19 @@ const App = () => {
             <Router>
                 <Switch>
 
-                    <Route path="/join/:id" exact component={params => {
-                        return !user ?
-                            (
-                                <JoinProvider>
-                                    <JoinView />
-                                </JoinProvider>
-                            ) : <Redirect to={"/room/" + params.match.params.id} />
-                    }} />
+                    <Route path="/join/:id" exact >
+                        <JoinProvider>
+                            <JoinView />
+                        </JoinProvider>
+                    </Route>
 
-                    <Route path="/room/:id" exact component={params => {
-                        return user ?
-                            (
-                                <P2PProvider>
-                                    <RoomProvider>
-                                        <RoomView />
-                                    </RoomProvider>
-                                </P2PProvider>
-                            ) : <Redirect to={"/join/" + params.match.params.id} />
-                    }} />
+                    <Route path="/room/:id" exact >
+                        <P2PProvider>
+                            <RoomProvider>
+                                <RoomView />
+                            </RoomProvider>
+                        </P2PProvider>
+                    </Route>
 
                     <Redirect to="/" />
                 </Switch>

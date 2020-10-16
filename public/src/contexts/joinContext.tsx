@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useReducer } from "react"
-import { Redirect, useParams } from "react-router-dom"
+import { Redirect, useHistory, useParams } from "react-router-dom"
 import JoinRoomAction from "../actions/joinRoomAction"
 import { IJoinRoomProvider, JoinRoomStateInit } from "../models/join_room_model"
 import { AppContext } from "./appContext"
@@ -13,11 +13,18 @@ const JoinProvider: React.FC = ({ children }) => {
     const { login } = useContext(AppContext)
     const [state, dispatch] = useReducer(JoinRoomAction, JoinRoomStateInit)
 
-    const { loadRoom,server } = useContext(ServerContext)
+    const { server } = useContext(ServerContext)
+    const { user } = useContext(AppContext);
     const { id } = useParams<{ id: string }>();
+    const { push } = useHistory();
 
     useEffect(() => {
-        loadRoom(id,dispatch)
+        if (user)
+            return push(`/room/${id}`);
+
+        loadRoom();
+        console.log("rendering JoinContext");
+        return () => console.log("disposing JoinContext");
     }, [])
 
     const submitName = useCallback(async (name: string) => {
@@ -26,9 +33,28 @@ const JoinProvider: React.FC = ({ children }) => {
         dispatch({ type: "loading_off" })
         if (!response)
             dispatch({ type: "login_error", payload: "check your name" })
-        else return login(response)
+        else {
+            login(response)
+            push(`/room/${id}`)
+        }
     }, [server, dispatch]);
 
+    const loadRoom = async () => {
+        dispatch({ type: "loading_on" })
+        const response = await server.loadRoomInfo(id);
+
+        if (response)
+            dispatch({ type: "load_room", payload: response })
+        else
+            return push(`/`);
+
+
+    }
+
+    useEffect(() => {
+        if (!state.loading && !state.title)
+            push("/");
+    }, [state.loading, state.title])
 
     const values = useMemo(() => ({
         ...state,
@@ -37,7 +63,6 @@ const JoinProvider: React.FC = ({ children }) => {
 
     return (
         <JoinContext.Provider value={values}>
-            {!state.loading && !state.title && <Redirect to="/" />}
             {children}
         </JoinContext.Provider>
     )
