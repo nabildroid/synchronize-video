@@ -19,7 +19,9 @@ export type SentDataType = {
 export type IPAdressType = string
 
 export default interface P2P_Node_API {
-	add(IPAdresses:IPAdressType[]):Promise<IUser[]>
+	join(IPAdresses:IPAdressType[]):Promise<IUser[]>
 	send(data: SentDataType): Promise<boolean>;
 	listen(callback: (content: RecievedContent) => void);
+	getMyIp():Promise<IPAdressType>
+	
 }

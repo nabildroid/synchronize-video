@@ -11,7 +11,10 @@ export type AuthKey = {
 export interface IServerAPI {
 	readonly auth: AuthKey;
 	join(name: string): Promise<JoinRoomResponse>;
-	boardcastIp(ip: IPAdressType): Promise<IPAdressType[] | false>;
+	boardcastIp(
+		roomId: RoomId,
+		ip: IPAdressType
+	): Promise<IPAdressType[] | false>;
 	loadRoomInfo(id: RoomId): Promise<IRoomInfo | false>;
 	signMeIn(auth: AuthKey): Promise<JoinRoomResponse>;
 }

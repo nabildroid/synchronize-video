@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import VideoWrapper from "../layouts/videoWrapper"
 import VideoTitle from "../components/videoTitle"
 import ShareLink from "../components/shareLink"
@@ -8,16 +8,22 @@ import UseMediaQuery from "../hooks/useMediaQuery"
 import Watchers from "../layouts/wacthers"
 import Messages from "../layouts/messages"
 import MessagesProvider from "../contexts/messagesContext"
+import { RoomContext } from "../contexts/roomContext"
 
 type Props = {
 
 }
 
 const RoomView: React.FC<Props> = ({ }) => {
+    const { loading, title, watchersUsers, link } = useContext(RoomContext)
 
     const bearkPoint = UseMediaQuery()
     const isLg = bearkPoint == "lg";
     const isNotSm = bearkPoint != "sm";
+
+
+    if (loading)
+        return <h2>loading</h2>
     return (
         <MessagesProvider>
             <div className="md:flex-row md:justify-center flex flex-col w-full min-h-screen">
@@ -25,10 +31,10 @@ const RoomView: React.FC<Props> = ({ }) => {
 
                     <VideoWrapper />
                     <div className="info pd-2 sm:pb-4 flex items-start justify-between p-2 border-b-2 border-indigo-100">
-                        <VideoTitle title="hello world" />
+                        <VideoTitle title={title} />
                         {
                             isNotSm &&
-                            <ShareLink url="http://localhost/vsync.html" />
+                            <ShareLink url={link} />
                         }
                     </div>
                     <div className="md:flex-col flex flex-row-reverse justify-between">
@@ -41,7 +47,7 @@ const RoomView: React.FC<Props> = ({ }) => {
                             <EmojisBlock click={() => { }} />
                         </div>
                         <div className="lg:-mt-4 md:w-full w-5/6">
-                            <Watchers guests={[{id:10,name:"test"}]} />
+                            <Watchers guests={watchersUsers} />
                         </div>
                     </div>
                 </div>

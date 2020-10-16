@@ -1,6 +1,6 @@
 import { IRoomInfo } from "../models/room_model";
 import { IPAdressType } from "../types/P2P_node_API";
-import { JoinRoomResponse } from "../types/room_type";
+import { JoinRoomResponse, RoomId } from "../types/room_type";
 import { AuthKey, IServerAPI } from "../types/server_API";
 
 const fakeAuthKey: AuthKey = {
@@ -41,7 +41,10 @@ class Server implements IServerAPI {
 		);
 	}
 
-	boardcastIp(ip): Promise<IPAdressType[] | false> {
+	boardcastIp(
+		roomId: RoomId,
+		ip: IPAdressType
+	): Promise<IPAdressType[] | false> {
 		if (!this.auth) return Promise.resolve<false>(false);
 		else
 			return new Promise((res, rej) =>
