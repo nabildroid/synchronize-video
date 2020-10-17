@@ -24,8 +24,8 @@ const Messages: React.FC<Props> = ({ }) => {
             secoud: 20,
             toTimestemp: () => 1520
         }),
-        name: "Tino"
-
+        name: "Tino",
+        getVideo:()=>Promise.resolve(null)
     };
     const messages: TimelineMessages = [
         {

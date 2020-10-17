@@ -1,6 +1,6 @@
 import P2P_Node_API, { IPAdressType } from "../types/P2P_node_API";
 import { Guest, IUser } from "../types/user_type";
-import { Duration } from "../types/video_type";
+import { Duration, VideoData } from "../types/video_type";
 
 class User implements IUser {
 	id: number = null;
@@ -38,6 +38,10 @@ class User implements IUser {
 			}, 500)
 		);
 	}
+	getVideo(): Promise<VideoData> {
+		throw new Error("Method not implemented.");
+	}
+	
 }
 
 export default User;

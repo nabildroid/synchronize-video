@@ -1,5 +1,5 @@
 import P2P_Node_API, { IPAdressType } from "./P2P_node_API";
-import { Duration } from "./video_type";
+import { Duration, VideoData } from "./video_type";
 
 export type Guest = {
 	id: number;
@@ -12,4 +12,5 @@ export interface IUser extends Guest {
 	isAuthor(author:Guest): boolean;
 	isSynched(): Promise<boolean>;
 	position(): Promise<Duration>;
+	getVideo():Promise<VideoData>
 }
