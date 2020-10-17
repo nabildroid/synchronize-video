@@ -9,7 +9,7 @@ export interface IUser extends Guest {
 	readonly network: P2P_Node_API;
 	ip: IPAdressType;
 	init(guest: Guest);
-	isAuthor(): Promise<boolean>;
+	isAuthor(author:Guest): boolean;
 	isSynched(): Promise<boolean>;
 	position(): Promise<Duration>;
 }

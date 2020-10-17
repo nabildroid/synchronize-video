@@ -13,11 +13,16 @@ export default (
     else if(action.type == "guests_to_Users"){
         return {
 			...state,
-			watchersUsers:action.payload,
-			loading:false
-        }
-    }
-	else if (action.type == "loading_off" || action.type == "loading_on")
+			watchersUsers: action.payload,
+			loading: false,
+		};
+	} else if (action.type == "guest_author_to_user") {
+		return {
+			...state,
+			authorUser: action.payload,
+			loading: false,
+		};
+	} else if (action.type == "loading_off" || action.type == "loading_on")
 		return {
 			...state,
 			loading: action.type == "loading_on",

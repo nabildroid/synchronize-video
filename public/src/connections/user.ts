@@ -16,12 +16,9 @@ class User implements IUser {
 		this.id = id;
 		this.name = name;
 	}
-	isAuthor() {
-		return new Promise<boolean>((res, rej) =>
-			setTimeout(() => {
-				res(this.id == 155);
-			}, 500)
-		);
+	isAuthor(author:Guest) {
+		// TODO you should ask the P2P network for the author, with voting system for better security 
+		return author.id == this.id;
 	}
 	isSynched() {
 		return new Promise<boolean>((res, rej) =>

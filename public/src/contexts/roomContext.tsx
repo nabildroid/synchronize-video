@@ -32,6 +32,12 @@ const RoomProvider: React.FC = ({ children }) => {
         }
     }, [state.title])
 
+    useEffect(()=>{
+        if(!!state.watchersUsers.length){
+            selectAuthorUser();
+        }
+    },[state.watchersUsers])
+
     const broadcastMyIp = async () => {
         dispatch({ type: "loading_on" })
         const myIp = await p2p.getMyIp();
@@ -54,6 +60,14 @@ const RoomProvider: React.FC = ({ children }) => {
             dispatch({ type: "load_room", payload: response })
         else
             return push(`/`);
+    }
+
+    const selectAuthorUser = () => {
+        dispatch({ type: "loading_on" })
+        const userAuthor = state.watchersUsers.filter(
+            user => user.isAuthor(state.author)
+        );
+        dispatch({ type: "guest_author_to_user", payload: userAuthor[0] });
     }
 
     const values = {
