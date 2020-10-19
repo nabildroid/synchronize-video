@@ -9,12 +9,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@master
-          with:
-            node-version: '10.x'
-        - run: cd public
-        - run: npm install
-        - run: npm run prod
-        - run: cd ..  
+        with:
+          node-version: '10.x'
+      - run: cd public
+      - run: npm install
+      - run: npm run prod
+      - run: cd ..  
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
