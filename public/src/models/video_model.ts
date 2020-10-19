@@ -37,8 +37,8 @@ export type VideoActions =
 	  };
 
 export interface IvideoProvider extends IVideoState {
-	playTo(time: Duration): boolean;
-	pause(): Promise<boolean>;
-	play(): Promise<boolean>;
-	start(): Promise<boolean>;
+	playTo?: (time: Duration) => boolean;
+	pause?: () => Promise<boolean>;
+	play?: () => Promise<boolean>;
+	start?: () => Promise<boolean>;
 }
