@@ -5,6 +5,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports.config = () => ({
 	mode: "production",
 	entry,
+	output: {
+		publicPath: "/",
+	},
 	module: {
 		rules: [
 			{
