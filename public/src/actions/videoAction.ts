@@ -4,7 +4,7 @@ export default (state: IVideoState, action: VideoActions): IVideoState => {
 	if (action.type == "load_video")
 		return {
 			...state,
-			...action.payload,
+			data:action.payload,
 			loading: false,
 		};
 	else if (action.type == "set_state") {

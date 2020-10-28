@@ -38,7 +38,6 @@ class P2P implements P2P_Node_API {
 		to: T,
 		callback: (data: RecievedDataType & { type: T }) => void
 	) {
-		throw new Error("Method not implemented.");
 	}
 }
 

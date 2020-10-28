@@ -9,6 +9,8 @@ import Watchers from "../layouts/wacthers"
 import Messages from "../layouts/messages"
 import MessagesProvider from "../contexts/messagesContext"
 import { RoomContext } from "../contexts/roomContext"
+import Video from "../layouts/video"
+import Loading from "../components/loading"
 
 type Props = {
 
@@ -23,13 +25,15 @@ const RoomView: React.FC<Props> = ({ }) => {
 
 
     if (loading)
-        return <h2>loading</h2>
+        return <Loading/>
     return (
         <MessagesProvider>
             <div className="md:flex-row md:justify-center flex flex-col w-full min-h-screen">
                 <div className="md:flex-none md:h-screen md:w-2/3 md:max-w-none lg:max-w-4xl flex flex-col">
 
-                    <VideoWrapper />
+                    <VideoWrapper>
+                        <Video />
+                    </VideoWrapper>
                     <div className="info pd-2 sm:pb-4 flex items-start justify-between p-2 border-b-2 border-indigo-100">
                         <VideoTitle title={title} />
                         {
