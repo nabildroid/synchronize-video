@@ -7,13 +7,14 @@ import P2PProvider from "./contexts/p2pContext";
 import RoomView from "./views/room_view";
 import JoinProvider from "./contexts/joinContext";
 import RoomProvider from "./contexts/roomContext";
+import Loading from "./components/loading";
 
 
 
 const App = () => {
     const { loading } = useContext(AppContext)
     if (loading)
-        return <h2>loading</h2>
+        return <Loading />
 
     return (
         <div>

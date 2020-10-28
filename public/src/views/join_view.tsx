@@ -5,6 +5,7 @@ import Join from "../layouts/join"
 import Watchers from "../layouts/wacthers"
 import Button from "../components/button"
 import { JoinContext } from "../contexts/joinContext"
+import Loading from "../components/loading"
 
 
 type Props = {
@@ -15,7 +16,7 @@ const JoinView: React.FC<Props> = ({ }) => {
     const { loading, author, background, title, watchers } = useContext(JoinContext)
 
     if(loading)
-        return <h2>Loading</h2>
+        return <Loading/>
     return (
         <div className="md:flex-row flex flex-col w-full min-h-screen">
             <div className="md:h-screen md:w-1/2 md:max-w-none lg:max-w-xl relative flex items-center justify-center h-56 bg-green-500">
