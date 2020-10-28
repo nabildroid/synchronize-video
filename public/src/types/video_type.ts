@@ -22,7 +22,7 @@ export type VideoLink =
 
 export type BroadcastChunks = string[];
 
-export type VideoData =
+export type VideoData = { length: Duration } & (
 	| {
 			type: VideoType.BROADCAST;
 			chunks: BroadcastChunks;
@@ -30,5 +30,5 @@ export type VideoData =
 	| {
 			type: VideoType.DOWNLOAD;
 			link: VideoLink;
-      };
-
+	  }
+);
