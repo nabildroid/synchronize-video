@@ -20,9 +20,10 @@ const RoomProvider: React.FC = ({ children }) => {
     const { push } = useHistory();
     const { id } = useParams<{ id: string }>();
 
+    if (!user)
+        push(`/join/${id}`);
+
     useEffect(() => {
-        if (!user)
-            return push(`/join/${id}`);
         loadRoom();
     }, [])
 
