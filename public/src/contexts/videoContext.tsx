@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useReducer } from "react"
 import videoAction from "../actions/videoAction"
 import { IvideoProvider, VideoStateInit } from "../models/video_model"
 import { DataFlowTypes } from "../types/P2P_node_API"
+import { Duration } from "../types/video_type"
 import { P2PContext } from "./p2pContext"
 import { RoomContext } from "./roomContext"
 
@@ -24,7 +25,7 @@ const VideoProvider: React.FC = ({ children }) => {
             p2p.listenTo(DataFlowTypes.USER_POSITION, ({ sender, payload }) => {
                 dispatch({
                     type: "user_position", payload: {
-                        position: payload,
+                        position: payload as Duration,
                         user: sender
                     }
                 })
