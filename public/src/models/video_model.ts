@@ -1,3 +1,4 @@
+import { Guest } from "../types/user_type";
 import { Duration, VideoData, VideoState } from "../types/video_type";
 
 export interface IVideoState {
@@ -34,7 +35,14 @@ export type VideoActions =
 	| {
 			type: "error";
 			payload: string;
-	  };
+	  }
+	|{
+		type:"user_position";
+		payload:{
+			user:Guest,
+			position:Duration
+		}
+	}
 
 export interface IvideoProvider extends IVideoState {
 	playTo?: (time: Duration) => boolean;

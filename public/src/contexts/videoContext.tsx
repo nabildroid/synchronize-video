@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react"
 import videoAction from "../actions/videoAction"
 import { IvideoProvider, VideoStateInit } from "../models/video_model"
+import { DataFlowTypes } from "../types/P2P_node_API"
 import { P2PContext } from "./p2pContext"
 import { RoomContext } from "./roomContext"
 
@@ -18,11 +19,17 @@ const VideoProvider: React.FC = ({ children }) => {
             askAuthorForVideo();
     }, [authorUser])
 
-    useEffect(()=>{
-        if(state.data){
-            
-        }
-    },[state.data])
+    useEffect(() => {
+        if (state.data)
+            p2p.listenTo(DataFlowTypes.USER_POSITION, ({ sender, payload }) => {
+                dispatch({
+                    type: "user_position", payload: {
+                        position: payload,
+                        user: sender
+                    }
+                })
+            })
+    }, [state.data])
 
     const askAuthorForVideo = async () => {
         dispatch({ type: "loading_on" })

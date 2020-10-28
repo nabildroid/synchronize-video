@@ -1,7 +1,8 @@
 import P2P_Node_API, {
+	DataFlowTypes,
 	IPAdressType,
-	RecievedContent,
-	SentDataType,
+	RecievedDataType,
+	SendDataType,
 } from "../types/P2P_node_API";
 import { IUser } from "../types/user_type";
 import User from "./user";
@@ -18,10 +19,10 @@ class P2P implements P2P_Node_API {
 				res(
 					Array(10)
 						.fill(null)
-						.map((_) => {
+						.map((_, i) => {
 							const user = new User(this);
 							user.init({
-								id: Math.floor(Math.random() * 100),
+								id: 155 * i,
 								name: "hello world!",
 							});
 							return user;
@@ -30,10 +31,13 @@ class P2P implements P2P_Node_API {
 			}, 500)
 		);
 	}
-	send(data: SentDataType): Promise<boolean> {
+	send(data: SendDataType): Promise<boolean> {
 		throw new Error("Method not implemented.");
 	}
-	listen(callback: (content: RecievedContent) => void) {
+	listenTo<T extends DataFlowTypes>(
+		to: T,
+		callback: (data: RecievedDataType & { type: T }) => void
+	) {
 		throw new Error("Method not implemented.");
 	}
 }
