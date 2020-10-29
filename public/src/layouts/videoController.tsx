@@ -3,9 +3,10 @@ import Button from "../components/button"
 import ProgressBar from "../components/progressBar"
 import Shade from "../components/shade"
 import Svg from "../components/svg"
+import VideoStateButton from "../components/VideoStateButton"
 import VideoTime from "../components/videoTime"
 import { TWColors } from "../types/colors"
-import { Duration } from "../types/video_type"
+import { Duration, VideoState } from "../types/video_type"
 
 type Props = {
     show: boolean,
@@ -45,19 +46,12 @@ const VideoController: React.FC<Props> = ({ show, hide }) => {
     }
 
 
-
-    const handlePauseClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-    }
-
     return show && (
         <div className="absolute inset-0 z-10">
             <Shade color={TWColors.BLACK} opacity={25} />
             <div className="relative z-10 flex flex-col w-full h-full">
                 <div className="flex items-center justify-center flex-1" onClick={hide}>
-                    <button className="border-4 border-white rounded-full" onClick={handlePauseClick}>
-                        <Svg type="Random" size={40} color={TWColors.WHITE} />
-                    </button>
+                    <VideoStateButton  state={VideoState.PUASED} change={console.log} />
                 </div>
                 <div className="flex flex-col">
                     <div className="flex items-center justify-between px-4">
