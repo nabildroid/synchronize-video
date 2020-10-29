@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import Shade from "../components/shade"
 import { TWColors } from "../types/colors"
 
 type Props = {
