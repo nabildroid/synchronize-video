@@ -1,6 +1,7 @@
 import React from "react"
 import { Duration } from "../types/video_type";
 import cl, { cls } from "../utils/cls";
+import TwoDigits from "../utils/twoDigitsNumber";
 
 
 type Props = {
@@ -15,7 +16,7 @@ const VideoTime: React.FC<Props> = ({ time, isBold = false }) => {
     const defaultStyle = cls(isBoldStyle, "text-sm", "text-white", "font-mono")
     return (
         <time {...defaultStyle} dateTime={date.toString()}>
-            {time.minute}:{time.secoud}
+            {TwoDigits(time.minute)}:{TwoDigits(time.secoud)}
         </time>
     )
 }
