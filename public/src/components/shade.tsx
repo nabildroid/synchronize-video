@@ -1,6 +1,7 @@
 import React from "react"
 import cl, { cls } from "../utils/cls"
-import applyColor, { TWColors } from "../types/colors";
+import  { TWColors } from "../types/colors";
+import applyColor from "../utils/applyColor";
 
 type Props = {
     color: TWColors

@@ -1,7 +1,8 @@
 import React from "react"
-import applyColor, { TWColors } from "../types/colors"
+import  { TWColors } from "../types/colors"
 import cl, { cls } from "../utils/cls"
 import SVGS from "../assets/svgs/svgs";
+import applyColor from "../utils/applyColor";
 
 
 
