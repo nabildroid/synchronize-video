@@ -1,6 +1,7 @@
-import { IRoomInfo } from "../models/room_model";
+import { IRoomInfo} from "../models/room_model";
 import { IPAdressType } from "./P2P_node_API";
-import { JoinRoomResponse, RoomId } from "./room_type";
+import { Background, JoinRoomResponse, NewRoomResponse, RoomId } from "./room_type";
+import { VideoData, VideoLink } from "./video_type";
 
 export type AuthKey = {
 	key: string;
@@ -17,4 +18,10 @@ export interface IServerAPI {
 	): Promise<IPAdressType[] | false>;
 	loadRoomInfo(id: RoomId): Promise<IRoomInfo | false>;
 	signMeIn(auth: AuthKey): Promise<JoinRoomResponse>;
+	createRoom(
+		name: string,
+		video: VideoLink,
+		title: string,
+		background: Background
+	): Promise<NewRoomResponse>;
 }

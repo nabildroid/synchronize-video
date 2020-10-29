@@ -1,7 +1,8 @@
 import { IRoomInfo } from "../models/room_model";
 import { IPAdressType } from "../types/P2P_node_API";
-import { JoinRoomResponse, RoomId } from "../types/room_type";
+import { JoinRoomResponse, NewRoomResponse, RoomId } from "../types/room_type";
 import { AuthKey, IServerAPI } from "../types/server_API";
+import { VideoLink, VideoType } from "../types/video_type";
 
 const fakeAuthKey: AuthKey = {
 	key: "auth me please!",
@@ -85,6 +86,36 @@ class Server implements IServerAPI {
 				500
 			)
 		);
+	}
+
+	createRoom(
+		name: string,
+		video: VideoLink,
+		title: string,
+		background: string
+	): Promise<NewRoomResponse> {
+		const response: NewRoomResponse = {
+			id: Math.floor(Math.random() * 100).toString(),
+			video: {
+				type: VideoType.DOWNLOAD,
+				length: {
+					minute: 1,
+					secoud: 12,
+					toTimestemp: () => 112,
+				},
+				link: video,
+			},
+		};
+		if (!this.auth) {
+			// TODO the server will return the new auth
+			this.auth = fakeAuthKey;
+			response.user = {
+				id: 89,
+				name: name,
+				isAuthor: true,
+			};
+		}
+		return new Promise((res, rej) => setTimeout(() => res(response), 1000));
 	}
 }
 
