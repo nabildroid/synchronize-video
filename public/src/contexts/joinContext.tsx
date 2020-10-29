@@ -10,18 +10,17 @@ import { ServerContext } from "./serverContext"
 export const JoinContext = createContext<IJoinRoomProvider>(null)
 
 const JoinProvider: React.FC = ({ children }) => {
-    const { login } = useContext(AppContext)
+    const { login, user } = useContext(AppContext)
     const [state, dispatch] = useReducer(JoinRoomAction, JoinRoomStateInit)
 
     const { server } = useContext(ServerContext)
-    const { user } = useContext(AppContext);
     const { id } = useParams<{ id: string }>();
     const { push } = useHistory();
 
-    useEffect(() => {
-        if (user)
-            return push(`/room/${id}`);
+    if (user)
+        push(`/room/${id}`);
 
+    useEffect(() => {
         loadRoom();
         console.log("rendering JoinContext");
         return () => console.log("disposing JoinContext");
