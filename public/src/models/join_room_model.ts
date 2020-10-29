@@ -1,17 +1,16 @@
+import { Guest } from "../types/user_type";
 import { IRoomInfo } from "./room_model";
 
 export interface IJoinRoomState extends IRoomInfo {
+	author:Guest;
 	loading: boolean;
 	error: Error;
 }
 export const JoinRoomStateInit: IJoinRoomState = {
-	author: {
-		name:"friend",
-		id:null
-	},
 	background: null,
 	title: null,
 	watchers: [],
+	author:null,
 	loading: true,
 	error: null,
 };

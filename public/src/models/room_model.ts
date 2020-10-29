@@ -5,7 +5,6 @@ import { Duration } from "../types/video_type";
 export interface IRoomInfo {
 	title: string;
 	background: Background;
-	author: Guest;
 	watchers: Guest[];
 }
 export interface IRoomState extends IRoomInfo {
@@ -15,10 +14,6 @@ export interface IRoomState extends IRoomInfo {
 	error: Error;
 }
 export const RoomStateInit: IRoomState = {
-	author: {
-		name: "friend",
-		id: null,
-	},
 	background: null,
 	title: null,
 	watchers: [],

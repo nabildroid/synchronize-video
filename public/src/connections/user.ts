@@ -7,19 +7,18 @@ class User implements IUser {
 	name: string = null;
 	network: P2P_Node_API = null;
     ip: IPAdressType = null;
+	isAuthor: boolean = false;
     
     constructor(network: P2P_Node_API) {
 		this.network = network;
     }
 	
-	init({ id, name }: Guest) {
+	init({ id, name, isAuthor }: Guest) {
 		this.id = id;
 		this.name = name;
+		this.isAuthor = isAuthor;
 	}
-	isAuthor(author:Guest) {
-		// TODO you should ask the P2P network for the author, with voting system for better security 
-		return author.id == this.id;
-	}
+
 	isSynched() {
 		return new Promise<boolean>((res, rej) =>
 			setTimeout(() => {
@@ -38,7 +37,7 @@ class User implements IUser {
 			}, 500)
 		);
 	}
-	getVideo()  {
+		if(!this.isAuthor)return Promise.reject(`${this.name} is not the author`);
 		return new Promise<VideoData>((res, rej) =>
 			setTimeout(() => {
 				res({

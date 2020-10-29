@@ -8,7 +8,8 @@ export default (
 		return {
 			...state,
 			...action.payload,
-			loading:false,
+			loading: false,
+			author: action.payload.watchers.filter((g) => g.isAuthor)[0],
 		};
 	if (action.type == "loading_off" || action.type == "loading_on")
 		return {

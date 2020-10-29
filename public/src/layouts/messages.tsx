@@ -17,7 +17,7 @@ const Messages: React.FC<Props> = ({ }) => {
         network:null,
         ip:null,
         init(){},
-        isAuthor: () => true,
+        isAuthor: true,
         isSynched: () => Promise.resolve(true),
         position: () => Promise.resolve({
             minute: 15,

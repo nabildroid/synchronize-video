@@ -19,6 +19,7 @@ class Server implements IServerAPI {
 					res({
 						id: 155,
 						name: "nabil",
+						isAuthor:true
 					});
 				} else return res(false);
 			}, 500)
@@ -34,6 +35,7 @@ class Server implements IServerAPI {
 					this.auth = fakeAuthKey;
 					res({
 						id: 155,
+						isAuthor:true,
 						name: "nabil",
 					});
 				} else return res(false);
@@ -63,10 +65,6 @@ class Server implements IServerAPI {
 					id != "11"
 						? res(false)
 						: res({
-								author: {
-									id: 155,
-									name: "efzefz",
-								},
 								background:
 									"https://images.unsplash.com/photo-1505051508008-923feaf90180?ixlib=rb-1.2.1&w=1000&q=80",
 								title:
@@ -74,11 +72,13 @@ class Server implements IServerAPI {
 								watchers: [
 									{
 										id: 151,
-										name: "efzefz",
+										name: "watcher",
+										isAuthor:false
 									},
 									{
 										id: 160,
-										name: "efzefz",
+										name: "Admin",
+										isAuthor:true
 									},
 								],
 						  }),
