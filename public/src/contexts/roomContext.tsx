@@ -66,7 +66,7 @@ const RoomProvider: React.FC = ({ children }) => {
     const selectAuthorUser = () => {
         dispatch({ type: "loading_on" })
         const userAuthor = state.watchersUsers.filter(
-            user => user.isAuthor(state.author)
+            user => user.isAuthor
         );
         dispatch({ type: "guest_author_to_user", payload: userAuthor[0] });
     }

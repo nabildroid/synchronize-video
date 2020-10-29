@@ -37,7 +37,9 @@ class User implements IUser {
 			}, 500)
 		);
 	}
-		if(!this.isAuthor)return Promise.reject(`${this.name} is not the author`);
+	getVideo() {
+		if (!this.isAuthor)
+			return Promise.reject(`${this.name} is not the author`);
 		return new Promise<VideoData>((res, rej) =>
 			setTimeout(() => {
 				res({
