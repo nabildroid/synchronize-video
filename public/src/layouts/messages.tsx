@@ -3,7 +3,7 @@ import Label from "../components/label";
 import MessagesList from "./messages/messagesList";
 import { MessageType, MessageReactions, TimelineMessages } from "../types/message_type";
 import { WithoutLabel, WithLabel } from "./messages/writeMessage";
-import {IUser} from "../types/user_type";
+import { IUser } from "../types/user_type";
 import UseMediaQuery from "../hooks/useMediaQuery";
 
 type Props = {
@@ -12,11 +12,11 @@ type Props = {
 
 const Messages: React.FC<Props> = ({ }) => {
 
-    const user:IUser = {
+    const user: IUser = {
         id: 17787,
-        network:null,
-        ip:null,
-        init(){},
+        network: null,
+        ip: null,
+        init() { },
         isAuthor: true,
         isSynched: () => Promise.resolve(true),
         position: () => Promise.resolve({
@@ -25,7 +25,7 @@ const Messages: React.FC<Props> = ({ }) => {
             toTimestemp: () => 1520
         }),
         name: "Tino",
-        getVideo:()=>Promise.resolve(null)
+        getVideo: () => Promise.resolve(null)
     };
     const messages: TimelineMessages = [
         {

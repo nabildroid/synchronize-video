@@ -17,7 +17,7 @@ type Props = {
 
 const VideoController: React.FC<Props> = ({ show, hide }) => {
     const { state, pause, play, start, position, data } = useContext(VideoContext);
-    
+
 
     useEffect(() => {
         // TODO use debounce because any action should reset the counter
@@ -26,7 +26,7 @@ const VideoController: React.FC<Props> = ({ show, hide }) => {
             return () => clearTimeout(timer);
         }
     }, [show])
-    
+
     const HandleVideoStateChange = (state: VideoState) => {
         if (state == VideoState.PUASED)
             pause();
@@ -36,10 +36,10 @@ const VideoController: React.FC<Props> = ({ show, hide }) => {
             start();
     }
 
-    if(!data)
+    if (!data)
         return null;
-    const {length} = data;
-    
+    const { length } = data;
+
     const progress = position.toTimestemp() / length.toTimestemp();
     return show && (
         <div className="absolute inset-0 z-10">

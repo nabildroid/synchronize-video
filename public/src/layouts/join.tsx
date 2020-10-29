@@ -18,7 +18,7 @@ const Join: React.FC<Props> = ({ author, showForPhone = false, hidePhoneLogin })
     const styleShowForPhone = cl({ "hidden": !showForPhone })
     const styleDefault = cl("md:relative md:block fixed inset-0 z-10 flex items-end")
     const { submitName, error } = useContext(JoinContext)
-    
+
     const onSubmit = e => {
         e.preventDefault();
         submitName(name)

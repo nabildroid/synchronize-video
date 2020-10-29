@@ -2,7 +2,7 @@ import React from "react"
 
 
 
-const Loading:React.FC=({})=>(
+const Loading: React.FC = ({ }) => (
     <h2>loading</h2>
 )
 

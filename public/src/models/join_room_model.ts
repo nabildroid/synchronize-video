@@ -2,7 +2,7 @@ import { Guest } from "../types/user_type";
 import { IRoomInfo } from "./room_model";
 
 export interface IJoinRoomState extends IRoomInfo {
-	author:Guest;
+	author: Guest;
 	loading: boolean;
 	error: Error;
 }
@@ -10,7 +10,7 @@ export const JoinRoomStateInit: IJoinRoomState = {
 	background: null,
 	title: null,
 	watchers: [],
-	author:null,
+	author: null,
 	loading: true,
 	error: null,
 };
@@ -32,5 +32,5 @@ export type JoinRoomActions =
 	  };
 
 export interface IJoinRoomProvider extends IJoinRoomState {
-	submitName(name:string):Promise<void>
+	submitName(name: string): Promise<void>;
 }

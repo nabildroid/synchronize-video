@@ -17,7 +17,7 @@ const Watchers: React.FC<Props> = ({ guests, children }) => {
             <Label name="watchers" htmlFor="watchers" />
             <ul id="watchers" className="flex items-center pb-2 space-x-2 overflow-x-scroll">
                 {children}
-                {guests.map(({id,name}) => (
+                {guests.map(({ id, name }) => (
                     // TODO use user id
                     <li key={id}>
                         <UserLabel text={name} color={TWColors.INDIGO} />

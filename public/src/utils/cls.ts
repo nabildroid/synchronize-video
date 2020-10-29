@@ -5,8 +5,8 @@ export default function cl(...args: ClAcceptedValue[]) {
 	t.value = args;
 	return t;
 }
-export function cls(...args: ClAcceptedValue[]){
-	return {"className":cl(...args).toString() as string}
+export function cls(...args: ClAcceptedValue[]) {
+	return { className: cl(...args).toString() as string };
 }
 
 /*
@@ -40,12 +40,14 @@ class Cl implements ICl {
 		return this.value.reduce((acc, val: ClAcceptedValue) => {
 			if (val instanceof Cl) return `${acc} ${val.toString()}`;
 			else if (typeof val == "string") return `${acc} ${val}`;
-			else 
-				return acc + Object.entries(val).reduce((a,v)=>{
-					if (v[1] == true)
-						return `${a} ${v[0]}`;
-					else return a;
-				},"");
+			else
+				return (
+					acc +
+					Object.entries(val).reduce((a, v) => {
+						if (v[1] == true) return `${a} ${v[0]}`;
+						else return a;
+					}, "")
+				);
 		}, "");
 	}
 }

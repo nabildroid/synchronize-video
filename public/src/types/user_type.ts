@@ -4,7 +4,7 @@ import { Duration, VideoData } from "./video_type";
 export type Guest = {
 	id: number;
 	name: string;
-	isAuthor:boolean;
+	isAuthor: boolean;
 };
 export interface IUser extends Guest {
 	readonly network: P2P_Node_API;
@@ -12,5 +12,5 @@ export interface IUser extends Guest {
 	init(guest: Guest);
 	isSynched(): Promise<boolean>;
 	position(): Promise<Duration>;
-	getVideo():Promise<VideoData>
+	getVideo(): Promise<VideoData>;
 }

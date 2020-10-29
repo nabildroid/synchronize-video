@@ -6,13 +6,13 @@ class User implements IUser {
 	id: number = null;
 	name: string = null;
 	network: P2P_Node_API = null;
-    ip: IPAdressType = null;
+	ip: IPAdressType = null;
 	isAuthor: boolean = false;
-    
-    constructor(network: P2P_Node_API) {
+
+	constructor(network: P2P_Node_API) {
 		this.network = network;
-    }
-	
+	}
+
 	init({ id, name, isAuthor }: Guest) {
 		this.id = id;
 		this.name = name;
@@ -43,18 +43,17 @@ class User implements IUser {
 		return new Promise<VideoData>((res, rej) =>
 			setTimeout(() => {
 				res({
-					type:VideoType.DOWNLOAD,
-					length:{
+					type: VideoType.DOWNLOAD,
+					length: {
 						minute: 10,
 						secoud: 15,
 						toTimestemp: () => 1015,
 					},
-					link:"https://www.w3schools.com/html/mov_bbb.mp4"
+					link: "https://www.w3schools.com/html/mov_bbb.mp4",
 				});
 			}, 500)
 		);
 	}
-	
 }
 
 export default User;

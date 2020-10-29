@@ -20,22 +20,22 @@ type Props = {
 const RoomView: React.FC<Props> = ({ }) => {
     const { loading, title, watchersUsers, link } = useContext(RoomContext)
 
-    const [showVideoController,setShowVideoController] = useState(true);
+    const [showVideoController, setShowVideoController] = useState(true);
     const bearkPoint = UseMediaQuery()
     const isLg = bearkPoint == "lg";
     const isNotSm = bearkPoint != "sm";
 
 
     if (loading)
-        return <Loading/>
+        return <Loading />
     return (
         <MessagesProvider>
             <div className="md:flex-row md:justify-center flex flex-col w-full min-h-screen">
                 <div className="md:flex-none md:h-screen md:w-2/3 md:max-w-none lg:max-w-4xl flex flex-col">
 
                     <VideoWrapper>
-                        <Video showController={()=>setShowVideoController(true)}/>
-                        <VideoController show={showVideoController} hide={()=>setShowVideoController(false)}/>
+                        <Video showController={() => setShowVideoController(true)} />
+                        <VideoController show={showVideoController} hide={() => setShowVideoController(false)} />
                     </VideoWrapper>
                     <div className="info pd-2 sm:pb-4 flex items-start justify-between p-2 border-b-2 border-indigo-100">
                         <VideoTitle title={title} />

@@ -1,1 +1,1 @@
-export type BreakPoints = "xl" | "lg" | "md" | "sm"
+export type BreakPoints = "xl" | "lg" | "md" | "sm";

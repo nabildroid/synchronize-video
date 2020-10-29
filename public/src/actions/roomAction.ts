@@ -1,17 +1,14 @@
 import { IRoomState, RoomActions } from "../models/room_model";
 
-export default (
-	state: IRoomState,
-	action: RoomActions
-): IRoomState => {
+export default (state: IRoomState, action: RoomActions): IRoomState => {
 	if (action.type == "load_room")
 		return {
 			...state,
 			...action.payload,
-			loading:false,
-        };
-    else if(action.type == "guests_to_Users"){
-        return {
+			loading: false,
+		};
+	else if (action.type == "guests_to_Users") {
+		return {
 			...state,
 			watchersUsers: action.payload,
 			loading: false,
@@ -31,7 +28,6 @@ export default (
 		return {
 			...state,
 			error: Error(action.payload),
-			loading:false
+			loading: false,
 		};
 };
-

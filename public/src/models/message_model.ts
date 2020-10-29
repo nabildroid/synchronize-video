@@ -9,7 +9,6 @@ export interface IMessagesActions {
 	listen(callback: Function): void;
 }
 
-
 export interface IMessagesProvider extends IMessagesState {
 	draftMessage: {
 		text: string;

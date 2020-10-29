@@ -1,17 +1,15 @@
 import { Guest } from "../types/user_type";
 import { Duration, VideoData, VideoState } from "../types/video_type";
 
-
-
 export type LateUser = {
-	user:Guest,
-	position:Duration
-}
+	user: Guest;
+	position: Duration;
+};
 export interface IVideoState {
 	data: VideoData;
 	state: VideoState;
-	position:Duration;
-	lateWatchers:LateUser[],
+	position: Duration;
+	lateWatchers: LateUser[];
 	loading: boolean;
 	error: Error;
 }
@@ -19,12 +17,12 @@ export interface IVideoState {
 export const VideoStateInit: IVideoState = {
 	data: null,
 	state: VideoState.WAITE,
-	lateWatchers:[],
+	lateWatchers: [],
 	loading: true,
-	position:{
-		minute:0,
-		secoud:0,
-		toTimestemp:()=>10
+	position: {
+		minute: 0,
+		secoud: 0,
+		toTimestemp: () => 10,
 	},
 	error: null,
 };
@@ -48,10 +46,10 @@ export type VideoActions =
 			type: "error";
 			payload: string;
 	  }
-	|{
-		type:"user_position";
-		payload:LateUser
-	}
+	| {
+			type: "user_position";
+			payload: LateUser;
+	  };
 
 export interface IvideoProvider extends IVideoState {
 	playTo?: (time: Duration) => boolean;

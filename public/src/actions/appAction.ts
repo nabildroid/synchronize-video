@@ -4,7 +4,7 @@ export default (state: IAppState, action: AppActions) => {
 	if (action.type == "login")
 		return {
 			...state,
-			loading:false,
+			loading: false,
 			user: action.payload,
 		};
 	if (action.type == "loading_on")

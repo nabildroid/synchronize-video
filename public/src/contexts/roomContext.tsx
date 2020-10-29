@@ -33,11 +33,11 @@ const RoomProvider: React.FC = ({ children }) => {
         }
     }, [state.title])
 
-    useEffect(()=>{
-        if(!!state.watchersUsers.length){
+    useEffect(() => {
+        if (!!state.watchersUsers.length) {
             selectAuthorUser();
         }
-    },[state.watchersUsers])
+    }, [state.watchersUsers])
 
     const broadcastMyIp = async () => {
         dispatch({ type: "loading_on" })
@@ -47,9 +47,9 @@ const RoomProvider: React.FC = ({ children }) => {
         if (ips) {
             const users = await p2p.join(ips)
             dispatch({ type: "guests_to_Users", payload: users });
-        }else {
+        } else {
             // TODO write better error message
-            dispatch({type:"error",payload:"error"})
+            dispatch({ type: "error", payload: "error" })
         }
     }
 

@@ -34,7 +34,7 @@ export type RoomActions =
 	  }
 	| {
 			type: "guest_author_to_user";
-			payload: IUser|"currentUser";
+			payload: IUser | "currentUser";
 	  }
 	| {
 			type: "loading_on";
@@ -48,5 +48,5 @@ export type RoomActions =
 	  };
 
 export interface IRoomProvider extends IRoomState {
-	link:string
+	link: string;
 }

@@ -23,7 +23,7 @@ export const AppStateInit: IAppState = {
 
 export interface IAppProvider extends IAppState {
 	login(user: Guest);
-}/*
+} /*
 
     App
         Room/JoinRoom

@@ -5,7 +5,7 @@ import Fullscreen from "./fullscreen";
 import Play from "./play";
 import Pause from "./pause";
 
-const all = { Random, Link, Join, Fullscreen,Play,Pause };
+const all = { Random, Link, Join, Fullscreen, Play, Pause };
 
 export default {
 	...all,

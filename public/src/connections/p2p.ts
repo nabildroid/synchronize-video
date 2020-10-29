@@ -38,8 +38,7 @@ class P2P implements P2P_Node_API {
 	listenTo<T extends DataFlowTypes>(
 		to: T,
 		callback: (data: RecievedDataType & { type: T }) => void
-	) {
-	}
+	) {}
 }
 
 export default P2P;

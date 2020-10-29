@@ -19,7 +19,7 @@ class Server implements IServerAPI {
 					res({
 						id: 155,
 						name: "nabil",
-						isAuthor:true
+						isAuthor: true,
 					});
 				} else return res(false);
 			}, 500)
@@ -27,7 +27,7 @@ class Server implements IServerAPI {
 	}
 
 	join(name): Promise<JoinRoomResponse> {
-		console.log("........fetching join")
+		console.log("........fetching join");
 
 		return new Promise((res, rej) =>
 			setTimeout(() => {
@@ -35,7 +35,7 @@ class Server implements IServerAPI {
 					this.auth = fakeAuthKey;
 					res({
 						id: 155,
-						isAuthor:true,
+						isAuthor: true,
 						name: "nabil",
 					});
 				} else return res(false);
@@ -58,7 +58,7 @@ class Server implements IServerAPI {
 	}
 
 	loadRoomInfo(id: string): Promise<IRoomInfo | false> {
-		console.log("........fetching room info")
+		console.log("........fetching room info");
 		return new Promise((res, rej) =>
 			setTimeout(
 				() =>
@@ -73,12 +73,12 @@ class Server implements IServerAPI {
 									{
 										id: 151,
 										name: "watcher",
-										isAuthor:false
+										isAuthor: false,
 									},
 									{
 										id: 160,
 										name: "Admin",
-										isAuthor:true
+										isAuthor: true,
 									},
 								],
 						  }),

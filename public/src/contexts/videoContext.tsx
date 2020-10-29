@@ -12,7 +12,7 @@ export const VideoContext = createContext<IvideoProvider>(null)
 
 const VideoProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useReducer(videoAction, VideoStateInit);
-    const {p2p} = useContext(P2PContext);
+    const { p2p } = useContext(P2PContext);
     const { authorUser } = useContext(RoomContext);
 
     useEffect(() => {

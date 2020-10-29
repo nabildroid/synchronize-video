@@ -1,7 +1,7 @@
 import React from "react"
 
 type Props = {
-    content:string
+    content: string
 }
 
 const MessageText: React.FC<Props> = ({ content }) => {

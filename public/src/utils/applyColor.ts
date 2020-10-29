@@ -1,6 +1,5 @@
 import { TWColors } from "../types/colors";
 
-
 export default function applyColor(
 	color: TWColors,
 	prefix: "bg" | "text",
