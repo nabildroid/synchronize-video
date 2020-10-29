@@ -9,8 +9,8 @@ export type LateUser = {
 }
 export interface IVideoState {
 	data: VideoData;
-	length: Duration;
 	state: VideoState;
+	position:Duration;
 	lateWatchers:LateUser[],
 	loading: boolean;
 	error: Error;
@@ -18,10 +18,14 @@ export interface IVideoState {
 
 export const VideoStateInit: IVideoState = {
 	data: null,
-	length: null,
 	state: VideoState.WAITE,
 	lateWatchers:[],
 	loading: true,
+	position:{
+		minute:0,
+		secoud:0,
+		toTimestemp:()=>10
+	},
 	error: null,
 };
 
