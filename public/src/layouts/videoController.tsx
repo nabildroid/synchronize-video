@@ -54,12 +54,12 @@ const VideoController: React.FC<Props> = ({ show, hide }) => {
                     <VideoStateButton  state={VideoState.PUASED} change={console.log} />
                 </div>
                 <div className="flex flex-col">
-                    <div className="flex items-center justify-between px-4">
+                    <div className="flex items-center justify-between px-4 leading-loose">
                         <VideoTime time={currentTime} isBold={true} />
                         <div className="flex items-center space-x-2">
                             <VideoTime time={endTime} />
                             <button>
-                                <Svg type="Fullscreen" color={TWColors.WHITE} size={5} />
+                                <Svg type="Fullscreen" color={TWColors.WHITE} size={4} />
                             </button>
                         </div>
                     </div>

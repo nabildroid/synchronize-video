@@ -11,14 +11,12 @@ type Props = {
 
 const VideoTime: React.FC<Props> = ({ time, isBold = false }) => {
     const date = new Date(time.toTimestemp());
-    const isBoldStyle = cl({ "font-bold": isBold });
-    const defaultStyle = cls(isBoldStyle,"text-sm","text-white","font-mono")
+    const isBoldStyle = cl({ "font-meduim": isBold });
+    const defaultStyle = cls(isBoldStyle, "text-sm", "text-white", "font-mono")
     return (
-        <div {...defaultStyle}>
-            <time dateTime={date.toString()}>
-                {time.minute}:{time.secoud}
-            </time>
-        </div>
+        <time {...defaultStyle} dateTime={date.toString()}>
+            {time.minute}:{time.secoud}
+        </time>
     )
 }
 

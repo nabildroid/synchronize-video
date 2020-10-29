@@ -17,13 +17,10 @@ const ProgressBar: React.FC<Props> = ({ progress }) => {
     const progressColor = applyColor(TWColors.INDIGO, "bg", 7);
 
     return (
-        <div className={`w-full py-1 ${backgroundColor} `}>
-            <div className={`w-1/3 h-3 text-right ${progressColor}`}
-                style={{width:`${floatProgress}%`}}
+        <div className={`w-full ${backgroundColor} `}>
+            <div className={`w-1/3 h-1 ${progressColor} transition duration-300 ease-out`}
+                style={{ width: `${floatProgress}%` }}
             >
-                <span className={`inline-block p-3 rounded-full -mr-2 -mt-2 ${progressColor}`}>
-
-                </span>
             </div>
         </div>
     )

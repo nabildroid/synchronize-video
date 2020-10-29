@@ -20,7 +20,7 @@ const VideoStateButton: React.FC<Props> = ({ state, change }) => {
 
     return (
         <button onClick={handleButtonClick}>
-            <Svg type={svgType} size={isSm?24:40} color={TWColors.WHITE} />
+            <Svg type={svgType} size={isSm?24:40} color={TWColors.WHITE} weight={!isSm?1:2} />
         </button>
     )
 }
