@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react"
+import { useHistory } from "react-router-dom";
 import Button from "../components/button";
 import Label from "../components/label";
 import { AppContext } from "../contexts/appContext";
@@ -9,6 +10,7 @@ type Props = {
 }
 
 const NewRoomView: React.FC<Props> = ({ }) => {
+    const { push } = useHistory()
 
     const { server } = useContext(ServerContext)
     const { user, addNewRoom } = useContext(AppContext);
@@ -34,6 +36,8 @@ const NewRoomView: React.FC<Props> = ({ }) => {
                 background,
                 video: videoData
             }, user);
+            push(`/room/${id}`);
+
             setLoading(false);
         }
     }

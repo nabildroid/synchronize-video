@@ -3,6 +3,7 @@ import videoAction from "../actions/videoAction"
 import { IvideoProvider, VideoStateInit } from "../models/video_model"
 import { DataFlowTypes } from "../types/P2P_node_API"
 import { Duration, VideoType } from "../types/video_type"
+import { AppContext } from "./appContext"
 import { P2PContext } from "./p2pContext"
 import { RoomContext } from "./roomContext"
 
@@ -14,7 +15,8 @@ const VideoProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useReducer(videoAction, VideoStateInit);
     const { p2p } = useContext(P2PContext);
     const { authorUser } = useContext(RoomContext);
-
+    const { newRoom } = useContext(AppContext)
+    
     useEffect(() => {
         if (authorUser)
             askAuthorForVideo();
@@ -37,19 +39,9 @@ const VideoProvider: React.FC = ({ children }) => {
         if (typeof authorUser == "object") {
             const video = await authorUser.getVideo();
             dispatch({ type: "load_video", payload: video });
-        } else if (authorUser == "currentUser") {
+        } else if (authorUser == "currentUser" && newRoom) {
             // TODO after author create new room, the app context will save the video
-            dispatch({
-                type: "load_video", payload: {
-                    type: VideoType.DOWNLOAD,
-                    length: {
-                        minute: 1,
-                        secoud: 12,
-                        toTimestemp: () => 112
-                    },
-                    link: "https://www.w3schools.com/html/mov_bbb.mp4"
-                }
-            });
+            dispatch({ type: "load_video", payload: newRoom.video });
         }
 
     }

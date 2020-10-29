@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react"
 import { useHistory, useParams } from "react-router-dom";
 import RoomAction from "../actions/roomAction";
-import { RoomStateInit } from "../models/room_model";
+import { IRoomInfo, RoomStateInit } from "../models/room_model";
 import { IRoomProvider } from "../models/room_model"
 import { AppContext } from "./appContext";
 import { P2PContext } from "./p2pContext";
@@ -16,9 +16,10 @@ const RoomProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useReducer(RoomAction, RoomStateInit)
     const { server } = useContext(ServerContext);
     const { p2p } = useContext(P2PContext);
-    const { user } = useContext(AppContext);
+    const { user, newRoom } = useContext(AppContext);
     const { push } = useHistory();
     const { id } = useParams<{ id: string }>();
+    console.log(newRoom);
 
     if (!user)
         push(`/join/${id}`);
@@ -56,13 +57,28 @@ const RoomProvider: React.FC = ({ children }) => {
 
     const loadRoom = async () => {
         dispatch({ type: "loading_on" })
-        const response = await server.loadRoomInfo(id);
+        // TODO use Promide.any
+        const response = await Promise.race([
+            LoadRoomFromApp(),
+            LoadRoomFromServer()
+        ]);
 
         if (response)
             dispatch({ type: "load_room", payload: response })
         else
             return push(`/`);
     }
+
+    const LoadRoomFromServer = () => server.loadRoomInfo(id);
+    const LoadRoomFromApp = (): Promise<IRoomInfo> => {
+        if (newRoom && newRoom.id == id)
+            return Promise.resolve({
+                ...newRoom,
+                watchers: []
+            })
+        else return Promise.reject();
+    }
+    
 
     const selectAuthorUser = () => {
         dispatch({ type: "loading_on" })
