@@ -11,6 +11,7 @@ import MessagesProvider from "../contexts/messagesContext"
 import { RoomContext } from "../contexts/roomContext"
 import Video from "../layouts/video"
 import Loading from "../components/loading"
+import VideoController from "../layouts/videoController"
 
 type Props = {
 
@@ -33,6 +34,7 @@ const RoomView: React.FC<Props> = ({ }) => {
 
                     <VideoWrapper>
                         <Video />
+                        <VideoController/>
                     </VideoWrapper>
                     <div className="info pd-2 sm:pb-4 flex items-start justify-between p-2 border-b-2 border-indigo-100">
                         <VideoTitle title={title} />
