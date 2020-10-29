@@ -3,6 +3,9 @@ import { MessageReactions } from "../types/message_type";
 import { cls } from "../utils/cls";
 
 
+import HHH from "../assets/images/hhh.png";
+
+
 type Props = {
     type: MessageReactions,
     width?: number,
@@ -16,19 +19,19 @@ const Emoji: React.FC<Props> = ({ type, height = 16, width = 16 }) => {
     switch (type) {
         case MessageReactions.SAD:
             return (
-                <img {...style} src="http://localhost/hhh.png" alt="sad emoji" />
+                <img {...style} src={HHH} alt="sad emoji" />
             )
         case MessageReactions.LANTH:
             return (
-                <img {...style} src="http://localhost/hhh.png" alt="lanth emoji" />
+                <img {...style} src={HHH} alt="lanth emoji" />
             )
         case MessageReactions.ANGER:
             return (
-                <img {...style} src="http://localhost/hhh.png" alt="anger emoji" />
+                <img {...style} src={HHH} alt="anger emoji" />
             )
         case MessageReactions.HEART:
             return (
-                <img {...style} src="http://localhost/hhh.png" alt="heart emoji" />
+                <img {...style} src={HHH} alt="heart emoji" />
             )
         default: return null
 
