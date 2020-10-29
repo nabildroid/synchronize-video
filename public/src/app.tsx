@@ -8,6 +8,7 @@ import RoomView from "./views/room_view";
 import JoinProvider from "./contexts/joinContext";
 import RoomProvider from "./contexts/roomContext";
 import Loading from "./components/loading";
+import NewRoomView from "./views/newRoom_view";
 
 
 
@@ -20,6 +21,9 @@ const App = () => {
         <div>
             <Router>
                 <Switch>
+                    <Route path="/" exact>
+                        <NewRoomView />
+                    </Route>
 
                     <Route path="/join/:id" exact >
                         <JoinProvider>
