@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import VideoWrapper from "../layouts/videoWrapper"
 import VideoTitle from "../components/videoTitle"
 import ShareLink from "../components/shareLink"
@@ -20,6 +20,7 @@ type Props = {
 const RoomView: React.FC<Props> = ({ }) => {
     const { loading, title, watchersUsers, link } = useContext(RoomContext)
 
+    const [showVideoController,setShowVideoController] = useState(true);
     const bearkPoint = UseMediaQuery()
     const isLg = bearkPoint == "lg";
     const isNotSm = bearkPoint != "sm";
@@ -33,8 +34,8 @@ const RoomView: React.FC<Props> = ({ }) => {
                 <div className="md:flex-none md:h-screen md:w-2/3 md:max-w-none lg:max-w-4xl flex flex-col">
 
                     <VideoWrapper>
-                        <Video />
-                        <VideoController/>
+                        <Video showController={()=>setShowVideoController(true)}/>
+                        <VideoController show={showVideoController} hide={()=>setShowVideoController(false)}/>
                     </VideoWrapper>
                     <div className="info pd-2 sm:pb-4 flex items-start justify-between p-2 border-b-2 border-indigo-100">
                         <VideoTitle title={title} />

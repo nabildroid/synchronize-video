@@ -5,20 +5,21 @@ import { VideoType } from "../types/video_type";
 
 
 type Props = {
+    showController()
 }
 
-const Video: React.FC<Props> = ({ }) => {
+const Video: React.FC<Props> = ({ showController }) => {
     const { data } = useContext(VideoContext);
-    console.log("video",data);
-    
+    console.log("video", data);
+
     if (!data)
         return <Loading />
     else if (data.type == VideoType.DOWNLOAD)
-        return <video className="w-full h-full">
+        return <video className="w-full h-full" onClick={showController}>
             <source src={data.link.toString()} />
         </video>
     else return <p>Video Not Supported</p>
-            
+
 
 };
 
