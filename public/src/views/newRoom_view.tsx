@@ -2,12 +2,16 @@ import React, { useContext, useState } from "react"
 import Button from "../components/button";
 import Label from "../components/label";
 import { AppContext } from "../contexts/appContext";
+import { ServerContext } from "../contexts/serverContext";
 
 type Props = {
 
 }
 
 const NewRoomView: React.FC<Props> = ({ }) => {
+
+    const { server } = useContext(ServerContext)
+    const { user, addNewRoom } = useContext(AppContext);
     const UserName = user && user.name;
 
     const [name, setName] = useState<string>("");
@@ -20,6 +24,16 @@ const NewRoomView: React.FC<Props> = ({ }) => {
         e.preventDefault();
         if (title.length && video.length && background.length && (UserName || name.length)) {
             setLoading(true);
+            const { id, video: videoData, user } = await server.createRoom(
+                name, video, title, background
+            )
+
+            addNewRoom({
+                id,
+                title,
+                background,
+                video: videoData
+            }, user);
             setLoading(false);
         }
     }

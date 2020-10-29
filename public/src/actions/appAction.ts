@@ -7,6 +7,11 @@ export default (state: IAppState, action: AppActions) => {
 			loading: false,
 			user: action.payload,
 		};
+	if (action.type == "load_new_room")
+		return {
+			...state,
+			newRoom: action.payload,
+		};
 	if (action.type == "loading_on")
 		return {
 			...state,

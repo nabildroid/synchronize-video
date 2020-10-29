@@ -16,7 +16,6 @@ const AppProvider: React.FC = ({ children }) => {
     const { server } = useContext(ServerContext)
     const [auth, setAuth] = useLocalStorage<AuthKey>("auth");
 
-
     useEffect(() => {
         if (auth) {
             dispatch({ type: "loading_on" })
@@ -33,9 +32,16 @@ const AppProvider: React.FC = ({ children }) => {
         dispatch({ type: "login", payload: user })
     }
 
+    const addNewRoom: IAppProvider["addNewRoom"] = (roomData, user) => {
+        if (user)
+            login(user);
+        dispatch({ type: "load_new_room", payload: roomData });
+    }
+
     const values = {
         ...state,
-        login
+        login,
+        addNewRoom
     }
     return (
         <AppContext.Provider value={values}>
