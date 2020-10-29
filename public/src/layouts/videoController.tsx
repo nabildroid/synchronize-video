@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import ProgressBar from "../components/progressBar"
 import Shade from "../components/shade"
 import { TWColors } from "../types/colors"
 
@@ -9,6 +10,7 @@ type Props = {
 
 const VideoController: React.FC<Props> = ({ }) => {
     const [show, setShow] = useState(true);
+    const [progress, setProgress] = useState(0);
 
 
     useEffect(() => {
@@ -19,6 +21,12 @@ const VideoController: React.FC<Props> = ({ }) => {
         }
     }, [show])
 
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setProgress(p=>p + Math.random() / 100);
+        }, 120);
+        return () => clearInterval(timer);
+    }, [])
 
     return (
         <div className="absolute inset-0">
@@ -30,7 +38,7 @@ const VideoController: React.FC<Props> = ({ }) => {
                             a
                         </div>
                         <div>
-                            <span>Progress bar</span>
+                            <ProgressBar progress={progress} />
                         </div>
                     </div>
                 </>
