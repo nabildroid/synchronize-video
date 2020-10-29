@@ -9,7 +9,7 @@ export interface IRoomInfo {
 }
 export interface IRoomState extends IRoomInfo {
 	watchersUsers: IUser[];
-	authorUser: IUser;
+	authorUser: IUser | "currentUser";
 	loading: boolean;
 	error: Error;
 }
@@ -34,7 +34,7 @@ export type RoomActions =
 	  }
 	| {
 			type: "guest_author_to_user";
-			payload: IUser;
+			payload: IUser|"currentUser";
 	  }
 	| {
 			type: "loading_on";

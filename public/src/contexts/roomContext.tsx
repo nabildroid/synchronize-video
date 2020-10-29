@@ -42,6 +42,7 @@ const RoomProvider: React.FC = ({ children }) => {
     const broadcastMyIp = async () => {
         dispatch({ type: "loading_on" })
         const myIp = await p2p.getMyIp();
+        // myIp is not included in ips
         const ips = await server.boardcastIp(id, myIp)
         if (ips) {
             const users = await p2p.join(ips)
@@ -65,10 +66,13 @@ const RoomProvider: React.FC = ({ children }) => {
 
     const selectAuthorUser = () => {
         dispatch({ type: "loading_on" })
-        const userAuthor = state.watchersUsers.filter(
+        const userAuthors = state.watchersUsers.filter(
             user => user.isAuthor
         );
-        dispatch({ type: "guest_author_to_user", payload: userAuthor[0] });
+        console.log(userAuthors);
+        // TODO allow multi authors
+        const userAuthor = userAuthors.length ? userAuthors[0] : "currentUser";
+        dispatch({ type: "guest_author_to_user", payload: userAuthor });
     }
 
     const values = {

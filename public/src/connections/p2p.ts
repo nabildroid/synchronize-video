@@ -24,7 +24,7 @@ class P2P implements P2P_Node_API {
 							user.init({
 								id: 155 * i,
 								name: "hello world!",
-								isAuthor: Math.random() > 0.5,
+								isAuthor: false,
 							});
 							return user;
 						})
