@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import RoomAction from "../actions/roomAction";
 import { IRoomInfo, RoomStateInit } from "../models/room_model";
 import { IRoomProvider } from "../models/room_model"
+import firstResolvedPromise from "../utils/firstResolvedPromise";
 import { AppContext } from "./appContext";
 import { P2PContext } from "./p2pContext";
 import { ServerContext } from "./serverContext";
@@ -57,8 +58,7 @@ const RoomProvider: React.FC = ({ children }) => {
 
     const loadRoom = async () => {
         dispatch({ type: "loading_on" })
-        // TODO use Promide.any
-        const response = await Promise.race([
+        const response = await firstResolvedPromise<false | IRoomInfo>([
             LoadRoomFromApp(),
             LoadRoomFromServer()
         ]);
