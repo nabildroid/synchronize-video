@@ -1,6 +1,5 @@
-import React, { useLayoutEffect, useEffect } from "react"
+import React, { useLayoutEffect} from "react"
 import Shade from "../components/shade"
-import VideoProvider from "../contexts/videoContext"
 import { TWColors } from "../types/colors"
 
 type Props = {
@@ -32,9 +31,7 @@ const VideoWrapper: React.FC<Props> = ({ children }) => {
                 ref={wrapper}
                 className=" sm:max-w-lg md:max-w-none sm:bg-indigo-600 relative w-full h-64 max-w-md mx-auto bg-yellow-500"
             >
-                <VideoProvider>
                     {children}
-                </VideoProvider>
             </div>
         </div >
     )

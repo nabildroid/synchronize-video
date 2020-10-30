@@ -13,6 +13,21 @@ export default (state: IVideoState, action: VideoActions): IVideoState => {
 			state: action.paylaod,
 			loading: false,
 		};
+	} else if (action.type == "controller_on") {
+		return {
+			...state,
+			controller: true,
+		};
+	} else if (action.type == "controller_off") {
+		return {
+			...state,
+			controller: false,
+		};
+	} else if (action.type == "update_position") {
+		return {
+			...state,
+			position: action.payload,
+		};
 	} else if (action.type == "loading_off" || action.type == "loading_on")
 		return {
 			...state,

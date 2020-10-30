@@ -1,26 +1,29 @@
-import React, { useContext } from "react";
-import Loading from "../components/loading";
-import { VideoContext } from "../contexts/videoContext";
-import { VideoType } from "../types/video_type";
-
+import React, { useContext } from "react"
+import VideoWrapper from "../components/videoWrapper"
+import { VideoContext } from "../contexts/videoContext"
+import VideoController from "./videoController"
+import VideoElement from "./videoElement"
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 type Props = {
-    showController()
+
 }
 
-const Video: React.FC<Props> = ({ showController }) => {
-    const { data } = useContext(VideoContext);
-    console.log("video", data);
 
-    if (!data)
-        return <Loading />
-    else if (data.type == VideoType.DOWNLOAD)
-        return <video className="w-full h-full" onClick={showController}>
-            <source src={data.link.toString()} />
-        </video>
-    else return <p>Video Not Supported</p>
-
-
-};
+const Video: React.FC<Props> = ({ }) => {
+    const handleFullscreen = useFullScreenHandle();
+    return (
+        <FullScreen handle={handleFullscreen}>
+            <VideoWrapper>
+                <VideoElement />
+                <VideoController
+                    enterFullscreen={handleFullscreen.enter}
+                    exitFullscreen={handleFullscreen.exit}
+                    fullscreen={handleFullscreen.active}
+                />
+            </VideoWrapper>
+        </FullScreen>
+    )
+}
 
 export default Video;

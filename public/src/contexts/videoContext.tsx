@@ -16,7 +16,7 @@ const VideoProvider: React.FC = ({ children }) => {
     const { p2p } = useContext(P2PContext);
     const { authorUser } = useContext(RoomContext);
     const { newRoom } = useContext(AppContext)
-    
+
     useEffect(() => {
         if (authorUser)
             askAuthorForVideo();
@@ -36,18 +36,25 @@ const VideoProvider: React.FC = ({ children }) => {
 
     const askAuthorForVideo = async () => {
         dispatch({ type: "loading_on" })
+        console.log(authorUser);
         if (typeof authorUser == "object") {
             const video = await authorUser.getVideo();
             dispatch({ type: "load_video", payload: video });
         } else if (authorUser == "currentUser" && newRoom) {
-            // TODO after author create new room, the app context will save the video
             dispatch({ type: "load_video", payload: newRoom.video });
         }
+
+    }
+    const toggleController = () => {
+        if (state.controller)
+            dispatch({ type: "controller_off" })
+        else dispatch({ type: "controller_on" })
 
     }
 
     const values = {
         ...state,
+        toggleController
 
     }
     return (
