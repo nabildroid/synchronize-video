@@ -20,8 +20,8 @@ export interface IServerAPI {
 	signMeIn(auth: AuthKey): Promise<JoinRoomResponse>;
 	createRoom(
 		name: string,
-		video: VideoLink,
 		title: string,
-		background: Background
+		background: Background,
+		video?: VideoLink // has a value only when the videoType.DOWNLOAD
 	): Promise<NewRoomResponse>;
 }

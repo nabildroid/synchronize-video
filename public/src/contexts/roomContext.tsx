@@ -45,6 +45,7 @@ const RoomProvider: React.FC = ({ children }) => {
         dispatch({ type: "loading_on" })
         const myIp = await p2p.getMyIp();
         // myIp is not included in ips
+        // TODO the server only determine whose author
         const ips = await server.boardcastIp(id, myIp)
         if (ips) {
             const users = await p2p.join(ips)

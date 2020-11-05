@@ -8,8 +8,8 @@ export type JoinRoomResponse = Guest | false;
 
 export type NewRoomResponse = {
 	id: RoomId;
-	user?: Guest;
-	video: VideoData & { type: VideoType.DOWNLOAD};
+	user?: Guest; // create new user, or use existing one
+	video? : VideoData & { type: VideoType.DOWNLOAD}; // the parsed video from the server
 	// TODO add room expire date
 };
 
