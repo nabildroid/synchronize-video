@@ -18,7 +18,6 @@ const App = () => {
         return <Loading />
 
     return (
-        <div>
             <Router>
                 <Switch>
                     <Route path="/" exact>
@@ -42,8 +41,6 @@ const App = () => {
                     <Redirect to="/" />
                 </Switch>
             </Router>
-
-        </div >
     )
 }
 
