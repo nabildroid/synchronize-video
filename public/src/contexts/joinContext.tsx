@@ -17,8 +17,6 @@ const JoinProvider: React.FC = ({ children }) => {
     const { id } = useParams<{ id: string }>();
     const { push, replace } = useHistory();
 
-    if (user)
-        push(`/room/${id}`);
 
     useEffect(() => {
         loadRoom();
@@ -30,9 +28,13 @@ const JoinProvider: React.FC = ({ children }) => {
         dispatch({ type: "loading_on" })
         const response = await server.loadRoomInfo(id);
 
-        if (response)
+        if (response) {
+            if (user && response.watchers.some(w => w.id == user.id)) {
+                replace(`/room/${id}`);
+            } else
             dispatch({ type: "load_room", payload: response })
-        else
+
+        } else
             return push(`/`);
     }
 
