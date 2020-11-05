@@ -26,6 +26,7 @@ const VideoWrapper: React.FC<Props> = ({ children }) => {
     return (
         <div className="video relative p-2 pb-0">
             <Shade color={TWColors.BLACK} opacity={100} className="inset-x-0 h-40" />
+            {/* TODO show the background */}
             <div
                 style={{ "height": height }}
                 ref={wrapper}
