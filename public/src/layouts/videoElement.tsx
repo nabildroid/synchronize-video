@@ -27,11 +27,10 @@ const VideoElement: React.FC<Props> = ({ }) => {
         })
     }
 
-    if (!data)
-        return <Loading />
-    else if (data.type == VideoType.DOWNLOAD)
-        return <div onClick={toggleController} className="w-full h-full">
-            <div className="w-full h-full pointer-events-none">
+
+    return <div onClick={toggleController} className="w-full h-full">
+        <div className="w-full h-full pointer-events-none">
+            {data.type == VideoType.DOWNLOAD ?
                 <ReactPlayer
                     url={data.link.toString()}
                     onProgress={({ playedSeconds }) => HandleVideoProgress(playedSeconds)}
@@ -39,9 +38,10 @@ const VideoElement: React.FC<Props> = ({ }) => {
                     onDuration={HandleVideoDuration}
                     width="100%" height="100%"
                 />
-            </div>
+                : <p>VideoType not supported</p>
+            }
         </div>
-    else return <p>Video Not Supported</p>
+    </div>
 };
 
 
