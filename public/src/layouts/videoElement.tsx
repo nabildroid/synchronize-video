@@ -9,8 +9,23 @@ type Props = {
 }
 
 const VideoElement: React.FC<Props> = ({ }) => {
-    const { data, toggleController } = useContext(VideoContext);
-    console.log("video", data);
+    const { data, toggleController, setLength, playTo } = useContext(VideoContext);
+
+    // TODO `HandleVideoDuration` should only works when the VideoType.DOWNLOAD
+    const HandleVideoDuration = (length: number) => {
+        setLength({
+            minute: Math.floor(length / 60),
+            secoud: Math.floor(length % 60),
+            toTimestemp: () => length
+        })
+    }
+    const HandleVideoProgress = (time: number) => {
+        playTo({
+            minute: Math.floor(time / 60),
+            secoud: Math.floor(time % 60),
+            toTimestemp: () => time
+        })
+    }
 
     if (!data)
         return <Loading />
@@ -19,9 +34,9 @@ const VideoElement: React.FC<Props> = ({ }) => {
             <div className="w-full h-full pointer-events-none">
                 <ReactPlayer
                     url={data.link.toString()}
-                    onProgress={console.log}
+                    onProgress={({ playedSeconds }) => HandleVideoProgress(playedSeconds)}
                     playing={true}
-
+                    onDuration={HandleVideoDuration}
                     width="100%" height="100%"
                 />
             </div>

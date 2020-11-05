@@ -7,6 +7,7 @@ export type LateUser = {
 };
 export interface IVideoState {
 	data: VideoData;
+	length: Duration;
 	state: VideoState;
 	position: Duration;
 	lateWatchers: LateUser[];
@@ -17,6 +18,7 @@ export interface IVideoState {
 
 export const VideoStateInit: IVideoState = {
 	data: null,
+	length: null,
 	state: VideoState.WAITE,
 	lateWatchers: [],
 	controller: true,
@@ -36,8 +38,12 @@ export type VideoActions =
 			payload: VideoData;
 	  }
 	| {
+			type: "set_length";
+			payload: Duration;
+	  }
+	| {
 			type: "set_state";
-			paylaod: VideoState;
+			payload: VideoState;
 	  }
 	| {
 			type: "loading_on";
@@ -66,7 +72,8 @@ export type VideoActions =
 
 export interface IvideoProvider extends IVideoState {
 	toggleController();
-	playTo?: (time: Duration) => boolean;
+	setLength(length: Duration);
+	playTo(time: Duration);
 	pause?: () => Promise<boolean>;
 	play?: () => Promise<boolean>;
 	start?: () => Promise<boolean>;

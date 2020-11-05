@@ -49,14 +49,22 @@ const VideoProvider: React.FC = ({ children }) => {
         if (state.controller)
             dispatch({ type: "controller_off" })
         else dispatch({ type: "controller_on" })
-
+    }
+    const setLength = (length: Duration) => {
+        dispatch({ type: "set_length", payload: length })
+    }
+    const playTo = (time: Duration) => {
+        console.log(time);
+        dispatch({ type: "update_position", payload: time })
     }
 
     const values = {
         ...state,
-        toggleController
-
+        toggleController,
+        setLength,
+        playTo
     }
+
     return (
         <VideoContext.Provider value={values}>
             {children}

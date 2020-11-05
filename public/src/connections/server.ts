@@ -98,11 +98,6 @@ class Server implements IServerAPI {
 			id: Math.floor(Math.random() * 100).toString(),
 			video: {
 				type: VideoType.DOWNLOAD,
-				length: {
-					minute: 1,
-					secoud: 12,
-					toTimestemp: () => 112,
-				},
 				link: video,
 			},
 		};

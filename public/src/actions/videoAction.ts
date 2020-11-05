@@ -1,16 +1,26 @@
 import { IVideoState, VideoActions } from "../models/video_model";
+import { VideoType } from "../types/video_type";
 
 export default (state: IVideoState, action: VideoActions): IVideoState => {
 	if (action.type == "load_video")
 		return {
 			...state,
 			data: action.payload,
+			length:
+				action.payload.type == VideoType.BROADCAST
+					? action.payload.length
+					: null,
 			loading: false,
 		};
-	else if (action.type == "set_state") {
+	else if (action.type == "set_length") {
 		return {
 			...state,
-			state: action.paylaod,
+			length: action.payload,
+		};
+	} else if (action.type == "set_state") {
+		return {
+			...state,
+			state: action.payload,
 			loading: false,
 		};
 	} else if (action.type == "controller_on") {

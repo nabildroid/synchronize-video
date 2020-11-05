@@ -17,7 +17,7 @@ type Props = {
 
 
 const VideoController: React.FC<Props> = ({ enterFullscreen, exitFullscreen, fullscreen }) => {
-    const { state, controller, toggleController, pause, play, start, position, data } = useContext(VideoContext);
+    const { state, controller, toggleController, pause, play, start, position, data, length } = useContext(VideoContext);
 
     useEffect(() => {
         // TODO use debounce because any action should reset the counter
@@ -42,10 +42,8 @@ const VideoController: React.FC<Props> = ({ enterFullscreen, exitFullscreen, ful
 
     }
 
-    if (!data)
+    if (!data || !length)
         return null;
-    const { length } = data;
-
     const progress = position.toTimestemp() / length.toTimestemp();
     return controller && (
         <div className="absolute inset-0 z-10">

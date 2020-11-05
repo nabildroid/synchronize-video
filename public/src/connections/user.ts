@@ -44,11 +44,6 @@ class User implements IUser {
 			setTimeout(() => {
 				res({
 					type: VideoType.DOWNLOAD,
-					length: {
-						minute: 10,
-						secoud: 15,
-						toTimestemp: () => 1015,
-					},
 					link: "https://www.w3schools.com/html/mov_bbb.mp4",
 				});
 			}, 500)
