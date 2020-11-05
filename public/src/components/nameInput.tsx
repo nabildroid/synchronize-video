@@ -8,10 +8,11 @@ import cl from "../utils/cls";
 type Props = {
     name: string,
     setName(val: string),
+    excludeRandomNames?: string[],
     isError: boolean
 }
 
-const NameInput: React.FC<Props> = ({ name, setName, isError }) => {
+const NameInput: React.FC<Props> = ({ name, setName, excludeRandomNames, isError }) => {
 
     const [error, setError] = useState(false);
 
@@ -19,12 +20,11 @@ const NameInput: React.FC<Props> = ({ name, setName, isError }) => {
         if (isError && !error) {
             setError(true);
             const timer = setTimeout(() => setError(false), 2000);
-            // TODO clearTimeout timer
         }
     }, [isError]);
 
     const insertRandomName = () => {
-        setName(RandomName());
+        setName(RandomName(excludeRandomNames || []));
     }
     const textStyle = cl({
         "text-indigo-700": !error,
