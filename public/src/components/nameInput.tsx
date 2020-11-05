@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RandomName from "../utils/randomName";
 import Label from "./label";
 import Svg from "./svg";
