@@ -15,7 +15,7 @@ const JoinProvider: React.FC = ({ children }) => {
 
     const { server } = useContext(ServerContext)
     const { id } = useParams<{ id: string }>();
-    const { push } = useHistory();
+    const { push, replace } = useHistory();
 
     if (user)
         push(`/room/${id}`);
@@ -26,18 +26,6 @@ const JoinProvider: React.FC = ({ children }) => {
         return () => console.log("disposing JoinContext");
     }, [])
 
-    const submitName = useCallback(async (name: string) => {
-        dispatch({ type: "loading_on" });
-        const response = await server.join(name);
-        dispatch({ type: "loading_off" })
-        if (!response)
-            dispatch({ type: "login_error", payload: "check your name" })
-        else {
-            login(response)
-            push(`/room/${id}`)
-        }
-    }, [server, dispatch]);
-
     const loadRoom = async () => {
         dispatch({ type: "loading_on" })
         const response = await server.loadRoomInfo(id);
@@ -46,14 +34,22 @@ const JoinProvider: React.FC = ({ children }) => {
             dispatch({ type: "load_room", payload: response })
         else
             return push(`/`);
-
-
     }
 
-    useEffect(() => {
-        if (!state.loading && !state.title)
-            push("/");
-    }, [state.loading, state.title])
+    const submitName = useCallback(async (name: string) => {
+        dispatch({ type: "loading_on" });
+        const response = await server.join(name);
+
+        dispatch({ type: "loading_off" })
+        if (!response)
+            dispatch({ type: "login_error", payload: "check your name" })
+        else {
+            login(response)
+            push(`/room/${id}`)
+    }
+    }, [server]);
+
+
 
     const values = useMemo(() => ({
         ...state,

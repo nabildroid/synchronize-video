@@ -18,28 +18,48 @@ const RoomProvider: React.FC = ({ children }) => {
     const { server } = useContext(ServerContext);
     const { p2p } = useContext(P2PContext);
     const { user, newRoom } = useContext(AppContext);
-    const { push } = useHistory();
+    const { replace, push } = useHistory();
     const { id } = useParams<{ id: string }>();
     console.log(newRoom);
 
     if (!user)
-        push(`/join/${id}`);
+        replace(`/join/${id}`);
 
     useEffect(() => {
         loadRoom();
     }, [])
 
+    // selecting the auhtor must be a event driven because, later we might implement a multi author, which means each time the watchers changes we have to select the authors all again
     useEffect(() => {
-        if (!!state.title) {
-            broadcastMyIp()
-        }
-    }, [state.title])
-
-    useEffect(() => {
-        if (!!state.watchersUsers.length) {
+        if (state.watchersUsers.length) {
             selectAuthorUser();
         }
     }, [state.watchersUsers])
+
+    const loadRoom = async () => {
+        dispatch({ type: "loading_on" })
+        const response = await firstResolvedPromise<false | IRoomInfo>([
+            LoadRoomFromApp(),
+            LoadRoomFromServer()
+        ]);
+
+        if (response) {
+            dispatch({ type: "load_room", payload: response })
+            // broadcast the current userIp happen only one time
+            broadcastMyIp()
+        }
+        else return push(`/`);
+    }
+
+    const LoadRoomFromServer = () => server.loadRoomInfo(id);
+    const LoadRoomFromApp = (): Promise<IRoomInfo> => {
+        if (newRoom && newRoom.id == id)
+            return Promise.resolve({
+                ...newRoom,
+                watchers: []
+            })
+        else return Promise.reject();
+    }
 
     const broadcastMyIp = async () => {
         dispatch({ type: "loading_on" })
@@ -56,31 +76,6 @@ const RoomProvider: React.FC = ({ children }) => {
         }
     }
 
-
-    const loadRoom = async () => {
-        dispatch({ type: "loading_on" })
-        const response = await firstResolvedPromise<false | IRoomInfo>([
-            LoadRoomFromApp(),
-            LoadRoomFromServer()
-        ]);
-
-        if (response)
-            dispatch({ type: "load_room", payload: response })
-        else
-            return push(`/`);
-    }
-
-    const LoadRoomFromServer = () => server.loadRoomInfo(id);
-    const LoadRoomFromApp = (): Promise<IRoomInfo> => {
-        if (newRoom && newRoom.id == id)
-            return Promise.resolve({
-                ...newRoom,
-                watchers: []
-            })
-        else return Promise.reject();
-    }
-    
-
     const selectAuthorUser = () => {
         dispatch({ type: "loading_on" })
         const userAuthors = state.watchersUsers.filter(
@@ -92,10 +87,17 @@ const RoomProvider: React.FC = ({ children }) => {
         dispatch({ type: "guest_author_to_user", payload: userAuthor });
     }
 
+
+
+
+
+
+
     const values = {
         ...state,
         link: window.location.origin + "/join/" + id
     }
+
     return (
         <RoomContext.Provider value={values}>
             {children}

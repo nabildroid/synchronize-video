@@ -18,13 +18,11 @@ const AppProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         if (auth) {
-            dispatch({ type: "loading_on" })
             server.signMeIn(auth).then(response => {
                 response && login(response);
             });
-        } else
-            dispatch({ type: "loading_off" })
-
+        }
+        dispatch({ type: "loading_off" })
     }, [])
 
     const login: IAppProvider["login"] = (user) => {
@@ -33,8 +31,7 @@ const AppProvider: React.FC = ({ children }) => {
     }
 
     const addNewRoom: IAppProvider["addNewRoom"] = (roomData, user) => {
-        if (user)
-            login(user);
+        if (user) login(user);
         dispatch({ type: "load_new_room", payload: roomData });
     }
 
