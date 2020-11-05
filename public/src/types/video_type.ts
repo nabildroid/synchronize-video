@@ -25,7 +25,6 @@ export type BroadcastChunks = string[];
 export type VideoData =
 	| {
 			type: VideoType.BROADCAST;
-			length: Duration;
 			chunks: BroadcastChunks;
 	  }
 	| {

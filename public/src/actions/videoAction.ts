@@ -6,10 +6,6 @@ export default (state: IVideoState, action: VideoActions): IVideoState => {
 		return {
 			...state,
 			data: action.payload,
-			length:
-				action.payload.type == VideoType.BROADCAST
-					? action.payload.length
-					: null,
 			loading: false,
 		};
 	else if (action.type == "set_length") {
