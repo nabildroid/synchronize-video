@@ -17,7 +17,7 @@ const Join: React.FC<Props> = ({ author, showForPhone = false, hidePhoneLogin })
     const [name, setName] = useState("nabil");
     const styleShowForPhone = cl({ "hidden": !showForPhone })
     const styleDefault = cl("md:relative md:block fixed inset-0 z-10 flex items-end")
-    const { submitName, error } = useContext(JoinContext)
+    const { submitName, loading_submit, error } = useContext(JoinContext)
 
     const onSubmit = e => {
         e.preventDefault();
@@ -37,8 +37,17 @@ const Join: React.FC<Props> = ({ author, showForPhone = false, hidePhoneLogin })
             >
                 <JoinTitle name={author} />
                 <div className="space-y-3">
-                    <NameInput name={name} setName={setName} />
+                    <NameInput
+                        name={name}
+                        setName={setName}
+                        isError={!!error}
+                    />
+                    {
+                        loading_submit ?
+                            <Button type="button" icon="Loading" iconSize={5} text="" fullwith={true} textSize="sm" className="py-2" />
+                            :
                     <Button type="submit" text="Join" fullwith={true} textSize="lg" />
+                    }
                 </div>
             </form>
         </div>

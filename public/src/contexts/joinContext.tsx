@@ -37,17 +37,17 @@ const JoinProvider: React.FC = ({ children }) => {
     }
 
     const submitName = useCallback(async (name: string) => {
-        dispatch({ type: "loading_on" });
+        dispatch({ type: "loading_submit_on" });
         const response = await server.join(name);
 
-        dispatch({ type: "loading_off" })
+        dispatch({ type: "loading_submit_off" })
         if (!response)
             dispatch({ type: "login_error", payload: "check your name" })
         else {
-            login(response)
-            push(`/room/${id}`)
+            // login(response)
+            setTimeout(() => push(`/room/${id}`), 350)
     }
-    }, [server]);
+    }, [server, dispatch]);
 
 
 

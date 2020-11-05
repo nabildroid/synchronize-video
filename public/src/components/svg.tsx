@@ -22,11 +22,14 @@ const Svg: SvgFC = ({ color = TWColors.BLACK, type = null, className = "", size 
 
     const sizeStyle = cl(`w-${size}`, `h-${size}`);
     const colorStyle = cl(applyColor(color, "text", 5))
-    const style = cls(colorStyle, sizeStyle, className)
+    const animationStyle = cl({
+        "animate-spin": type == "Loading"
+    });
+    const style = cls(colorStyle, sizeStyle, animationStyle, className);
 
 
     return (
-        <svg {...style} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={weight} strokeLinecap="round" strokeLinejoin="round">
+        <svg {...style} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={type == "Loading" ? 1 : weight} strokeLinecap="round" strokeLinejoin="round">
             {
                 children ? children : (() => {
                     if (type) {

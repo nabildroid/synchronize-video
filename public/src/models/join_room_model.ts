@@ -4,6 +4,7 @@ import { IRoomInfo } from "./room_model";
 export interface IJoinRoomState extends IRoomInfo {
 	author: Guest;
 	loading: boolean;
+	loading_submit: boolean;
 	error: Error;
 }
 export const JoinRoomStateInit: IJoinRoomState = {
@@ -12,6 +13,7 @@ export const JoinRoomStateInit: IJoinRoomState = {
 	watchers: [],
 	author: null,
 	loading: true,
+	loading_submit: false,
 	error: null,
 };
 
@@ -25,6 +27,12 @@ export type JoinRoomActions =
 	  }
 	| {
 			type: "loading_off";
+	  }
+	| {
+			type: "loading_submit_on";
+	  }
+	| {
+			type: "loading_submit_off";
 	  }
 	| {
 			type: "login_error";

@@ -11,36 +11,36 @@ import Loading from "./components/loading";
 import NewRoomView from "./views/newRoom_view";
 
 
-
 const App = () => {
     const { loading } = useContext(AppContext)
+
     if (loading)
-        return <Loading />
+        return <Loading center={true} heightScreen={true} />
 
     return (
-            <Router>
-                <Switch>
-                    <Route path="/" exact>
-                        <NewRoomView />
-                    </Route>
+        <Router>
+            <Switch>
+                <Route path="/" exact>
+                    <NewRoomView />
+                </Route>
 
-                    <Route path="/join/:id" exact >
-                        <JoinProvider>
-                            <JoinView />
-                        </JoinProvider>
-                    </Route>
+                <Route path="/join/:id" exact >
+                    <JoinProvider>
+                        <JoinView />
+                    </JoinProvider>
+                </Route>
 
-                    <Route path="/room/:id" exact >
-                        <P2PProvider>
-                            <RoomProvider>
-                                <RoomView />
-                            </RoomProvider>
-                        </P2PProvider>
-                    </Route>
+                <Route path="/room/:id" exact >
+                    <P2PProvider>
+                        <RoomProvider>
+                            <RoomView />
+                        </RoomProvider>
+                    </P2PProvider>
+                </Route>
 
-                    <Redirect to="/" />
-                </Switch>
-            </Router>
+                <Redirect to="/" />
+            </Switch>
+        </Router>
     )
 }
 

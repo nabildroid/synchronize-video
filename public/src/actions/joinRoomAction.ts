@@ -16,6 +16,15 @@ export default (
 			...state,
 			loading: action.type == "loading_on",
 		};
+	if (
+		action.type == "loading_submit_off" ||
+		action.type == "loading_submit_on"
+	)
+		return {
+			...state,
+			error: action.type == "loading_submit_on" ? null : state.error,
+			loading_submit: action.type == "loading_submit_on",
+		};
 	if (action.type == "login_error")
 		return {
 			...state,

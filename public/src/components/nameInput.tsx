@@ -3,17 +3,33 @@ import RandomName from "../utils/randomName";
 import Label from "./label";
 import Svg from "./svg";
 import { TWColors } from "../types/colors";
+import cl from "../utils/cls";
 
 type Props = {
     name: string,
-    setName(val: string)
+    setName(val: string),
+    isError: boolean
 }
 
-const NameInput: React.FC<Props> = ({ name, setName }) => {
+const NameInput: React.FC<Props> = ({ name, setName, isError }) => {
+
+    const [error, setError] = useState(false);
+
+    useEffect(() => {
+        if (isError && !error) {
+            setError(true);
+            const timer = setTimeout(() => setError(false), 2000);
+            // TODO clearTimeout timer
+        }
+    }, [isError]);
 
     const insertRandomName = () => {
         setName(RandomName());
     }
+    const textStyle = cl({
+        "text-indigo-700": !error,
+        "text-red-700": error,
+    })
 
     return (<div className="space-y-1">
         <Label name="name" htmlFor="input-name" />
@@ -21,7 +37,7 @@ const NameInput: React.FC<Props> = ({ name, setName }) => {
             <input
                 value={name}
                 onChange={e => setName(e.target.value)}
-                className="text-md flex-1 h-10 px-2 font-medium tracking-wider text-indigo-700 bg-transparent outline-none" placeholder="enter your name" type="text" id="input-name"
+                className={`${textStyle.toString()} text-md flex-1 h-10 px-2 font-medium tracking-wider  bg-transparent outline-none`} placeholder="enter your name" type="text" id="input-name"
             />
             <button
                 onClick={insertRandomName}
