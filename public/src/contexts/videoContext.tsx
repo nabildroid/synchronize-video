@@ -4,7 +4,7 @@ import videoAction from "../actions/videoAction"
 import P2P from "../connections/p2p"
 import { IvideoProvider, VideoStateInit } from "../models/video_model"
 import { DataFlowTypes } from "../types/P2P_node_API"
-import { Duration, VideoState, VideoType } from "../types/video_type"
+import { Duration, VideoData, VideoState, VideoType } from "../types/video_type"
 import { AppContext } from "./appContext"
 import { P2PContext } from "./p2pContext"
 import { RoomContext } from "./roomContext"
@@ -27,8 +27,8 @@ const VideoProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         const authorWaitingForWatchers = authorUser == "currentUser" && state.state == VideoState.WAITING;
-        console.log(authorWaitingForWatchers,watchersUsers);
-        
+        console.log(authorWaitingForWatchers, watchersUsers);
+
         if (authorWaitingForWatchers && watchersUsers.length)
             pause();
     }, [watchersUsers, authorUser])
@@ -42,6 +42,22 @@ const VideoProvider: React.FC = ({ children }) => {
                 }
             })
         })
+
+        p2p.listenTo(DataFlowTypes.VIDEO_STATE, ({ sender, payload }) => {
+            if (sender.isAuthor)
+                dispatch({ type: "set_state", payload: payload as VideoState});
+        })
+
+        p2p.listenTo(DataFlowTypes.VIDEO_DATA, ({ sender, payload }) => {
+            if (sender.isAuthor)
+                dispatch({ type: "load_video", payload: payload  as VideoData});
+        })
+
+        p2p.listenTo(DataFlowTypes.VIDEO_LENGTH, ({ sender, payload }) => {
+            if (sender.isAuthor)
+                dispatch({ type: "set_length", payload: payload  as Duration});
+        })
+
     }, [])
 
     const askAuthorForVideo = async () => {
@@ -68,13 +84,18 @@ const VideoProvider: React.FC = ({ children }) => {
     }
 
     const playTo = (time: Duration) => {
-        console.log(time);
-        dispatch({ type: "update_position", payload: time })
+        p2p.send({
+            target: "all",
+            type: DataFlowTypes.USER_POSITION,
+            payload: time
+        }).then(() =>
+            dispatch({ type: "update_position", payload: time })
+        );
     }
 
     const pause = () => {
         console.log("video paused");
-        
+
         p2p.send({
             target: "all",
             type: DataFlowTypes.VIDEO_STATE,
