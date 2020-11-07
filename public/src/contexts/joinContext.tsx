@@ -46,7 +46,7 @@ const JoinProvider: React.FC = ({ children }) => {
         if (!response)
             dispatch({ type: "login_error", payload: "check your name" })
         else {
-            // login(response)
+            login(response)
             setTimeout(() => push(`/room/${id}`), 350)
     }
     }, [server, dispatch]);
