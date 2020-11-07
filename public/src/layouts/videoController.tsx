@@ -6,6 +6,7 @@ import Shade from "../components/shade"
 import Svg from "../components/svg"
 import VideoStateButton from "../components/VideoStateButton"
 import VideoTime from "../components/videoTime"
+import { RoomContext } from "../contexts/roomContext"
 import { VideoContext } from "../contexts/videoContext"
 import { TWColors } from "../types/colors"
 import { Duration, VideoState } from "../types/video_type"
@@ -19,6 +20,7 @@ type Props = {
 
 const VideoController: React.FC<Props> = ({ enterFullscreen, exitFullscreen, fullscreen }) => {
     const { state, controller, toggleController, pause, play, start, position, length } = useContext(VideoContext);
+    const { authorUser } = useContext(RoomContext);
 
     useEffect(() => {
         // TODO use debounce because any action should reset the counter
@@ -55,7 +57,7 @@ const VideoController: React.FC<Props> = ({ enterFullscreen, exitFullscreen, ful
             {!!length &&
                 <div className="relative z-10 flex flex-col w-full h-full">
                     <div className="flex items-center justify-center flex-1" onClick={toggleController}>
-                        <VideoStateButton state={state} change={HandleVideoStateChange} />
+                        <VideoStateButton author={authorUser} state={state} change={HandleVideoStateChange} />
                     </div>
                     <div className="flex flex-col">
 

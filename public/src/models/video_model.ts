@@ -19,7 +19,7 @@ export interface IVideoState {
 export const VideoStateInit: IVideoState = {
 	data: null,
 	length: null,
-	state: VideoState.WAITE,
+	state: VideoState.WAITING,
 	lateWatchers: [],
 	controller: true,
 	loading: true,

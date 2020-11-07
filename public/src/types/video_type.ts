@@ -5,7 +5,7 @@ export interface Duration {
 }
 
 export enum VideoState {
-	WAITE,
+	WAITING, // for the author means waiting for watchers, for watchers means waiting for the author to start the video
 	PLAYIED,
 	PUASED,
 }

@@ -7,9 +7,10 @@ export interface IRoomInfo {
 	background: Background;
 	watchers: Guest[];
 }
+export type AuthorUser = IUser | "currentUser";
 export interface IRoomState extends IRoomInfo {
 	watchersUsers: IUser[];
-	authorUser: IUser | "currentUser";
+	authorUser: AuthorUser;
 	loading: boolean;
 	error: Error;
 }
