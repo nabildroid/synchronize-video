@@ -13,6 +13,8 @@ class Server implements IServerAPI {
 	auth: AuthKey = null;
 
 	signMeIn(auth: AuthKey): Promise<JoinRoomResponse> {
+		console.log("==========> get user from auth request");
+
 		return new Promise((res, rej) =>
 			setTimeout(() => {
 				if (auth.key == "auth me please!") {
@@ -29,7 +31,7 @@ class Server implements IServerAPI {
 	}
 
 	join(name): Promise<JoinRoomResponse> {
-		console.log("........fetching join");
+		console.log("==========> join request");
 
 		return new Promise((res, rej) =>
 			setTimeout(() => {
@@ -49,6 +51,8 @@ class Server implements IServerAPI {
 		roomId: RoomId,
 		ip: IPAdressType
 	): Promise<IPAdressType[] | false> {
+		console.log("==========> add my api to sever, and get watchers ips request");
+
 		if (!this.auth) return Promise.resolve<false>(false);
 		else
 			return new Promise((res, rej) =>
@@ -60,7 +64,8 @@ class Server implements IServerAPI {
 	}
 
 	loadRoomInfo(id: string): Promise<IRoomInfo | false> {
-		console.log("........fetching room info");
+		console.log("==========> room info request");
+
 		return new Promise((res, rej) =>
 			setTimeout(
 				() =>
@@ -95,6 +100,8 @@ class Server implements IServerAPI {
 		title: string,
 		background: string
 	): Promise<NewRoomResponse> {
+		console.log("==========> create new room request");
+
 		const response: NewRoomResponse = {
 			id: Math.floor(Math.random() * 100).toString(),
 			video: {

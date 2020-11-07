@@ -48,7 +48,8 @@ export type IPAdressType = string;
 
 // TODO implement unsubscribe from the listener
 export default interface P2P_Node_API {
-	join: (IPAdresses: IPAdressType[]) => Promise<IUser[]>;
+	// TODO remove allowAuthors, its just for debugging 
+	join: (IPAdresses: IPAdressType[],allowAuthors:boolean) => Promise<IUser[]>;
 	send: (data: SendDataType) => Promise<boolean>;
 	listenTo: <T extends DataFlowTypes>(
 		to: T,

@@ -29,9 +29,9 @@ const VideoProvider: React.FC = ({ children }) => {
 
     function startTheVideoWhenWatchersCome() {
         const authorWaitingForWatchers = authorUser == "currentUser" && state.state == VideoState.WAITING;
-        console.log(authorWaitingForWatchers, watchersUsers);
 
         if (authorWaitingForWatchers && watchersUsers.length){
+            console.log("watchers users", watchersUsers);
             // the video state now is on waiting whitch means unresponsive.
             // after the watchers come, we should give the author the option to play it whenever he want
             // when video state is paused, the video becomes responsive to play action
@@ -48,34 +48,41 @@ const VideoProvider: React.FC = ({ children }) => {
                     user: sender
                 }
             })
+            console.log("<<<<===== P2P UserPosition")
+
         })
 
         p2p.listenTo(DataFlowTypes.VIDEO_STATE, ({ sender, payload }) => {
             if (sender.isAuthor)
                 dispatch({ type: "set_state", payload: payload as VideoState });
+            console.log("<<<<===== P2P videoState")
         })
 
         p2p.listenTo(DataFlowTypes.VIDEO_DATA, ({ sender, payload }) => {
             if (sender.isAuthor)
                 dispatch({ type: "load_video", payload: payload as VideoData });
+                console.log("<<<<===== P2P videoData")
         })
 
         p2p.listenTo(DataFlowTypes.VIDEO_LENGTH, ({ sender, payload }) => {
             if (sender.isAuthor)
                 dispatch({ type: "set_length", payload: payload as Duration });
+                console.log("<<<<===== P2P videoLength")
         })
     }
 
     function askAuthorForVideoWhenItUnavailable() {
         if (authorUser && !state.data) {
             dispatch({ type: "loading_on" })
-            console.log(authorUser);
             // get the video either from the p2p or AppContext
             if (typeof authorUser == "object") {
+                console.log("getting the video from the Author")
                 authorUser.getVideo().then(video =>
                     dispatch({ type: "load_video", payload: video })
                 );
             } else if (authorUser == "currentUser" && newRoom) {
+                console.log("getting the video from the App Context")
+
                 dispatch({ type: "load_video", payload: newRoom.video });
             } else push("/")
         }

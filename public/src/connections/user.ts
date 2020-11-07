@@ -38,6 +38,7 @@ class User implements IUser {
 		);
 	}
 	getVideo() {
+		console.log("======> P2P video data")
 		if (!this.isAuthor)
 			return Promise.reject(`${this.name} is not the author`);
 		return new Promise<VideoData>((res, rej) =>

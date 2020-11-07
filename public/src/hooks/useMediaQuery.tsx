@@ -6,7 +6,6 @@ const UseMediaQuery = (): BreakPoints => {
 
     const ReactToWindowSizing = React.useCallback((e: UIEvent) => {
         const target = e.target as Window;
-        // console.log("hello",e);
         setWidth(target.innerWidth);
     }, []);
 

@@ -3,6 +3,7 @@ import { Guest } from "../types/user_type";
 
 export interface IAppState {
 	user: Guest | false;
+	// TODO find meaningful name instead of newRoom, because sometimes it referes to prevRoom
 	newRoom?: NewRoomData;
 	loading: boolean;
 }

@@ -22,12 +22,13 @@ const RoomProvider: React.FC = ({ children }) => {
     const { user, newRoom } = useContext(AppContext);
     const { replace, push } = useHistory();
     const { id } = useParams<{ id: string }>();
-    console.log(newRoom);
 
     if (!user)
         replace(`/join/${id}`);
 
     useEffect(() => {
+        console.log("prev room", newRoom);
+
         loadRoom();
         initListeners();
     }, [])
@@ -60,7 +61,7 @@ const RoomProvider: React.FC = ({ children }) => {
             })
         else return Promise.reject();
     }
- 
+
     const broadcastMyIp = async () => {
         dispatch({ type: "loading_on" })
         const myIp = await p2p.getMyIp();
@@ -68,7 +69,7 @@ const RoomProvider: React.FC = ({ children }) => {
         // TODO the server only determine whose author
         const ips = await server.boardcastIp(id, myIp)
         if (ips) {
-            const users = await p2p.join(ips)
+            const users = await p2p.join(ips, id == "11")
             dispatch({ type: "guests_to_Users", payload: users });
         } else {
             // TODO write better error message
@@ -88,9 +89,9 @@ const RoomProvider: React.FC = ({ children }) => {
             const userAuthors = state.watchersUsers.filter(
                 user => user.isAuthor
             );
-            console.log(userAuthors);
             // TODO allow multi authors
             const userAuthor = userAuthors.length ? userAuthors[0] : "currentUser";
+            console.log("the room's author", userAuthor);
             dispatch({ type: "guest_author_to_user", payload: userAuthor });
         }
     }
