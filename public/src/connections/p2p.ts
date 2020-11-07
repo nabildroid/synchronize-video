@@ -58,6 +58,11 @@ class P2P implements P2P_Node_API {
 		callback: (data: RecievedDataType & { type: T }) => void
 	) {
 		this.notifiers[to].push(callback);
+		return () => {
+			this.notifiers[to] = this.notifiers[to].filter(
+				(f) => f != callback
+			);
+		};
 	}
 }
 

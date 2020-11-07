@@ -30,7 +30,7 @@ const VideoProvider: React.FC = ({ children }) => {
     function startTheVideoWhenWatchersCome() {
         const authorWaitingForWatchers = authorUser == "currentUser" && state.state == VideoState.WAITING;
 
-        if (authorWaitingForWatchers && watchersUsers.length){
+        if (authorWaitingForWatchers && watchersUsers.length) {
             console.log("watchers users", watchersUsers);
             // the video state now is on waiting whitch means unresponsive.
             // after the watchers come, we should give the author the option to play it whenever he want
@@ -38,37 +38,41 @@ const VideoProvider: React.FC = ({ children }) => {
             pause();
         }
     }
-    
+
 
     function initListeners() {
-        p2p.listenTo(DataFlowTypes.USER_POSITION, ({ sender, payload }) => {
-            dispatch({
-                type: "user_position", payload: {
-                    position: payload as Duration,
-                    user: sender
-                }
-            })
-            console.log("<<<<===== P2P UserPosition")
+        const unsubscribe = [
+            p2p.listenTo(DataFlowTypes.USER_POSITION, ({ sender, payload }) => {
+                dispatch({
+                    type: "user_position", payload: {
+                        position: payload as Duration,
+                        user: sender
+                    }
+                })
+                console.log("<<<<===== P2P UserPosition")
 
-        })
+            }),
 
-        p2p.listenTo(DataFlowTypes.VIDEO_STATE, ({ sender, payload }) => {
-            if (sender.isAuthor)
-                dispatch({ type: "set_state", payload: payload as VideoState });
-            console.log("<<<<===== P2P videoState")
-        })
+            p2p.listenTo(DataFlowTypes.VIDEO_STATE, ({ sender, payload }) => {
+                if (sender.isAuthor)
+                    dispatch({ type: "set_state", payload: payload as VideoState });
+                console.log("<<<<===== P2P videoState")
+            }),
 
-        p2p.listenTo(DataFlowTypes.VIDEO_DATA, ({ sender, payload }) => {
-            if (sender.isAuthor)
-                dispatch({ type: "load_video", payload: payload as VideoData });
+            p2p.listenTo(DataFlowTypes.VIDEO_DATA, ({ sender, payload }) => {
+                if (sender.isAuthor)
+                    dispatch({ type: "load_video", payload: payload as VideoData });
                 console.log("<<<<===== P2P videoData")
-        })
+            }),
 
-        p2p.listenTo(DataFlowTypes.VIDEO_LENGTH, ({ sender, payload }) => {
-            if (sender.isAuthor)
-                dispatch({ type: "set_length", payload: payload as Duration });
+            p2p.listenTo(DataFlowTypes.VIDEO_LENGTH, ({ sender, payload }) => {
+                if (sender.isAuthor)
+                    dispatch({ type: "set_length", payload: payload as Duration });
                 console.log("<<<<===== P2P videoLength")
-        })
+            })
+        ];
+
+        return () => unsubscribe.forEach(f => f());
     }
 
     function askAuthorForVideoWhenItUnavailable() {

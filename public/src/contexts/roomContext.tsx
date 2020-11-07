@@ -30,7 +30,8 @@ const RoomProvider: React.FC = ({ children }) => {
         console.log("prev room", newRoom);
 
         loadRoom();
-        initListeners();
+        const unsubscribe = initListeners();
+        return unsubscribe;
     }, [])
 
     // selecting the auhtor must be a event driven because, later we might implement a multi author, which means each time the watchers changes we have to select the authors all again
@@ -78,9 +79,13 @@ const RoomProvider: React.FC = ({ children }) => {
     }
 
     function initListeners() {
-        p2p.listenTo(DataFlowTypes.NEW_USER, ({ sender, payload }) => {
-            dispatch({ type: "guests_to_Users", payload: payload as IUser[] })
-        });
+        const unsubscribe = [
+            p2p.listenTo(DataFlowTypes.NEW_USER, ({ sender, payload }) => {
+                dispatch({ type: "guests_to_Users", payload: payload as IUser[] })
+            })
+        ];
+
+        return () => unsubscribe.forEach(f => f());
     }
 
     function selectAuthorUserFromWatchersUsers() {

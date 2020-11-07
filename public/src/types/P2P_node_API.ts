@@ -48,14 +48,17 @@ export type IPAdressType = string;
 
 // TODO implement unsubscribe from the listener
 export default interface P2P_Node_API {
-	// TODO remove allowAuthors, its just for debugging 
-	join: (IPAdresses: IPAdressType[],allowAuthors:boolean) => Promise<IUser[]>;
+	// TODO remove allowAuthors, its just for debugging
+	join: (
+		IPAdresses: IPAdressType[],
+		allowAuthors: boolean
+	) => Promise<IUser[]>;
 	send: (data: SendDataType) => Promise<boolean>;
 	listenTo: <T extends DataFlowTypes>(
 		to: T,
 		callback: (content: RecievedDataType & { type: T }) => void
-	) => void;
+	) => () => void;
 	getMyIp: () => Promise<IPAdressType>;
 	// TODO remove it from interface because this function the only p2p network should have listen, i used it here to just create fake data flow
-	listen(data: RecievedDataType)
+	listen(data: RecievedDataType);
 }
