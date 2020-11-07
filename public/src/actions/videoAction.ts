@@ -8,33 +8,33 @@ export default (state: IVideoState, action: VideoActions): IVideoState => {
 			data: action.payload,
 			loading: false,
 		};
-	else if (action.type == "set_length") {
+	else if (action.type == "set_length")
 		return {
 			...state,
 			length: action.payload,
 		};
-	} else if (action.type == "set_state") {
+	else if (action.type == "set_state")
 		return {
 			...state,
 			state: action.payload,
 			loading: false,
 		};
-	} else if (action.type == "controller_on") {
+	else if (action.type == "controller_on")
 		return {
 			...state,
 			controller: true,
 		};
-	} else if (action.type == "controller_off") {
+	else if (action.type == "controller_off")
 		return {
 			...state,
 			controller: false,
 		};
-	} else if (action.type == "update_position") {
+	else if (action.type == "update_position")
 		return {
 			...state,
 			position: action.payload,
 		};
-	} else if (action.type == "loading_off" || action.type == "loading_on")
+	else if (action.type == "loading_off" || action.type == "loading_on")
 		return {
 			...state,
 			loading: action.type == "loading_on",
@@ -45,4 +45,5 @@ export default (state: IVideoState, action: VideoActions): IVideoState => {
 			error: Error(action.payload),
 			loading: false,
 		};
+	else return state;
 };

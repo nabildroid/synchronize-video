@@ -7,19 +7,19 @@ export default (state: IRoomState, action: RoomActions): IRoomState => {
 			...action.payload,
 			loading: false,
 		};
-	else if (action.type == "guests_to_Users") {
+	else if (action.type == "guests_to_Users")
 		return {
 			...state,
 			watchersUsers: [...state.watchersUsers, ...action.payload],
 			loading: false,
 		};
-	} else if (action.type == "guest_author_to_user") {
+	else if (action.type == "guest_author_to_user")
 		return {
 			...state,
 			authorUser: action.payload,
 			loading: false,
 		};
-	} else if (action.type == "loading_off" || action.type == "loading_on")
+	else if (action.type == "loading_off" || action.type == "loading_on")
 		return {
 			...state,
 			loading: action.type == "loading_on",
@@ -30,4 +30,5 @@ export default (state: IRoomState, action: RoomActions): IRoomState => {
 			error: Error(action.payload),
 			loading: false,
 		};
+	else return state;
 };

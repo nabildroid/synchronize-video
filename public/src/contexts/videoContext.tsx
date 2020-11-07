@@ -20,20 +20,27 @@ const VideoProvider: React.FC = ({ children }) => {
     const { newRoom } = useContext(AppContext)
     const { push } = useHistory();
 
-    useEffect(() => {
-        if (authorUser && !state.data)
-            askAuthorForVideo();
-    }, [authorUser])
+    useEffect(initListeners, []);
 
-    useEffect(() => {
+    useEffect(askAuthorForVideoWhenItUnavailable, [authorUser]);
+
+    useEffect(startTheVideoWhenWatchersCome, [watchersUsers, authorUser]);
+
+
+    function startTheVideoWhenWatchersCome() {
         const authorWaitingForWatchers = authorUser == "currentUser" && state.state == VideoState.WAITING;
         console.log(authorWaitingForWatchers, watchersUsers);
 
-        if (authorWaitingForWatchers && watchersUsers.length)
+        if (authorWaitingForWatchers && watchersUsers.length){
+            // the video state now is on waiting whitch means unresponsive.
+            // after the watchers come, we should give the author the option to play it whenever he want
+            // when video state is paused, the video becomes responsive to play action
             pause();
-    }, [watchersUsers, authorUser])
+        }
+    }
+    
 
-    useEffect(() => {
+    function initListeners() {
         p2p.listenTo(DataFlowTypes.USER_POSITION, ({ sender, payload }) => {
             dispatch({
                 type: "user_position", payload: {
@@ -45,32 +52,33 @@ const VideoProvider: React.FC = ({ children }) => {
 
         p2p.listenTo(DataFlowTypes.VIDEO_STATE, ({ sender, payload }) => {
             if (sender.isAuthor)
-                dispatch({ type: "set_state", payload: payload as VideoState});
+                dispatch({ type: "set_state", payload: payload as VideoState });
         })
 
         p2p.listenTo(DataFlowTypes.VIDEO_DATA, ({ sender, payload }) => {
             if (sender.isAuthor)
-                dispatch({ type: "load_video", payload: payload  as VideoData});
+                dispatch({ type: "load_video", payload: payload as VideoData });
         })
 
         p2p.listenTo(DataFlowTypes.VIDEO_LENGTH, ({ sender, payload }) => {
             if (sender.isAuthor)
-                dispatch({ type: "set_length", payload: payload  as Duration});
+                dispatch({ type: "set_length", payload: payload as Duration });
         })
+    }
 
-    }, [])
-
-    const askAuthorForVideo = async () => {
-        dispatch({ type: "loading_on" })
-        console.log(authorUser);
-        // get the video either from the p2p or AppContext
-        if (typeof authorUser == "object") {
-            const video = await authorUser.getVideo();
-            dispatch({ type: "load_video", payload: video });
-        } else if (authorUser == "currentUser" && newRoom) {
-            dispatch({ type: "load_video", payload: newRoom.video });
-        } else push("/")
-
+    function askAuthorForVideoWhenItUnavailable() {
+        if (authorUser && !state.data) {
+            dispatch({ type: "loading_on" })
+            console.log(authorUser);
+            // get the video either from the p2p or AppContext
+            if (typeof authorUser == "object") {
+                authorUser.getVideo().then(video =>
+                    dispatch({ type: "load_video", payload: video })
+                );
+            } else if (authorUser == "currentUser" && newRoom) {
+                dispatch({ type: "load_video", payload: newRoom.video });
+            } else push("/")
+        }
     }
 
     const toggleController = () => {

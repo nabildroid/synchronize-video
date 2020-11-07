@@ -29,19 +29,14 @@ const RoomProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         loadRoom();
-        p2p.listenTo(DataFlowTypes.NEW_USER, ({ sender, payload }) => {
-            dispatch({ type: "guests_to_Users", payload: payload as IUser[] })
-        });
+        initListeners();
     }, [])
 
     // selecting the auhtor must be a event driven because, later we might implement a multi author, which means each time the watchers changes we have to select the authors all again
-    useEffect(() => {
-        if (state.watchersUsers.length) {
-            selectAuthorUser();
-        }
-    }, [state.watchersUsers])
+    useEffect(selectAuthorUserFromWatchersUsers, [state.watchersUsers])
 
-    const loadRoom = async () => {
+
+    async function loadRoom() {
         dispatch({ type: "loading_on" })
         const response = await firstResolvedPromise<false | IRoomInfo>([
             LoadRoomFromApp(),
@@ -65,7 +60,7 @@ const RoomProvider: React.FC = ({ children }) => {
             })
         else return Promise.reject();
     }
-
+ 
     const broadcastMyIp = async () => {
         dispatch({ type: "loading_on" })
         const myIp = await p2p.getMyIp();
@@ -81,19 +76,24 @@ const RoomProvider: React.FC = ({ children }) => {
         }
     }
 
-    const selectAuthorUser = () => {
-        dispatch({ type: "loading_on" })
-        const userAuthors = state.watchersUsers.filter(
-            user => user.isAuthor
-        );
-        console.log(userAuthors);
-        // TODO allow multi authors
-        const userAuthor = userAuthors.length ? userAuthors[0] : "currentUser";
-        dispatch({ type: "guest_author_to_user", payload: userAuthor });
+    function initListeners() {
+        p2p.listenTo(DataFlowTypes.NEW_USER, ({ sender, payload }) => {
+            dispatch({ type: "guests_to_Users", payload: payload as IUser[] })
+        });
     }
 
-
-
+    function selectAuthorUserFromWatchersUsers() {
+        if (state.watchersUsers.length) {
+            dispatch({ type: "loading_on" })
+            const userAuthors = state.watchersUsers.filter(
+                user => user.isAuthor
+            );
+            console.log(userAuthors);
+            // TODO allow multi authors
+            const userAuthor = userAuthors.length ? userAuthors[0] : "currentUser";
+            dispatch({ type: "guest_author_to_user", payload: userAuthor });
+        }
+    }
 
 
 

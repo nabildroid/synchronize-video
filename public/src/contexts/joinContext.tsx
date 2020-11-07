@@ -20,8 +20,6 @@ const JoinProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         loadRoom();
-        console.log("rendering JoinContext");
-        return () => console.log("disposing JoinContext");
     }, [])
 
     const loadRoom = async () => {
@@ -29,34 +27,31 @@ const JoinProvider: React.FC = ({ children }) => {
         const response = await server.loadRoomInfo(id);
 
         if (response) {
-            if (user && response.watchers.some(w => w.id == user.id)) {
+            const currentUserIsAlreadyAWatcher = user && response.watchers.some(w => w.id == user.id);
+            if (currentUserIsAlreadyAWatcher) {
                 replace(`/room/${id}`);
-            } else
-            dispatch({ type: "load_room", payload: response })
+            }
+            else dispatch({ type: "load_room_info", payload: response })
 
-        } else
-            return push(`/`);
+        } else return push(`/`);
     }
 
-    const submitName = useCallback(async (name: string) => {
+    async function submitName(name: string) {
         dispatch({ type: "loading_submit_on" });
         const response = await server.join(name);
 
-        dispatch({ type: "loading_submit_off" })
-        if (!response)
-            dispatch({ type: "login_error", payload: "check your name" })
-        else {
+        if (response) {
+            dispatch({ type: "loading_submit_off" })
             login(response)
             setTimeout(() => push(`/room/${id}`), 350)
+        } else dispatch({ type: "login_error", payload: "check your name" })
     }
-    }, [server, dispatch]);
 
 
-
-    const values = useMemo(() => ({
+    const values = {
         ...state,
         submitName
-    }), [state]);
+    }
 
     return (
         <JoinContext.Provider value={values}>

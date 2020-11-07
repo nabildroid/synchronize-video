@@ -2,7 +2,9 @@ import React, { createContext, useContext, useEffect, useReducer } from "react"
 import AppAction from "../actions/appAction"
 import useLocalStorage from "../hooks/useLocalStorage"
 import { AppStateInit, IAppProvider } from "../models/app_model"
+import { NewRoomData } from "../types/room_type"
 import { AuthKey } from "../types/server_API"
+import { Guest } from "../types/user_type"
 import { ServerContext } from "./serverContext"
 
 
@@ -16,21 +18,27 @@ const AppProvider: React.FC = ({ children }) => {
     const { server } = useContext(ServerContext)
     const [auth, setAuth] = useLocalStorage<AuthKey>("auth");
 
-    useEffect(() => {
+    useEffect(ValidateCurrentAuthIfItExists, []);
+
+    function ValidateCurrentAuthIfItExists() {
         if (auth) {
             server.signMeIn(auth).then(response => {
                 response && login(response);
-            });
+            }).finally(() =>
+                dispatch({ type: "loading_off" })
+            )
+        } else {
+            setAuth(null);
+            dispatch({ type: "loading_off" });
         }
-        dispatch({ type: "loading_off" })
-    }, [])
+    }
 
-    const login: IAppProvider["login"] = (user) => {
+    function login(user: Guest) {
         setAuth(server.auth);
         dispatch({ type: "login", payload: user })
     }
 
-    const addNewRoom: IAppProvider["addNewRoom"] = (roomData, user) => {
+    function addNewRoom(roomData: NewRoomData, user: Guest) {
         if (user) login(user);
         dispatch({ type: "load_new_room", payload: roomData });
     }

@@ -7,20 +7,20 @@ export default (state: IAppState, action: AppActions) => {
 			loading: false,
 			user: action.payload,
 		};
-	if (action.type == "load_new_room")
+	else if (action.type == "load_new_room")
 		return {
 			...state,
 			newRoom: action.payload,
 		};
-	if (action.type == "loading_on")
+	else if (action.type == "loading_on")
 		return {
 			...state,
 			loading: true,
 		};
-	if (action.type == "loading_off")
+	else if (action.type == "loading_off")
 		return {
 			...state,
 			loading: false,
 		};
-	return state;
+	else return state;
 };

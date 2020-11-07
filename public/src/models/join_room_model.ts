@@ -19,7 +19,7 @@ export const JoinRoomStateInit: IJoinRoomState = {
 
 export type JoinRoomActions =
 	| {
-			type: "load_room";
+			type: "load_room_info";
 			payload: IRoomInfo;
 	  }
 	| {
