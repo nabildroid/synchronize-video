@@ -1,7 +1,8 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useReducer } from "react"
-import { Redirect, useHistory, useParams } from "react-router-dom"
+import { Redirect, useHistory, useLocation, useParams } from "react-router-dom"
 import JoinRoomAction from "../actions/joinRoomAction"
 import { IJoinRoomProvider, JoinRoomStateInit } from "../models/join_room_model"
+import { IRoomInfo } from "../models/room_model"
 import { AppContext } from "./appContext"
 import { ServerContext } from "./serverContext"
 
@@ -29,7 +30,8 @@ const JoinProvider: React.FC = ({ children }) => {
         if (response) {
             const currentUserIsAlreadyAWatcher = user && response.watchers.some(w => w.id == user.id);
             if (currentUserIsAlreadyAWatcher) {
-                replace(`/room/${id}`);
+                // TODO send the response within the redirection
+                push(`/room/${id}`, response);
             }
             else dispatch({ type: "load_room_info", payload: response })
 
@@ -43,7 +45,14 @@ const JoinProvider: React.FC = ({ children }) => {
         if (response) {
             dispatch({ type: "loading_submit_off" })
             login(response)
-            setTimeout(() => push(`/room/${id}`), 350)
+
+            const currentRoomInfo: IRoomInfo = {
+                background: state.background,
+                title: state.title,
+                watchers: state.watchers
+            }
+
+            setTimeout(() => push(`/room/${id}`, currentRoomInfo), 350)
         } else dispatch({ type: "login_error", payload: "check your name" })
     }
 

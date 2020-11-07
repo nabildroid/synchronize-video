@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react"
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import RoomAction from "../actions/roomAction";
 import { IRoomInfo, RoomStateInit } from "../models/room_model";
 import { IRoomProvider } from "../models/room_model"
@@ -22,6 +22,9 @@ const RoomProvider: React.FC = ({ children }) => {
     const { user, newRoom } = useContext(AppContext);
     const { replace, push } = useHistory();
     const { id } = useParams<{ id: string }>();
+    const { state: roomInfoFromJoinPage } = useLocation<IRoomInfo | null>();
+
+
 
     if (!user)
         replace(`/join/${id}`);
@@ -40,7 +43,7 @@ const RoomProvider: React.FC = ({ children }) => {
 
     async function loadRoom() {
         dispatch({ type: "loading_on" })
-        const response = await firstResolvedPromise<false | IRoomInfo>([
+        const response = roomInfoFromJoinPage || await firstResolvedPromise<false | IRoomInfo>([
             LoadRoomFromApp(),
             LoadRoomFromServer()
         ]);
