@@ -3,6 +3,8 @@ import { useHistory, useParams } from "react-router-dom";
 import RoomAction from "../actions/roomAction";
 import { IRoomInfo, RoomStateInit } from "../models/room_model";
 import { IRoomProvider } from "../models/room_model"
+import { DataFlowTypes } from "../types/P2P_node_API";
+import { IUser } from "../types/user_type";
 import firstResolvedPromise from "../utils/firstResolvedPromise";
 import { AppContext } from "./appContext";
 import { P2PContext } from "./p2pContext";
@@ -27,6 +29,9 @@ const RoomProvider: React.FC = ({ children }) => {
 
     useEffect(() => {
         loadRoom();
+        p2p.listenTo(DataFlowTypes.NEW_USER, ({ sender, payload }) => {
+            dispatch({ type: "guests_to_Users", payload: payload as IUser[] })
+        });
     }, [])
 
     // selecting the auhtor must be a event driven because, later we might implement a multi author, which means each time the watchers changes we have to select the authors all again

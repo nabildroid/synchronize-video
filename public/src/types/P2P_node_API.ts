@@ -55,4 +55,6 @@ export default interface P2P_Node_API {
 		callback: (content: RecievedDataType & { type: T }) => void
 	) => void;
 	getMyIp: () => Promise<IPAdressType>;
+	// TODO remove it from interface because this function the only p2p network should have listen, i used it here to just create fake data flow
+	listen(data: RecievedDataType)
 }

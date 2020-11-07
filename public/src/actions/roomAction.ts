@@ -10,7 +10,7 @@ export default (state: IRoomState, action: RoomActions): IRoomState => {
 	else if (action.type == "guests_to_Users") {
 		return {
 			...state,
-			watchersUsers: action.payload,
+			watchersUsers: [...state.watchersUsers, ...action.payload],
 			loading: false,
 		};
 	} else if (action.type == "guest_author_to_user") {
