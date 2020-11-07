@@ -74,7 +74,6 @@ export interface IvideoProvider extends IVideoState {
 	toggleController();
 	setLength(length: Duration);
 	playTo(time: Duration);
-	pause?: () => Promise<boolean>;
-	play?: () => Promise<boolean>;
-	start?: () => Promise<boolean>;
+	pause();
+	play();
 }

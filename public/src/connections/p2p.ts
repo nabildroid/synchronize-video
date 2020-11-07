@@ -33,7 +33,7 @@ class P2P implements P2P_Node_API {
 		);
 	}
 	send(data: SendDataType): Promise<boolean> {
-		throw new Error("Method not implemented.");
+		return new Promise((res, rej) => setTimeout(() => res(true), 5000));
 	}
 	listenTo<T extends DataFlowTypes>(
 		to: T,

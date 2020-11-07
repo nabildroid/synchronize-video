@@ -19,12 +19,12 @@ type Props = {
 
 
 const VideoController: React.FC<Props> = ({ enterFullscreen, exitFullscreen, fullscreen }) => {
-    const { state, controller, toggleController, pause, play, start, position, length } = useContext(VideoContext);
+    const { state, controller, toggleController, pause, play, position, length } = useContext(VideoContext);
     const { authorUser } = useContext(RoomContext);
-
+    
     useEffect(() => {
         // TODO use debounce because any action should reset the counter
-        if (controller && length) {
+        if (controller && length && state == VideoState.PLAYIED) {
             const timer = setTimeout(toggleController, 5000);
             return () => clearTimeout(timer);
         }
@@ -35,8 +35,6 @@ const VideoController: React.FC<Props> = ({ enterFullscreen, exitFullscreen, ful
             pause();
         else if (state == VideoState.PLAYIED)
             play();
-        else if (state == VideoState.WAITE)
-            start();
     }
 
     const ToggleFullScreen = () => {
@@ -73,7 +71,7 @@ const VideoController: React.FC<Props> = ({ enterFullscreen, exitFullscreen, ful
                         <ProgressBar progress={calcProgress(length, position)} />
                     </div>
                 </div>}
-                
+
             {!length && <Loading center={true} primaryColor={TWColors.WHITE} />}
         </div>
     )

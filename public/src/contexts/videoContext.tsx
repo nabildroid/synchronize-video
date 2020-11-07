@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react"
 import { useHistory } from "react-router-dom"
 import videoAction from "../actions/videoAction"
+import P2P from "../connections/p2p"
 import { IvideoProvider, VideoStateInit } from "../models/video_model"
 import { DataFlowTypes } from "../types/P2P_node_API"
-import { Duration, VideoType } from "../types/video_type"
+import { Duration, VideoState, VideoType } from "../types/video_type"
 import { AppContext } from "./appContext"
 import { P2PContext } from "./p2pContext"
 import { RoomContext } from "./roomContext"
@@ -15,7 +16,7 @@ export const VideoContext = createContext<IvideoProvider>(null)
 const VideoProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useReducer(videoAction, VideoStateInit);
     const { p2p } = useContext(P2PContext);
-    const { authorUser } = useContext(RoomContext);
+    const { authorUser, watchersUsers } = useContext(RoomContext);
     const { newRoom } = useContext(AppContext)
     const { push } = useHistory();
 
@@ -24,6 +25,13 @@ const VideoProvider: React.FC = ({ children }) => {
             askAuthorForVideo();
     }, [authorUser])
 
+    useEffect(() => {
+        const authorWaitingForWatchers = authorUser == "currentUser" && state.state == VideoState.WAITING;
+        console.log(authorWaitingForWatchers,watchersUsers);
+        
+        if (authorWaitingForWatchers && watchersUsers.length)
+            pause();
+    }, [watchersUsers, authorUser])
 
     useEffect(() => {
         p2p.listenTo(DataFlowTypes.USER_POSITION, ({ sender, payload }) => {
@@ -64,11 +72,35 @@ const VideoProvider: React.FC = ({ children }) => {
         dispatch({ type: "update_position", payload: time })
     }
 
+    const pause = () => {
+        console.log("video paused");
+        
+        p2p.send({
+            target: "all",
+            type: DataFlowTypes.VIDEO_STATE,
+            payload: VideoState.PUASED
+        }).then(() =>
+            dispatch({ type: "set_state", payload: VideoState.PUASED })
+        );
+    }
+
+    const play = () => {
+        p2p.send({
+            target: "all",
+            type: DataFlowTypes.VIDEO_STATE,
+            payload: VideoState.PLAYIED
+        }).then(() =>
+            dispatch({ type: "set_state", payload: VideoState.PLAYIED })
+        );
+    }
+
     const values = {
         ...state,
         toggleController,
         setLength,
-        playTo
+        playTo,
+        play,
+        pause
     }
 
     return (
