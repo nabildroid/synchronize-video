@@ -1,4 +1,8 @@
 import { IRoomState, RoomActions } from "../models/room_model";
+import { Guest } from "../types/user_type";
+import removeDuplicates from "../utils/removeDuplicates";
+
+
 
 export default (state: IRoomState, action: RoomActions): IRoomState => {
 	if (action.type == "load_room")
@@ -7,16 +11,19 @@ export default (state: IRoomState, action: RoomActions): IRoomState => {
 			...action.payload,
 			loading: false,
 		};
-	else if (action.type == "guests_to_Users")
+	else if (action.type == "add_watchers")
 		return {
 			...state,
-			watchersUsers: [...state.watchersUsers, ...action.payload],
+			watchers: removeDuplicates<Guest>(
+				[...state.watchers, ...action.payload],
+				(a, b) => a.id == b.id
+			),
 			loading: false,
 		};
-	else if (action.type == "guest_author_to_user")
+	else if (action.type == "guest_to_author")
 		return {
 			...state,
-			authorUser: action.payload,
+			authorGuest: action.payload,
 			loading: false,
 		};
 	else if (action.type == "loading_off" || action.type == "loading_on")

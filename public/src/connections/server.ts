@@ -63,7 +63,7 @@ class Server implements IServerAPI {
 			);
 	}
 
-	loadRoomInfo(id: string): Promise<IRoomInfo | false> {
+	loadRoomInfo(id: string,allowAuthors:boolean = true): Promise<IRoomInfo | false> {
 		console.log("==========> room info request");
 
 		return new Promise((res, rej) =>
@@ -83,9 +83,9 @@ class Server implements IServerAPI {
 										isAuthor: false,
 									},
 									{
-										id: 160,
+										id:310,
 										name: "Admin",
-										isAuthor: true,
+										isAuthor: allowAuthors,
 									},
 								],
 						  }),

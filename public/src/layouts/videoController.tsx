@@ -20,7 +20,7 @@ type Props = {
 
 const VideoController: React.FC<Props> = ({ enterFullscreen, exitFullscreen, fullscreen }) => {
     const { state, controller, toggleController, pause, play, position, length } = useContext(VideoContext);
-    const { authorUser } = useContext(RoomContext);
+    const { authorGuest } = useContext(RoomContext);
     
     useEffect(() => {
         // TODO use debounce because any action should reset the counter
@@ -55,7 +55,7 @@ const VideoController: React.FC<Props> = ({ enterFullscreen, exitFullscreen, ful
             {!!length &&
                 <div className="relative z-10 flex flex-col w-full h-full">
                     <div className="flex items-center justify-center flex-1" onClick={toggleController}>
-                        <VideoStateButton author={authorUser} state={state} change={HandleVideoStateChange} />
+                        <VideoStateButton author={authorGuest} state={state} change={HandleVideoStateChange} />
                     </div>
                     <div className="flex flex-col">
 

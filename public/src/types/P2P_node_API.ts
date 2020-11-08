@@ -1,14 +1,13 @@
-import { Guest, IUser } from "./user_type";
+import { Guest } from "./user_type";
 import { Message } from "./message_type";
 import { Duration, VideoData, VideoState } from "./video_type";
-import User from "../connections/user";
 import link from "../assets/svgs/link";
 
 export enum DataFlowTypes {
 	MESSAGE,
-	NEW_USER,
+	NEW_WATCHERS,
 	VIDEO_STATE,
-	USER_POSITION,
+	WATCHER_POSITION,
 	VIDEO_DATA,
 	VIDEO_LENGTH,
 }
@@ -19,11 +18,11 @@ export type DataFlowType =
 			payload: Message[];
 	  }
 	| {
-			type: DataFlowTypes.NEW_USER;
-			payload: User[];
+			type: DataFlowTypes.NEW_WATCHERS;
+			payload: Guest[];
 	  }
 	| {
-			type: DataFlowTypes.USER_POSITION;
+			type: DataFlowTypes.WATCHER_POSITION;
 			payload: Duration;
 	  }
 	| {
@@ -40,7 +39,9 @@ export type DataFlowType =
 			payload: Duration;
 	  };
 
-export type SendDataType = { target: Guest | "all" } & DataFlowType;
+export type TargetType = { target: Guest | "all" };
+export type SendDataType = TargetType & DataFlowType;
+export type QueryDataType = TargetType & { type: DataFlowTypes };
 
 export type RecievedDataType = { sender: Guest } & DataFlowType;
 
@@ -48,12 +49,14 @@ export type IPAdressType = string;
 
 // TODO implement unsubscribe from the listener
 export default interface P2P_Node_API {
+	init(user: Guest);
 	// TODO remove allowAuthors, its just for debugging
 	join: (
 		IPAdresses: IPAdressType[],
 		allowAuthors: boolean
-	) => Promise<IUser[]>;
+	) => Promise<Guest[]>;
 	send: (data: SendDataType) => Promise<boolean>;
+	query: (data: QueryDataType) => Promise<boolean>;
 	listenTo: <T extends DataFlowTypes>(
 		to: T,
 		callback: (content: RecievedDataType & { type: T }) => void

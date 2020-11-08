@@ -1,13 +1,13 @@
 import React from "react"
 import UseMediaQuery from "../hooks/useMediaQuery";
-import { AuthorUser } from "../models/room_model";
+import { AuthorGuest } from "../models/room_model";
 import { TWColors } from "../types/colors";
 import { VideoState } from "../types/video_type";
 import Svg from "./svg";
 
 type Props = {
     state: VideoState,
-    author: AuthorUser
+    author: AuthorGuest
     change: (state: VideoState) => void
 }
 

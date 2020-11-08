@@ -1,51 +1,75 @@
 import P2P_Node_API, {
 	DataFlowTypes,
 	IPAdressType,
+	QueryDataType,
 	RecievedDataType,
 	SendDataType,
 } from "../types/P2P_node_API";
-import { IUser } from "../types/user_type";
-import User from "./user";
+import { Guest } from "../types/user_type";
+import { VideoType } from "../types/video_type";
 
 class P2P implements P2P_Node_API {
+	private user: Guest;
+
 	notifiers: {
 		[key in DataFlowTypes]: ((data: RecievedDataType) => void)[];
 	} = {
 		[DataFlowTypes.MESSAGE]: [],
-		[DataFlowTypes.NEW_USER]: [],
-		[DataFlowTypes.USER_POSITION]: [],
+		[DataFlowTypes.NEW_WATCHERS]: [],
+		[DataFlowTypes.WATCHER_POSITION]: [],
 		[DataFlowTypes.VIDEO_DATA]: [],
 		[DataFlowTypes.VIDEO_LENGTH]: [],
 		[DataFlowTypes.VIDEO_STATE]: [],
 	};
 
+	init(user: Guest) {
+		this.user = user;
+	}
 	getMyIp(): Promise<IPAdressType> {
 		return new Promise((res, rej) =>
 			setTimeout(() => res("192.168.1.1"), 500)
 		);
 	}
 
-	join(IPAdresses: IPAdressType[]): Promise<IUser[]> {
+	join(IPAdresses: IPAdressType[]): Promise<Guest[]> {
 		return new Promise((res, rej) =>
 			setTimeout(() => {
 				res(
 					Array(10)
 						.fill(null)
-						.map((_, i) => {
-							const user = new User(this);
-							user.init({
-								id: 155 * i,
-								name: "hello world!",
-								isAuthor: Math.random() > 0.9, // TODO this information should only comes from the server
-							});
-							return user;
-						})
+						.map((_, i) => ({
+							id: 155 * i,
+							name: "hello world!",
+							isAuthor: Math.random() > 0.9, // TODO this information should only comes from the server
+						}))
 				);
 			}, 500)
 		);
 	}
 
 	send(data: SendDataType): Promise<boolean> {
+		return new Promise((res, rej) => setTimeout(() => res(true), 5000));
+	}
+
+	query(data: QueryDataType): Promise<boolean> {
+		if (data.type == DataFlowTypes.VIDEO_DATA) {
+			setTimeout(
+				() =>
+					this.listen({
+						type: DataFlowTypes.VIDEO_DATA,
+						payload: {
+							type: VideoType.DOWNLOAD,
+							link: "https://www.w3schools.com/html/mov_bbb.mp4",
+						},
+						sender: {
+							id: 8577,
+							isAuthor: true,
+							name: "eizeffe",
+						},
+					}),
+				3000
+			);
+		}
 		return new Promise((res, rej) => setTimeout(() => res(true), 5000));
 	}
 

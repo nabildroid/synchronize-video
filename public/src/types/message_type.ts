@@ -1,4 +1,4 @@
-import { IUser } from "./user_type";
+import { Guest } from "./user_type";
 import { Duration } from "./video_type";
 
 export enum MessageReactions {
@@ -24,7 +24,7 @@ export type MessageBody =
 	  };
 
 export type Message = {
-	user: IUser;
+	user: Guest;
 	body: MessageBody;
 	duration: Duration;
 };

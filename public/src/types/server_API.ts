@@ -1,6 +1,11 @@
-import { IRoomInfo} from "../models/room_model";
+import { IRoomInfo } from "../models/room_model";
 import { IPAdressType } from "./P2P_node_API";
-import { Background, JoinRoomResponse, NewRoomResponse, RoomId } from "./room_type";
+import {
+	Background,
+	JoinRoomResponse,
+	NewRoomResponse,
+	RoomId,
+} from "./room_type";
 import { VideoData, VideoLink } from "./video_type";
 
 export type AuthKey = {
@@ -16,7 +21,8 @@ export interface IServerAPI {
 		roomId: RoomId,
 		ip: IPAdressType
 	): Promise<IPAdressType[] | false>;
-	loadRoomInfo(id: RoomId): Promise<IRoomInfo | false>;
+	// TODO remove allowAuthors, its just for debugging
+	loadRoomInfo(id: RoomId, allowAuthors?: boolean): Promise<IRoomInfo | false>;
 	signMeIn(auth: AuthKey): Promise<JoinRoomResponse>;
 	createRoom(
 		name: string,

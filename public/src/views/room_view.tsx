@@ -18,7 +18,7 @@ type Props = {
 }
 
 const RoomView: React.FC<Props> = ({ }) => {
-    const { loading, title, watchersUsers, link } = useContext(RoomContext)
+    const { loading, title, watchers, link } = useContext(RoomContext)
     const bearkPoint = UseMediaQuery()
     const isLg = bearkPoint == "lg";
     const isNotSm = bearkPoint != "sm";
@@ -51,7 +51,7 @@ const RoomView: React.FC<Props> = ({ }) => {
                             <EmojisBlock click={() => { }} />
                         </div>
                         <div className="lg:-mt-4 md:w-full w-5/6">
-                            <Watchers guests={watchersUsers} />
+                            <Watchers guests={Array.from(watchers).reverse()} />
                         </div>
                     </div>
                 </div>
