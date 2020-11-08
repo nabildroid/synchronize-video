@@ -17,10 +17,12 @@ const Watchers: React.FC<Props> = ({ guests, children }) => {
             <Label name="watchers" htmlFor="watchers" />
             <ul id="watchers" className="flex items-center pb-2 space-x-2 overflow-x-scroll">
                 {children}
-                {guests.map(({ id, name }) => (
+                {guests.sort(
+                    (a, b) => (b.isAuthor ? 1 : 0) - (a.isAuthor ? 1 : 0)
+                ).map(({ id, name, isAuthor }) => (
                     // TODO use user id
                     <li key={id}>
-                        <UserLabel text={name} color={TWColors.INDIGO} />
+                        <UserLabel text={name} color={isAuthor ? TWColors.INDIGO : TWColors.GRAY} />
                     </li>
                 ))}
             </ul>
