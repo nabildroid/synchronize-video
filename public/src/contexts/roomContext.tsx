@@ -19,7 +19,7 @@ const RoomProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useReducer(RoomAction, RoomStateInit)
     const { server } = useContext(ServerContext);
     const { p2p } = useContext(P2PContext);
-    const { user, newRoom } = useContext(AppContext);
+    const { user, newRoom, login } = useContext(AppContext);
     const { replace, push } = useHistory();
     const { id } = useParams<{ id: string }>();
     const { state: roomInfoFromJoinPage } = useLocation<IRoomInfo | null>();
@@ -50,19 +50,27 @@ const RoomProvider: React.FC = ({ children }) => {
         ]);
 
         if (response) {
-            dispatch({ type: "load_room", payload: response })
-            // broadcast the current userIp happen only one time
-            broadcastMyIp()
+            console.log("room has been loaded",response);
+            if (checkIfCurrentUserIsAlreadyAWatcher(response.watchers)) {
+                login({ ...response.watchers.find(w => w.id == user.id) });
+                dispatch({ type: "load_room", payload: response })
+
+                broadcastMyIp()
+            } else replace(`/join/${id}`, response);
         }
         else return push(`/`);
     }
 
-    const LoadRoomFromServer = () => server.loadRoomInfo(id,false);
+    function checkIfCurrentUserIsAlreadyAWatcher(watchers: Guest[]) {
+        return user && watchers.some(w => w.id == user.id);
+    }
+
+    const LoadRoomFromServer = () => server.loadRoomInfo(id, false);
     const LoadRoomFromApp = (): Promise<IRoomInfo> => {
         if (newRoom && newRoom.id == id)
             return Promise.resolve({
                 ...newRoom,
-                watchers: []
+                watchers: [{ ...user, isAuthor: true }]
             })
         else return Promise.reject();
     }
@@ -95,14 +103,23 @@ const RoomProvider: React.FC = ({ children }) => {
     function selectAuthorGuestFromWatchers() {
         if (state.watchers.length) {
             dispatch({ type: "loading_on" })
-            // TODO is not secure to select authors when the new guests cames from P2P not from the server
-            const guestAuthors = state.watchers.filter(
-                user => user.isAuthor
-            );
-            // TODO allow multi authors
-            const guestAuthor = guestAuthors.length ? guestAuthors[0] : "currentUser";
-            console.log("the room's author", guestAuthor);
-            dispatch({ type: "guest_to_author", payload: guestAuthor });
+            let guestAuthor = null;
+
+            if (user && user.isAuthor)
+                guestAuthor = "currentUser"
+            else {
+                // TODO is not secure to select authors when the new guests cames from P2P not from the server
+                const guestAuthors = state.watchers.filter(
+                    user => user.isAuthor
+                );
+                // TODO allow multi authors
+                guestAuthor = guestAuthors.length ? guestAuthors[0] : null;
+            }
+            console.log("selelcting the author", guestAuthor);
+            if (guestAuthor) {
+                console.log("the room's author", guestAuthor);
+                dispatch({ type: "guest_to_author", payload: guestAuthor });
+            } else dispatch({ type: "error", payload: "error" });
         }
     }
 

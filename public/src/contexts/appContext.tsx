@@ -34,6 +34,7 @@ const AppProvider: React.FC = ({ children }) => {
     }
 
     function login(user: Guest) {
+        console.log("@login");
         setAuth(server.auth);
         dispatch({ type: "login", payload: user })
     }

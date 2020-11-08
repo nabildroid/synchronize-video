@@ -2,7 +2,7 @@ import { NewRoomData } from "../types/room_type";
 import { Guest } from "../types/user_type";
 
 export interface IAppState {
-	user: Guest | false;
+	user: Guest;
 	// TODO find meaningful name instead of newRoom, because sometimes it referes to prevRoom
 	newRoom?: NewRoomData;
 	loading: boolean;
@@ -24,7 +24,7 @@ export type AppActions =
 	  };
 
 export const AppStateInit: IAppState = {
-	user: false,
+	user: null,
 	loading: true,
 };
 

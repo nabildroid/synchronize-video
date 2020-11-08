@@ -3,6 +3,7 @@ import { Redirect, useHistory, useLocation, useParams } from "react-router-dom"
 import JoinRoomAction from "../actions/joinRoomAction"
 import { IJoinRoomProvider, JoinRoomStateInit } from "../models/join_room_model"
 import { IRoomInfo } from "../models/room_model"
+import { Guest } from "../types/user_type"
 import { AppContext } from "./appContext"
 import { ServerContext } from "./serverContext"
 
@@ -17,6 +18,7 @@ const JoinProvider: React.FC = ({ children }) => {
     const { server } = useContext(ServerContext)
     const { id } = useParams<{ id: string }>();
     const { push, replace } = useHistory();
+    const { state: roomInfoFromRoomPage } = useLocation<IRoomInfo | null>();
 
 
     useEffect(() => {
@@ -25,17 +27,19 @@ const JoinProvider: React.FC = ({ children }) => {
 
     const loadRoom = async () => {
         dispatch({ type: "loading_on" })
-        const response = await server.loadRoomInfo(id);
-
+        const response = roomInfoFromRoomPage || await server.loadRoomInfo(id);
+        console.log(response);
         if (response) {
-            const currentUserIsAlreadyAWatcher = user && response.watchers.some(w => w.id == user.id);
-            if (currentUserIsAlreadyAWatcher) {
-                // TODO send the response within the redirection
+            if (checkIfCurrentUserIsAlreadyAWatcher(response.watchers)) {
                 push(`/room/${id}`, response);
             }
             else dispatch({ type: "load_room_info", payload: response })
 
         } else return push(`/`);
+    }
+
+    function checkIfCurrentUserIsAlreadyAWatcher(watchers: Guest[]) {
+        return user && watchers.some(w => w.id == user.id);
     }
 
     async function submitName(name: string) {

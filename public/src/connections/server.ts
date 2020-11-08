@@ -2,6 +2,7 @@ import { IRoomInfo } from "../models/room_model";
 import { IPAdressType } from "../types/P2P_node_API";
 import { JoinRoomResponse, NewRoomResponse, RoomId } from "../types/room_type";
 import { AuthKey, IServerAPI } from "../types/server_API";
+import { Guest } from "../types/user_type";
 import { VideoLink, VideoType } from "../types/video_type";
 
 const fakeAuthKey: AuthKey = {
@@ -12,7 +13,7 @@ const fakeAuthKey: AuthKey = {
 class Server implements IServerAPI {
 	auth: AuthKey = null;
 
-	signMeIn(auth: AuthKey): Promise<JoinRoomResponse> {
+	signMeIn(auth: AuthKey): Promise<Guest> {
 		console.log("==========> get user from auth request");
 
 		return new Promise((res, rej) =>
@@ -25,12 +26,12 @@ class Server implements IServerAPI {
 						// TODO `signMeIn` just to check the credential, response shouldn't contian `isAuth`
 						isAuthor: false,
 					});
-				} else return res(false);
+				} else return res(null);
 			}, 500)
 		);
 	}
 
-	join(name): Promise<JoinRoomResponse> {
+	join(name): Promise<Guest> {
 		console.log("==========> join request");
 
 		return new Promise((res, rej) =>
@@ -39,10 +40,10 @@ class Server implements IServerAPI {
 					this.auth = fakeAuthKey;
 					res({
 						id: 155,
-						isAuthor: true,
+						isAuthor: false,
 						name: "nabil",
 					});
-				} else return res(false);
+				} else return res(null);
 			}, 500)
 		);
 	}
@@ -83,7 +84,12 @@ class Server implements IServerAPI {
 										isAuthor: false,
 									},
 									{
-										id:310,
+										id: 155,
+										name: "nabil",
+										isAuthor: false,
+									},
+									{
+										id: 310,
 										name: "Admin",
 										isAuthor: allowAuthors,
 									},
@@ -113,7 +119,7 @@ class Server implements IServerAPI {
 			// TODO the server will return the new auth
 			this.auth = fakeAuthKey;
 			response.user = {
-				id: 89,
+				id: 155,
 				name: name,
 				isAuthor: true,
 			};

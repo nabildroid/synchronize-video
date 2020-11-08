@@ -6,6 +6,7 @@ import {
 	NewRoomResponse,
 	RoomId,
 } from "./room_type";
+import { Guest } from "./user_type";
 import { VideoData, VideoLink } from "./video_type";
 
 export type AuthKey = {
@@ -16,14 +17,14 @@ export type AuthKey = {
 
 export interface IServerAPI {
 	readonly auth: AuthKey;
-	join(name: string): Promise<JoinRoomResponse>;
+	join(name: string): Promise<Guest>;
 	boardcastIp(
 		roomId: RoomId,
 		ip: IPAdressType
 	): Promise<IPAdressType[] | false>;
 	// TODO remove allowAuthors, its just for debugging
 	loadRoomInfo(id: RoomId, allowAuthors?: boolean): Promise<IRoomInfo | false>;
-	signMeIn(auth: AuthKey): Promise<JoinRoomResponse>;
+	signMeIn(auth: AuthKey): Promise<Guest>;
 	createRoom(
 		name: string,
 		title: string,
