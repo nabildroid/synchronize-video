@@ -4,7 +4,7 @@ import RoomAction from "../actions/roomAction";
 import { IRoomInfo, RoomStateInit } from "../models/room_model";
 import { IRoomProvider } from "../models/room_model"
 import { DataFlowTypes } from "../types/P2P_node_API";
-import { IUser } from "../types/user_type";
+import { Guest } from "../types/user_type";
 import firstResolvedPromise from "../utils/firstResolvedPromise";
 import { AppContext } from "./appContext";
 import { P2PContext } from "./p2pContext";
@@ -32,13 +32,14 @@ const RoomProvider: React.FC = ({ children }) => {
     useEffect(() => {
         console.log("prev room", newRoom);
 
+        user && p2p.init(user)
         loadRoom();
         const unsubscribe = initListeners();
         return unsubscribe;
     }, [])
 
     // selecting the auhtor must be a event driven because, later we might implement a multi author, which means each time the watchers changes we have to select the authors all again
-    useEffect(selectAuthorUserFromWatchersUsers, [state.watchersUsers])
+    useEffect(selectAuthorGuestFromWatchers, [state.watchers])
 
 
     async function loadRoom() {
@@ -56,7 +57,7 @@ const RoomProvider: React.FC = ({ children }) => {
         else return push(`/`);
     }
 
-    const LoadRoomFromServer = () => server.loadRoomInfo(id);
+    const LoadRoomFromServer = () => server.loadRoomInfo(id,false);
     const LoadRoomFromApp = (): Promise<IRoomInfo> => {
         if (newRoom && newRoom.id == id)
             return Promise.resolve({
@@ -73,8 +74,8 @@ const RoomProvider: React.FC = ({ children }) => {
         // TODO the server only determine whose author
         const ips = await server.boardcastIp(id, myIp)
         if (ips) {
-            const users = await p2p.join(ips, id == "11")
-            dispatch({ type: "guests_to_Users", payload: users });
+            const watchers = await p2p.join(ips, id == "11")
+            dispatch({ type: "add_watchers", payload: watchers });
         } else {
             // TODO write better error message
             dispatch({ type: "error", payload: "error" })
@@ -83,24 +84,25 @@ const RoomProvider: React.FC = ({ children }) => {
 
     function initListeners() {
         const unsubscribe = [
-            p2p.listenTo(DataFlowTypes.NEW_USER, ({ sender, payload }) => {
-                dispatch({ type: "guests_to_Users", payload: payload as IUser[] })
+            p2p.listenTo(DataFlowTypes.NEW_WATCHERS, ({ sender, payload }) => {
+                dispatch({ type: "add_watchers", payload: payload as Guest[] })
             })
         ];
 
         return () => unsubscribe.forEach(f => f());
     }
 
-    function selectAuthorUserFromWatchersUsers() {
-        if (state.watchersUsers.length) {
+    function selectAuthorGuestFromWatchers() {
+        if (state.watchers.length) {
             dispatch({ type: "loading_on" })
-            const userAuthors = state.watchersUsers.filter(
+            // TODO is not secure to select authors when the new guests cames from P2P not from the server
+            const guestAuthors = state.watchers.filter(
                 user => user.isAuthor
             );
             // TODO allow multi authors
-            const userAuthor = userAuthors.length ? userAuthors[0] : "currentUser";
-            console.log("the room's author", userAuthor);
-            dispatch({ type: "guest_author_to_user", payload: userAuthor });
+            const guestAuthor = guestAuthors.length ? guestAuthors[0] : "currentUser";
+            console.log("the room's author", guestAuthor);
+            dispatch({ type: "guest_to_author", payload: guestAuthor });
         }
     }
 

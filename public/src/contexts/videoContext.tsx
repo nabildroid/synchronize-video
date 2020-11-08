@@ -16,22 +16,22 @@ export const VideoContext = createContext<IvideoProvider>(null)
 const VideoProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useReducer(videoAction, VideoStateInit);
     const { p2p } = useContext(P2PContext);
-    const { authorUser, watchersUsers } = useContext(RoomContext);
+    const { authorGuest, watchers } = useContext(RoomContext);
     const { newRoom } = useContext(AppContext)
     const { push } = useHistory();
 
     useEffect(initListeners, []);
 
-    useEffect(askAuthorForVideoWhenItUnavailable, [authorUser]);
+    useEffect(askAuthorForVideoWhenItUnavailable, [authorGuest]);
 
-    useEffect(startTheVideoWhenWatchersCome, [watchersUsers, authorUser]);
+    useEffect(startTheVideoWhenWatchersCome, [watchers, authorGuest]);
 
 
     function startTheVideoWhenWatchersCome() {
-        const authorWaitingForWatchers = authorUser == "currentUser" && state.state == VideoState.WAITING;
+        const authorWaitingForWatchers = authorGuest == "currentUser" && state.state == VideoState.WAITING;
 
-        if (authorWaitingForWatchers && watchersUsers.length) {
-            console.log("watchers users", watchersUsers);
+        if (authorWaitingForWatchers && watchers.length) {
+            console.log("watchers users", watchers);
             // the video state now is on waiting whitch means unresponsive.
             // after the watchers come, we should give the author the option to play it whenever he want
             // when video state is paused, the video becomes responsive to play action
@@ -42,7 +42,7 @@ const VideoProvider: React.FC = ({ children }) => {
 
     function initListeners() {
         const unsubscribe = [
-            p2p.listenTo(DataFlowTypes.USER_POSITION, ({ sender, payload }) => {
+            p2p.listenTo(DataFlowTypes.WATCHER_POSITION, ({ sender, payload }) => {
                 dispatch({
                     type: "user_position", payload: {
                         position: payload as Duration,
@@ -76,15 +76,19 @@ const VideoProvider: React.FC = ({ children }) => {
     }
 
     function askAuthorForVideoWhenItUnavailable() {
-        if (authorUser && !state.data) {
+        // TODO add loading_video state, to block this process when the video request has been sent
+        if (authorGuest && !state.data) {
             dispatch({ type: "loading_on" })
-            // get the video either from the p2p or AppContext
-            if (typeof authorUser == "object") {
+
+            if (typeof authorGuest == "object") {
                 console.log("getting the video from the Author")
-                authorUser.getVideo().then(video =>
-                    dispatch({ type: "load_video", payload: video })
-                );
-            } else if (authorUser == "currentUser" && newRoom) {
+
+                p2p.query({
+                    target: authorGuest,
+                    type: DataFlowTypes.VIDEO_DATA,
+                })
+
+            } else if (authorGuest == "currentUser" && newRoom) {
                 console.log("getting the video from the App Context")
 
                 dispatch({ type: "load_video", payload: newRoom.video });
@@ -105,7 +109,7 @@ const VideoProvider: React.FC = ({ children }) => {
     const playTo = (time: Duration) => {
         p2p.send({
             target: "all",
-            type: DataFlowTypes.USER_POSITION,
+            type: DataFlowTypes.WATCHER_POSITION,
             payload: time
         }).then(() =>
             dispatch({ type: "update_position", payload: time })

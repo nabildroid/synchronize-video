@@ -1,9 +1,9 @@
-import React, { createContext, useEffect, useRef } from "react";
+import React, { createContext, useContext, useEffect, useRef } from "react";
 
 import P2P from "../connections/p2p";
-import User from "../connections/user";
 import P2P_Node_API, { DataFlowTypes } from "../types/P2P_node_API";
 import { VideoState } from "../types/video_type";
+import { AppContext } from "./appContext";
 
 
 interface IProviderValues {
@@ -27,21 +27,18 @@ const P2PProvider: React.FC = ({ children }) => {
                     }
                 }
             );
-        }, 10000)
+        }, 10000);
 
-
-        const user = new User(p2p.current);
-        user.init({
-            id: 58787,
-            name: "new user from P2P",
-            isAuthor: false
-        });
         setTimeout(() => {
             p2p.current.listen(
                 {
-                    type: DataFlowTypes.NEW_USER,
+                    type: DataFlowTypes.NEW_WATCHERS,
                     payload: [
-                        user
+                        {
+                            id: 58787,
+                            name: "new user from P2P",
+                            isAuthor: false
+                        }
                     ],
                     sender: {
                         id: 8577,

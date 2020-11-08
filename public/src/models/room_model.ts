@@ -1,16 +1,15 @@
 import { Background } from "../types/room_type";
-import { Guest, IUser } from "../types/user_type";
-import { Duration } from "../types/video_type";
+import { Guest } from "../types/user_type";
 
 export interface IRoomInfo {
 	title: string;
 	background: Background;
 	watchers: Guest[];
 }
-export type AuthorUser = IUser | "currentUser";
+export type AuthorGuest = Guest | "currentUser";
+
 export interface IRoomState extends IRoomInfo {
-	watchersUsers: IUser[];
-	authorUser: AuthorUser;
+	authorGuest: AuthorGuest;
 	loading: boolean;
 	error: Error;
 }
@@ -18,8 +17,7 @@ export const RoomStateInit: IRoomState = {
 	background: null,
 	title: null,
 	watchers: [],
-	watchersUsers: [],
-	authorUser: null,
+	authorGuest: null,
 	loading: true,
 	error: null,
 };
@@ -30,12 +28,12 @@ export type RoomActions =
 			payload: IRoomInfo;
 	  }
 	| {
-			type: "guests_to_Users";
-			payload: IUser[];
+			type: "add_watchers";
+			payload: Guest[];
 	  }
 	| {
-			type: "guest_author_to_user";
-			payload: IUser | "currentUser";
+			type: "guest_to_author";
+			payload: Guest | "currentUser";
 	  }
 	| {
 			type: "loading_on";
