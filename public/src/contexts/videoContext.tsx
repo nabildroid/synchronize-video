@@ -30,7 +30,7 @@ const VideoProvider: React.FC = ({ children }) => {
     function startTheVideoWhenWatchersCome() {
         const authorWaitingForWatchers = authorGuest == "currentUser" && state.state == VideoState.WAITING;
 
-        if (authorWaitingForWatchers && watchers.length) {
+        if (authorWaitingForWatchers && watchers.length > 1) {
             console.log("watchers users", watchers);
             // the video state now is on waiting whitch means unresponsive.
             // after the watchers come, we should give the author the option to play it whenever he want
