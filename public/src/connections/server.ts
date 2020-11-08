@@ -23,7 +23,7 @@ class Server implements IServerAPI {
 						id: 155,
 						name: "nabil",
 						// TODO `signMeIn` just to check the credential, response shouldn't contian `isAuth`
-						isAuthor: Math.random() > 0.5,
+						isAuthor: false,
 					});
 				} else return res(false);
 			}, 500)
