@@ -65,7 +65,7 @@ const RoomProvider: React.FC = ({ children }) => {
         return user && watchers.some(w => w.id == user.id);
     }
 
-    const LoadRoomFromServer = () => server.loadRoomInfo(id, false);
+    const LoadRoomFromServer = () => server.loadRoomInfo(id, true);
     const LoadRoomFromApp = (): Promise<IRoomInfo> => {
         if (newRoom && newRoom.id == id)
             return Promise.resolve({

@@ -35,7 +35,7 @@ class P2P implements P2P_Node_API {
 		return new Promise((res, rej) =>
 			setTimeout(() => {
 				res(
-					Array(10)
+					Array(Math.random() > 0.5 ? 3 : 0)
 						.fill(null)
 						.map((_, i) => ({
 							id: 155 * i,

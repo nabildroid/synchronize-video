@@ -27,7 +27,7 @@ const JoinProvider: React.FC = ({ children }) => {
 
     const loadRoom = async () => {
         dispatch({ type: "loading_on" })
-        const response = roomInfoFromRoomPage || await server.loadRoomInfo(id);
+        const response = roomInfoFromRoomPage || await server.loadRoomInfo(id,true);
         console.log(response);
         if (response) {
             if (checkIfCurrentUserIsAlreadyAWatcher(response.watchers)) {
