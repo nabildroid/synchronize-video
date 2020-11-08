@@ -111,9 +111,8 @@ const VideoProvider: React.FC = ({ children }) => {
             target: "all",
             type: DataFlowTypes.WATCHER_POSITION,
             payload: time
-        }).then(() =>
-            dispatch({ type: "update_position", payload: time })
-        );
+        })
+        dispatch({ type: "update_position", payload: time })
     }
 
     const pause = () => {
@@ -123,9 +122,8 @@ const VideoProvider: React.FC = ({ children }) => {
             target: "all",
             type: DataFlowTypes.VIDEO_STATE,
             payload: VideoState.PUASED
-        }).then(() =>
-            dispatch({ type: "set_state", payload: VideoState.PUASED })
-        );
+        })
+        dispatch({ type: "set_state", payload: VideoState.PUASED })
     }
 
     const play = () => {
@@ -133,9 +131,8 @@ const VideoProvider: React.FC = ({ children }) => {
             target: "all",
             type: DataFlowTypes.VIDEO_STATE,
             payload: VideoState.PLAYIED
-        }).then(() =>
-            dispatch({ type: "set_state", payload: VideoState.PLAYIED })
-        );
+        })
+        dispatch({ type: "set_state", payload: VideoState.PLAYIED })
     }
 
     const values = {

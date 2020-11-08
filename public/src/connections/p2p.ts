@@ -48,6 +48,7 @@ class P2P implements P2P_Node_API {
 	}
 
 	send(data: SendDataType): Promise<boolean> {
+		// TODO include the timestemp
 		return new Promise((res, rej) => setTimeout(() => res(true), 5000));
 	}
 
