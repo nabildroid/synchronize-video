@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Loading from "../components/loading";
 import { VideoContext } from "../contexts/videoContext";
-import { VideoType } from "../types/video_type";
+import { VideoState, VideoType } from "../types/video_type";
 import ReactPlayer from "react-player";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 }
 
 const VideoElement: React.FC<Props> = ({ }) => {
-    const { data, toggleController, setLength, playTo } = useContext(VideoContext);
+    const { data, toggleController, setLength, playTo,state } = useContext(VideoContext);
 
     // TODO `HandleVideoDuration` should only works when the VideoType.DOWNLOAD
     const HandleVideoDuration = (length: number) => {
@@ -34,7 +34,7 @@ const VideoElement: React.FC<Props> = ({ }) => {
                 <ReactPlayer
                     url={data.link.toString()}
                     onProgress={({ playedSeconds }) => HandleVideoProgress(playedSeconds)}
-                    playing={true}
+                    playing={state == VideoState.PLAYIED}
                     onDuration={HandleVideoDuration}
                     width="100%" height="100%"
                 />
