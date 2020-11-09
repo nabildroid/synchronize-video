@@ -1,17 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { MessageReactions } from '../types/message_type'
 import EmojiButton from '../components/emojiButton';
 import enumKeys from '../utils/enumKeys';
+import { MessagesContext } from '../contexts/messagesContext';
 
 
 type Props = {
-    click(emojiType: MessageReactions)
 }
 
 
 
-const EmojisBlock: React.FC<Props> = ({ click }) => {
-
+const EmojisBlock: React.FC<Props> = ({ }) => {
+    const { sendReaction } = useContext(MessagesContext)
 
     let allEmojis = enumKeys(MessageReactions)
     return (
@@ -21,7 +21,7 @@ const EmojisBlock: React.FC<Props> = ({ click }) => {
                     <EmojiButton key={key}
                         type={MessageReactions[key]}
                         name={key}
-                        click={() => click(MessageReactions[key])}
+                        click={() => sendReaction(MessageReactions[key])}
                     />
                 ))
             }

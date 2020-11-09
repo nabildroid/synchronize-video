@@ -45,10 +45,10 @@ const RoomView: React.FC<Props> = ({ }) => {
                         <div className="lg:pb-0 lg:justify-end md:w-full flex items-end justify-between w-1/6 p-2 space-x-2">
                             {isLg && (
                                 <div className="w-5/6">
-                                    <WithLabel text="hello" setText={() => { }} />
+                                    <WithLabel  />
                                 </div>
                             )}
-                            <EmojisBlock click={() => { }} />
+                            <EmojisBlock />
                         </div>
                         <div className="lg:-mt-4 md:w-full w-5/6">
                             <Watchers guests={Array.from(watchers).reverse()} />

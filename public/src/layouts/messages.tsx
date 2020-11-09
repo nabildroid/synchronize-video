@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Label from "../components/label";
 import MessagesList from "./messages/messagesList";
 import { MessageType, MessageReactions, TimelineMessages } from "../types/message_type";
 import { WithoutLabel, WithLabel } from "./messages/writeMessage";
 import UseMediaQuery from "../hooks/useMediaQuery";
+import { MessagesContext } from "../contexts/messagesContext";
 
 type Props = {
 
@@ -11,6 +12,7 @@ type Props = {
 
 const Messages: React.FC<Props> = ({ }) => {
 
+    const { timeline_messages } = useContext(MessagesContext);
     const user = {
         id: 17787,
         isAuthor: true,
@@ -165,14 +167,13 @@ const Messages: React.FC<Props> = ({ }) => {
     ]
 
 
-    const [text, setText] = useState("");
     const isNotLg = UseMediaQuery() != "lg";
     return (
         <div className="md:bg-gray-100 flex flex-col flex-auto w-full h-full px-2 pt-2 bg-white">
             <Label name="Messages" />
-            <MessagesList content={messages} />
+            <MessagesList content={timeline_messages} />
             <div className="md:relative fixed bottom-0 left-0 self-end w-full px-2 py-2">
-                {isNotLg && <WithoutLabel text={text} setText={setText} />}
+                {isNotLg && <WithoutLabel />}
             </div>
         </div>
     )

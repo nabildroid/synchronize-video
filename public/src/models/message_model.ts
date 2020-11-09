@@ -1,19 +1,48 @@
-import { Message, MessageBody, TimelineMessages } from "../types/message_type";
-import { Duration } from "../types/video_type";
+import {
+	Message,
+	MessageReactions,
+	TimelineMessages,
+} from "../types/message_type";
 
 export interface IMessagesState {
-	messages: Message[];
+	row_messages: Message[];
+	timeline_messages: TimelineMessages;
+	draft: string;
+	loading: boolean;
 }
-export interface IMessagesActions {
-	send(msg: Message): Promise<boolean>;
-	listen(callback: Function): void;
-}
+export const MessagesStateInit: IMessagesState = {
+	draft: "",
+	row_messages: [],
+	timeline_messages: [],
+	loading: true,
+};
+
+export type MessagesActions =
+	| {
+			type: "set_draft";
+			payload: string;
+	  }
+	| {
+			type: "load_messages";
+			payload: Message[];
+	  }
+	| {
+			type: "add_new_messages";
+			payload: Message[];
+	  }
+	| {
+			type: "loading_on";
+	  }
+	| {
+			type: "loading_off";
+	  }
+	| {
+			type: "set_timeline_messages";
+			payload: TimelineMessages;
+	  };
 
 export interface IMessagesProvider extends IMessagesState {
-	draftMessage: {
-		text: string;
-		setText(val: string);
-	};
-	timeLineMessages: TimelineMessages;
-	send(body: MessageBody): Promise<boolean>;
+	setDraft(val: string);
+	send();
+	sendReaction(reaction: MessageReactions);
 }

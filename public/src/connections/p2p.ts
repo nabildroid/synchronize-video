@@ -48,6 +48,25 @@ class P2P implements P2P_Node_API {
 	}
 
 	send(data: SendDataType): Promise<boolean> {
+		if (data.type == DataFlowTypes.MESSAGE) {
+			console.log(
+				"=====>>>> P2P send Message",
+				data.payload[0].body.content
+			);
+			setTimeout(
+				() =>
+					this.listen({
+						type: DataFlowTypes.MESSAGE,
+						payload: data.payload,
+						sender: {
+							id: 8577,
+							isAuthor: true,
+							name: "Admin",
+						},
+					}),
+				3000
+			);
+		}
 		// TODO include the timestemp
 		return new Promise((res, rej) => setTimeout(() => res(true), 5000));
 	}
