@@ -22,6 +22,7 @@ const MessagesList: React.FC<Props> = ({ }) => {
         elm: HTMLDivElement,
         time: Duration
     }[]>([]);
+    const elm = useRef<HTMLDivElement>();
 
     useEffect(() => {
         const target = childs.current.find(e => {
@@ -35,6 +36,11 @@ const MessagesList: React.FC<Props> = ({ }) => {
             setTimeout(() => setAllowMessagesToVideoProgress(true), 200);
         }
     }, [position])
+
+    useEffect(() => {
+        if (isSynced)
+            elm.current.scrollTo(0, 1000000)
+    }, [timeline_messages])
 
 
     const handleScroll = (event: React.UIEvent) => {
@@ -71,6 +77,7 @@ const MessagesList: React.FC<Props> = ({ }) => {
         <div
             className="md:pb-2 md:space-y-2 flex-1 max-h-screen pb-24 space-y-1 overflow-y-scroll text-center"
             onScroll={handleScroll}
+            ref={elm}
         >
             {
                 timeline_messages.map(elm => {
