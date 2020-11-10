@@ -19,14 +19,14 @@ const VideoElement: React.FC<Props> = ({ }) => {
         setLength({
             minute: Math.floor(length / 60),
             secoud: Math.floor(length % 60),
-            toTimestemp: () => length
+            toTimestemp: () => length * 1000
         })
     }
     const HandleVideoProgress = (time: number) => {
         playToTime({
             minute: Math.floor(time / 60),
             secoud: Math.floor(time % 60),
-            toTimestemp: () => time
+            toTimestemp: () => time * 1000
         })
     }
 

@@ -5,6 +5,7 @@ import { Message, MessageBody, MessageReactions, MessageType, TimelineMessages }
 import { DataFlowTypes, SendDataType } from "../types/P2P_node_API"
 import { AppContext } from "./appContext"
 import { P2PContext } from "./p2pContext"
+import { VideoContext } from "./videoContext"
 
 
 
@@ -15,6 +16,7 @@ const MessagesProvider: React.FC = ({ children }) => {
     const [state, dispatch] = useReducer(MessagesAction, MessagesStateInit)
     const { p2p } = useContext(P2PContext);
     const { user } = useContext(AppContext);
+    const { position } = useContext(VideoContext);
 
     useEffect(initListeners, []);
     useEffect(processRowMessages, [state.row_messages]);
@@ -76,12 +78,12 @@ const MessagesProvider: React.FC = ({ children }) => {
                         })
                     }
                 }
-                block.forEach(msg => timeLine.push({
-                    id: i++,
-                    payload: msg,
-                    type: "message"
-                }))
             }
+            block.forEach(msg => timeLine.push({
+                id: i++,
+                payload: msg,
+                type: "message"
+            }))
         });
 
         dispatch({ type: "set_timeline_messages", payload: timeLine })
@@ -124,11 +126,7 @@ const MessagesProvider: React.FC = ({ children }) => {
             type: DataFlowTypes.MESSAGE,
             payload: [{
                 user,
-                duration: {
-                    minute: Math.floor(time / 1000 / 60) % 60,
-                    secoud: Math.floor(time / 1000) % 60,
-                    toTimestemp: () => time
-                },
+                duration: position,
                 body: msg
             }]
         } as SendDataType

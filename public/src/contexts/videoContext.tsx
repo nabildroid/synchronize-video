@@ -168,6 +168,7 @@ const VideoProvider: React.FC = ({ children }) => {
         playToTime,
         playToProgress,
         onProgressSeekTo,
+        playBack,
         play,
         pause
     }

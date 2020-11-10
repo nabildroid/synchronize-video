@@ -84,6 +84,7 @@ export interface IvideoProvider extends IVideoState {
 	playToTime(time: Duration);
 	playToProgress(progress: number);
 	onProgressSeekTo(fct: (timestamp: number) => void);
+	playBack(time: Duration);
 	pause();
 	play();
 }

@@ -171,7 +171,7 @@ const Messages: React.FC<Props> = ({ }) => {
     return (
         <div className="md:bg-gray-100 flex flex-col flex-auto w-full h-full px-2 pt-2 bg-white">
             <Label name="Messages" />
-            <MessagesList content={timeline_messages} />
+            <MessagesList />
             <div className="md:relative fixed bottom-0 left-0 self-end w-full px-2 py-2">
                 {isNotLg && <WithoutLabel />}
             </div>

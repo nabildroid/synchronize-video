@@ -1,42 +1,67 @@
-import React, { useRef } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import { MessageType, TimelineMessage, TimelineMessages } from "../../types/message_type";
 import Dot from "../../components/messageDot";
 import TextMessage from "./textMessage";
 import EmojiMessage from "./emojiMessage";
 import MessageTimeLabel from "../../components/messageTimeLabel";
 import { Duration } from "../../types/video_type";
+import { MessagesContext } from "../../contexts/messagesContext";
+import { VideoContext } from "../../contexts/videoContext";
 
 
 
 type Props = {
-    content: TimelineMessages,
 }
 
 
-const MessagesList: React.FC<Props> = ({ content }) => {
-
+const MessagesList: React.FC<Props> = ({ }) => {
+    const { timeline_messages } = useContext(MessagesContext);
+    const { isSynced, playBack, position } = useContext(VideoContext);
+    const [allowMessagesToVideoProgress, setAllowMessagesToVideoProgress] = useState(true);
     const childs = useRef<{
         elm: HTMLDivElement,
         time: Duration
     }[]>([]);
 
-    const handleScroll = (event: React.UIEvent) => {
-        const parent = event.target as HTMLDivElement;
-        const viewportStart = parent.scrollTop;
-        const viewportEnd = viewportStart + parent.offsetHeight;
-
-        childs.current.forEach(e => {
-            e.elm.classList.remove("bg-red-200")
-            e.elm.classList.add("bg-indigo-200")
+    useEffect(() => {
+        const target = childs.current.find(e => {
+            const diff = Math.abs(e.time.toTimestemp() - position.toTimestemp())
+            return diff < 1000;
         });
-        for (const { elm, time } of Array.from(childs.current).reverse()) {
-            const { offsetHeight: height, offsetTop: top } = elm;
-            if (top >= viewportStart && top + height / 2 <= viewportEnd) {
-                // console.log(elm);
-                elm.classList.remove("bg-indigo-200")
 
-                elm.classList.add("bg-red-200");
-                break;
+        if (target && !isSynced) {
+            setAllowMessagesToVideoProgress(false);
+            target.elm.scrollIntoView();
+            setTimeout(() => setAllowMessagesToVideoProgress(true), 200);
+        }
+    }, [position])
+
+
+    const handleScroll = (event: React.UIEvent) => {
+        if (allowMessagesToVideoProgress) {
+            console.log(event.nativeEvent);
+            const parent = event.target as HTMLDivElement;
+            const viewportStart = parent.scrollTop;
+            const viewportEnd = viewportStart + parent.offsetHeight;
+
+            childs.current.forEach(e => {
+                e.elm.classList.remove("bg-red-200")
+                e.elm.classList.add("bg-indigo-200")
+            });
+
+            const reversed = Array.from(childs.current).reverse();
+            for (let i = 0; i < reversed.length; i++) {
+                const { elm, time } = reversed[i];
+
+                const { offsetHeight: height, offsetTop: top } = elm;
+                if (i != 0 && top >= viewportStart && top + height / 2 <= viewportEnd) {
+                    playBack(time);
+                    // console.log(elm);
+                    elm.classList.remove("bg-indigo-200")
+
+                    elm.classList.add("bg-red-200");
+                    break;
+                }
             }
         }
 
@@ -48,7 +73,7 @@ const MessagesList: React.FC<Props> = ({ content }) => {
             onScroll={handleScroll}
         >
             {
-                content.map(elm => {
+                timeline_messages.map(elm => {
                     switch (elm.type) {
                         case "dot":
                             return <Dot key={elm.id} />
