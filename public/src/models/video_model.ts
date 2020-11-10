@@ -10,6 +10,7 @@ export interface IVideoState {
 	length: Duration;
 	state: VideoState;
 	position: Duration;
+	isSynced: boolean;
 	lateWatchers: LateUser[];
 	controller: boolean;
 	loading: boolean;
@@ -21,6 +22,7 @@ export const VideoStateInit: IVideoState = {
 	length: null,
 	state: VideoState.WAITING,
 	lateWatchers: [],
+	isSynced: true,
 	controller: true,
 	loading: true,
 	position: {
@@ -52,6 +54,12 @@ export type VideoActions =
 			type: "loading_off";
 	  }
 	| {
+			type: "sync_on";
+	  }
+	| {
+			type: "sync_off";
+	  }
+	| {
 			type: "error";
 			payload: string;
 	  }
@@ -73,7 +81,9 @@ export type VideoActions =
 export interface IvideoProvider extends IVideoState {
 	toggleController();
 	setLength(length: Duration);
-	playTo(time: Duration);
+	playToTime(time: Duration);
+	playToProgress(progress: number);
+	onProgressSeekTo(fct: (timestamp: number) => void);
 	pause();
 	play();
 }

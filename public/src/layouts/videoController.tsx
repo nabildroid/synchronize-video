@@ -19,9 +19,9 @@ type Props = {
 
 
 const VideoController: React.FC<Props> = ({ enterFullscreen, exitFullscreen, fullscreen }) => {
-    const { state, controller, toggleController, pause, play, position, length } = useContext(VideoContext);
+    const { state, controller, toggleController, pause, play, playToProgress, position, length } = useContext(VideoContext);
     const { authorGuest } = useContext(RoomContext);
-    
+
     useEffect(() => {
         // TODO use debounce because any action should reset the counter
         if (controller && length && state == VideoState.PLAYIED) {
@@ -59,7 +59,7 @@ const VideoController: React.FC<Props> = ({ enterFullscreen, exitFullscreen, ful
                     </div>
                     <div className="flex flex-col">
 
-                        <div className="flex items-center justify-between px-4 leading-loose">
+                        <div className="flex items-center justify-between px-4 leading-relaxed">
                             <VideoTime time={position} isBold={true} />
                             <div className="flex items-center space-x-2">
                                 <VideoTime time={length} />
@@ -68,7 +68,7 @@ const VideoController: React.FC<Props> = ({ enterFullscreen, exitFullscreen, ful
                                 </button>
                             </div>
                         </div>
-                        <ProgressBar progress={calcProgress(length, position)} />
+                        <ProgressBar progress={calcProgress(length, position)} playTo={playToProgress} />
                     </div>
                 </div>}
 

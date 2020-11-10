@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import Loading from "../components/loading";
 import { VideoContext } from "../contexts/videoContext";
 import { VideoState, VideoType } from "../types/video_type";
@@ -9,7 +9,10 @@ type Props = {
 }
 
 const VideoElement: React.FC<Props> = ({ }) => {
-    const { data, toggleController, setLength, playTo,state } = useContext(VideoContext);
+    const { data, toggleController, setLength, playToTime, state, onProgressSeekTo } = useContext(VideoContext);
+    const player = useRef<ReactPlayer>();
+
+    useEffect(() => onProgressSeekTo(player.current.seekTo), [player]);
 
     // TODO `HandleVideoDuration` should only works when the VideoType.DOWNLOAD
     const HandleVideoDuration = (length: number) => {
@@ -20,7 +23,7 @@ const VideoElement: React.FC<Props> = ({ }) => {
         })
     }
     const HandleVideoProgress = (time: number) => {
-        playTo({
+        playToTime({
             minute: Math.floor(time / 60),
             secoud: Math.floor(time % 60),
             toTimestemp: () => time
@@ -37,6 +40,7 @@ const VideoElement: React.FC<Props> = ({ }) => {
                     playing={state == VideoState.PLAYIED}
                     onDuration={HandleVideoDuration}
                     width="100%" height="100%"
+                    ref={player}
                 />
                 : <p>VideoType not supported</p>
             }

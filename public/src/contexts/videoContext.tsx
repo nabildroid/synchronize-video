@@ -1,10 +1,11 @@
-import React, { createContext, useContext, useEffect, useReducer } from "react"
+import React, { createContext, useContext, useEffect, useReducer, useRef } from "react"
 import { useHistory } from "react-router-dom"
 import videoAction from "../actions/videoAction"
 import P2P from "../connections/p2p"
 import { IvideoProvider, VideoStateInit } from "../models/video_model"
 import { DataFlowTypes } from "../types/P2P_node_API"
 import { Duration, VideoData, VideoState, VideoType } from "../types/video_type"
+
 import { AppContext } from "./appContext"
 import { P2PContext } from "./p2pContext"
 import { RoomContext } from "./roomContext"
@@ -19,6 +20,7 @@ const VideoProvider: React.FC = ({ children }) => {
     const { authorGuest, watchers } = useContext(RoomContext);
     const { newRoom } = useContext(AppContext)
     const { push } = useHistory();
+    const progressSeekToCallback = useRef<(timestamp: number) => void>();
 
     useEffect(initListeners, []);
 
@@ -106,12 +108,32 @@ const VideoProvider: React.FC = ({ children }) => {
         dispatch({ type: "set_length", payload: length })
     }
 
-    const playTo = (time: Duration) => {
+
+    const playToProgress = (progress: number) => {
+        const timestamp = Math.floor(state.length.toTimestemp() * progress);
+        const time: Duration = {
+            minute: Math.floor(timestamp / 60) % 60,
+            secoud: timestamp % 60,
+            toTimestemp: () => timestamp
+        }
+        playBack(time);
+    }
+
+    function playBack(time: Duration) {
         p2p.send({
             target: "all",
             type: DataFlowTypes.WATCHER_POSITION,
             payload: time
         })
+        dispatch({ type: "sync_off" });
+        if (progressSeekToCallback.current)
+            progressSeekToCallback.current(time.minute * 60 + time.secoud);
+        else playToTime(time)
+        
+        console.log("playing back")
+    }
+
+    const playToTime = (time: Duration) => {
         dispatch({ type: "update_position", payload: time })
     }
 
@@ -134,12 +156,18 @@ const VideoProvider: React.FC = ({ children }) => {
         })
         dispatch({ type: "set_state", payload: VideoState.PLAYIED })
     }
+    const onProgressSeekTo = (fct: (timestamp: number) => void) => {
+        progressSeekToCallback.current = fct;
+    }
+
 
     const values = {
         ...state,
         toggleController,
         setLength,
-        playTo,
+        playToTime,
+        playToProgress,
+        onProgressSeekTo,
         play,
         pause
     }

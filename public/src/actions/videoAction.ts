@@ -39,6 +39,11 @@ export default (state: IVideoState, action: VideoActions): IVideoState => {
 			...state,
 			loading: action.type == "loading_on",
 		};
+		else if (action.type == "sync_off" || action.type == "sync_on")
+		return {
+			...state,
+			isSynced: action.type == "sync_on",
+		};
 	else if (action.type == "error")
 		return {
 			...state,
